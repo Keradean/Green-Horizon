@@ -76,7 +76,7 @@ public class MainMenu : MonoBehaviour
         for (int i = 0; i < _resolutions.Length; i++)
         {
             Resolution r = _resolutions[i];
-            options.Add($"{r.width} x {r.height} @ {r.refreshRateRatio.value:F0}Hz");
+            options.Add($"{r.width} x {r.height}");
 
             if (savedIndex == i)
                 currentIndex = i;
