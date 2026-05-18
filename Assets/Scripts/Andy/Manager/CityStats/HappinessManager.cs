@@ -2,8 +2,11 @@ using UnityEngine;
 using UnityEngine.UI;
 //=== Andy ===//
 
-public class HappinessDisplay : MonoBehaviour
+public class HappinessManager : MonoBehaviour
 {
+    // Singleton - von überall erreichbar
+    public static HappinessManager Instance { get; private set; }
+
     [Header("Happiness Wert")]
     [Range(0f, 100f)]
     public float happinessValue = 100f;
@@ -11,14 +14,25 @@ public class HappinessDisplay : MonoBehaviour
     [Header("Icon")]
     public Image happinessIcon;
 
+    [Header("Farb-Verlauf")]
+    public Gradient colorGradient;          // Im Inspector einstellbar
+
     [Header("Schwellen")]
     public HappinessThreshold[] thresholds;
 
+    void Awake()
+    {
+        // Singleton Setup
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
+    }
+
     void Update()
     {
-        // Farbe von grün zu rot
-        float colorT = 1f - (happinessValue / 100f);
-        happinessIcon.color = Color.Lerp(Color.green, Color.red, colorT);
+        // Farbe aus Gradient (0 = rot, 1 = grün)
+        happinessIcon.color = colorGradient.Evaluate(happinessValue / 100f);
 
         // Passendes Icon finden
         Sprite bestSprite = null;
