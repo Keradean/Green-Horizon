@@ -6,7 +6,7 @@ namespace Placement
 {
     public class BuildingModel : MonoBehaviour
     {
-        public float Rotation => transform.rotation.eulerAngles.y;
+        public float Rotation => wrapper.localEulerAngles.y;
         [SerializeField] private Transform wrapper;
         private BuildingShapeUnit[] _shapeUnits;
         /////////////////////////////////////////////////////////////////////////////////////////////////

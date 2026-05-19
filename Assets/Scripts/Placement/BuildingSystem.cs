@@ -12,7 +12,10 @@ namespace Placement
         [SerializeField] private BuildingPreview buildingPreviewPrefab;
         [SerializeField] private Building buildingPrefab;
         [SerializeField] private BuildingGrid grid;
+        [SerializeField] private Material demolishHighlightMaterial;
         private BuildingPreview _preview;
+        private Building _hoveredBuilding;
+        private bool _isDemolishMode;
         private Camera _camera;
         /////////////////////////////////////////////////////////////////////////////////////
         private void Awake()
@@ -23,21 +26,73 @@ namespace Placement
         private void Update()
         {
             var mousePos = GetMousePosition();
+            if (_isDemolishMode)
+            {
+                HandleDemolishMode(mousePos);
+                return;
+            }
             if (_preview != null)
             {
                 HandlePreview(mousePos);
+                return;
             }
-            else
+            // Idle
+            if (Keyboard.current.xKey.wasPressedThisFrame)
             {
-                if (Keyboard.current.digit1Key.wasPressedThisFrame)
-                {
-                    _preview = CreatePreview(smallHouse, mousePos);
-                }
+                EnterDemolishMode();
+            }
+            else if (Keyboard.current.digit1Key.wasPressedThisFrame)
+            {
+                _preview = CreatePreview(smallHouse, mousePos);
+            }
+        }
+        /////////////////////////////////////////////////////////////////////////////////////
+        private void EnterDemolishMode()
+        {
+            _isDemolishMode = true;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////
+        private void ExitDemolishMode()
+        {
+            _isDemolishMode = false;
+            if (_hoveredBuilding != null)
+            {
+                _hoveredBuilding.Unhighlight();
+                _hoveredBuilding = null;
+            }
+        }
+        /////////////////////////////////////////////////////////////////////////////////////
+        private void HandleDemolishMode(Vector3 mousePos)
+        {
+            if (Keyboard.current.xKey.wasPressedThisFrame
+                || Keyboard.current.escapeKey.wasPressedThisFrame)
+            {
+                ExitDemolishMode();
+                return;
+            }
+            var building = grid.GetBuildingAt(mousePos);
+            if (building != _hoveredBuilding)
+            {
+                if (_hoveredBuilding != null) _hoveredBuilding.Unhighlight();
+                _hoveredBuilding = building;
+                if (_hoveredBuilding != null) _hoveredBuilding.Highlight(demolishHighlightMaterial);
+            }
+            if (Mouse.current.leftButton.wasPressedThisFrame && _hoveredBuilding != null)
+            {
+                grid.RemoveBuilding(_hoveredBuilding);
+                Destroy(_hoveredBuilding.gameObject);
+                _hoveredBuilding = null;
             }
         }
         /////////////////////////////////////////////////////////////////////////////////////
         private void HandlePreview(Vector3 mousePosition)
         {
+            if (Keyboard.current.escapeKey.wasPressedThisFrame)
+            {
+                Destroy(_preview.gameObject);
+                _preview = null;
+                return;
+            }
             _preview.transform.position = mousePosition;
             var buildPosition = _preview.BuildingModel.GetAllBuildingPositions();
             var canBuild = grid.CanBuild(buildPosition);
@@ -62,7 +117,8 @@ namespace Placement
         /////////////////////////////////////////////////////////////////////////////////////
         private void PlaceBuilding(List<Vector3> buildPosition)
         {
-            var building = Instantiate(buildingPrefab, _preview.transform.position, Quaternion.identity);
+            var rotation = Quaternion.Euler(0, _preview.BuildingModel.Rotation, 0);
+            var building = Instantiate(buildingPrefab, _preview.transform.position, rotation);
             building.Setup(_preview.Data, _preview.BuildingModel.Rotation);
             grid.SetBuilding(building, buildPosition);
             Destroy(_preview.gameObject);

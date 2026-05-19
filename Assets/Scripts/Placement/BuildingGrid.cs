@@ -8,6 +8,7 @@ namespace Placement
         [SerializeField] private int width;
         [SerializeField] private int height;
         private BuildingGridCell[,]  _grid;
+        private readonly Dictionary<Building, List<(int x, int y)>> _buildingCells = new();
         /////////////////////////////////////////////////////////////////////////////////////////////////
         private void Start()
         {
@@ -23,11 +24,28 @@ namespace Placement
         /////////////////////////////////////////////////////////////////////////////////////////////////
         public void SetBuilding(Building building, List<Vector3> allBuildingPositions)
         {
+            var cells = new List<(int x, int y)>();
             foreach (var p in allBuildingPositions)
             {
                 var (x, y) = WorldToGridPosition(p);
                 _grid[x, y].SetBuilding(building);
+                cells.Add((x, y));
             }
+            _buildingCells[building] = cells;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////
+        public void RemoveBuilding(Building building)
+        {
+            if (!_buildingCells.TryGetValue(building, out var cells)) return;
+            foreach (var (x, y) in cells) _grid[x, y].Clear();
+            _buildingCells.Remove(building);
+        }
+        /////////////////////////////////////////////////////////////////////////////////////
+        public Building GetBuildingAt(Vector3 worldPosition)
+        {
+            var (x, y) = WorldToGridPosition(worldPosition);
+            if (x < 0 || x >= width || y < 0 || y >= height) return null;
+            return _grid[x, y].GetBuilding();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////
         public bool CanBuild(List<Vector3> allBuildingPositions)
@@ -70,21 +88,19 @@ namespace Placement
     /************************************************************************************************/
     public class BuildingGridCell
     {
-        private Building _building; 
-        /////////////////////////////////////////////////////////////////////////////////////////////////
+        private Building _building;
+        /////////////////////////////////////////////////////////////////////////////////////
         public BuildingGridCell(Building building)
         {
             _building = building;
-        }    
-        /////////////////////////////////////////////////////////////////////////////////////////////////
-        public void SetBuilding(Building building)
-        {
-            _building = building;
         }
-        /////////////////////////////////////////////////////////////////////////////////////////////////
-        public bool IsEmpty()
-        {
-            return _building == null; 
-        }
+        /////////////////////////////////////////////////////////////////////////////////////
+        public void SetBuilding(Building building) => _building = building;
+        /////////////////////////////////////////////////////////////////////////////////////
+        public void Clear() => _building = null;
+        /////////////////////////////////////////////////////////////////////////////////////
+        public Building GetBuilding() => _building;
+        /////////////////////////////////////////////////////////////////////////////////////
+        public bool IsEmpty() => _building == null;
     }
 }
