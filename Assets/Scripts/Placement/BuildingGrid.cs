@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Placement
@@ -8,28 +8,28 @@ namespace Placement
         [SerializeField] private int width;
         [SerializeField] private int height;
         private BuildingGridCell[,]  _grid;
-
+        /////////////////////////////////////////////////////////////////////////////////////////////////
         private void Start()
         {
             _grid = new BuildingGridCell[width, height];
-            for (var X = 0; X < _grid.GetLength(0); X++)
+            for (var x = 0; x < _grid.GetLength(0); x++)
             {
                 for (var y = 0; y < _grid.GetLength(1); y++)
                 {
-                    _grid[X, y] = new();
+                    _grid[x, y] = new BuildingGridCell(null);
                 }
             }
         }
-
+        /////////////////////////////////////////////////////////////////////////////////////////////////
         public void SetBuilding(Building building, List<Vector3> allBuildingPositions)
         {
             foreach (var p in allBuildingPositions)
             {
                 var (x, y) = WorldToGridPosition(p);
-                _grid[x, y]. SetBuilding(building);
+                _grid[x, y].SetBuilding(building);
             }
         }
-
+        /////////////////////////////////////////////////////////////////////////////////////////////////
         public bool CanBuild(List<Vector3> allBuildingPositions)
         {
             foreach (var p in allBuildingPositions)
@@ -40,16 +40,17 @@ namespace Placement
             }
             return true;
         }
-        private (int x, int y) WorldToGridPosition(Vector3 position)
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        private (int x, int y) WorldToGridPosition(Vector3 worldPosition)
         {
-            int x = Math.FloorToInt((worldPosition - transform.position).x / BuildingSystem.CellSize);
-            int y = Math.FloorToInt((worldPosition - transform.position).z / BuildingSystem.CellSize);
+            var x = Mathf.FloorToInt((worldPosition - transform.position).x / BuildingSystem.CellSize);
+            var y = Mathf.FloorToInt((worldPosition - transform.position).z / BuildingSystem.CellSize);
             return (x, y);
         }
-
+        /////////////////////////////////////////////////////////////////////////////////////////////////
         private void OnDrawGizmos()
         {
-            Gizmos.color = Color.yellow;
+            Gizmos.color = Color.blue;
             if (BuildingSystem.CellSize <= 0 || width <= 0 || height <= 0) return;
             var origin = transform.position;
             for (var y = 0; y <= height; y++)
@@ -66,14 +67,21 @@ namespace Placement
             }
         }
     }
+    /************************************************************************************************/
     public class BuildingGridCell
     {
-        private readonly Building _building; 
+        private Building _building; 
+        /////////////////////////////////////////////////////////////////////////////////////////////////
         public BuildingGridCell(Building building)
         {
             _building = building;
+        }    
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        public void SetBuilding(Building building)
+        {
+            _building = building;
         }
-
+        /////////////////////////////////////////////////////////////////////////////////////////////////
         public bool IsEmpty()
         {
             return _building == null; 
