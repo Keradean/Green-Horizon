@@ -1,8 +1,7 @@
 using UnityEngine;
 //=== Andy ===//
 
-// Liegt auf Panel - Pause
-// Animiert Holder - PauseMenu von oben rein/raus
+// Liegt auf Panel - Pause, animiert Holder - PauseMenu von oben rein/raus
 public class PauseMenuController : MonoBehaviour
 {
     public BottomBarToggle bottomBarToggle;
@@ -16,7 +15,6 @@ public class PauseMenuController : MonoBehaviour
     void Awake()
     {
         pauseMenu.anchoredPosition = new Vector2(0, closedY);
-
         GameStateManager.Instance.OnGameStateChanged += OnGameStateChanged;
         OnGameStateChanged(GameStateManager.Instance.CurrentGameState);
     }
@@ -40,7 +38,7 @@ public class PauseMenuController : MonoBehaviour
     private void OnGameStateChanged(GameState newGameState)
     {
         isOpen = newGameState == GameState.Paused;
-        gameObject.SetActive(true);     // Panel immer aktiv für Animation
+        gameObject.SetActive(true);
 
         if (newGameState == GameState.Paused)
             bottomBarToggle.CloseBar();

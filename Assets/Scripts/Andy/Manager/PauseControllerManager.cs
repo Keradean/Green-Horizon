@@ -9,7 +9,6 @@ public class PauseControllerManager : MonoBehaviour
     {
         if (Keyboard.current[Key.Escape].wasPressedThisFrame)
         {
-            // Aktuellen State holen und umschalten
             GameState current = GameStateManager.Instance.CurrentGameState;
             GameState next = current == GameState.Gameplay ? GameState.Paused : GameState.Gameplay;
             GameStateManager.Instance.SetState(next);
