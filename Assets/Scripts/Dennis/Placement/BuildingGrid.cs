@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Placement
+namespace Dennis.Placement
 {
     public class BuildingGrid : MonoBehaviour
     {
@@ -57,6 +57,26 @@ namespace Placement
                 if (!_grid[x, y].IsEmpty()) return false;
             }
             return true;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        public bool CanBuildAt(Vector2Int cell)
+        {
+            if (cell.x < 0 || cell.x >= width || cell.y < 0 || cell.y >= height) return false;
+            return _grid[cell.x, cell.y].IsEmpty();
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        public Vector2Int WorldToCell(Vector3 worldPosition)
+        {
+            var (x, y) = WorldToGridPosition(worldPosition);
+            return new Vector2Int(x, y);
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        public Vector3 CellToWorld(Vector2Int cell)
+        {
+            return transform.position
+                 + new Vector3((cell.x + 0.5f) * BuildingSystem.CellSize,
+                               0,
+                               (cell.y + 0.5f) * BuildingSystem.CellSize);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////
         private (int x, int y) WorldToGridPosition(Vector3 worldPosition)

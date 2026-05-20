@@ -3,10 +3,12 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Placement
+namespace Dennis.Placement
 {
     public class BuildingSystem : MonoBehaviour
     {
+        [SerializeField] private RoadDragHandler roadHandler;
+        private bool _isRoadMode;
         public const float CellSize = 1f;
         [SerializeField] private BuildingData smallHouse;
         [SerializeField] private BuildingPreview buildingPreviewPrefab;
@@ -26,25 +28,37 @@ namespace Placement
         private void Update()
         {
             var mousePos = GetMousePosition();
-            if (_isDemolishMode)
-            {
-                HandleDemolishMode(mousePos);
-                return;
-            }
-            if (_preview != null)
-            {
-                HandlePreview(mousePos);
-                return;
-            }
+
+            if (_isDemolishMode) { HandleDemolishMode(mousePos); return; }
+            if (_isRoadMode)     { HandleRoadMode(mousePos);     return; }
+            if (_preview != null){ HandlePreview(mousePos);      return; }
+
             // Idle
             if (Keyboard.current.xKey.wasPressedThisFrame)
-            {
                 EnterDemolishMode();
-            }
             else if (Keyboard.current.digit1Key.wasPressedThisFrame)
-            {
                 _preview = CreatePreview(smallHouse, mousePos);
+            else if (Keyboard.current.digit2Key.wasPressedThisFrame)
+                EnterRoadMode();
+        }
+
+        private void EnterRoadMode() => _isRoadMode = true;
+
+        private void ExitRoadMode()
+        {
+            _isRoadMode = false;
+            roadHandler.Cancel();
+        }
+
+        private void HandleRoadMode(Vector3 mousePos)
+        {
+            if (Keyboard.current.escapeKey.wasPressedThisFrame
+                || Keyboard.current.digit2Key.wasPressedThisFrame)
+            {
+                ExitRoadMode();
+                return;
             }
+            roadHandler.Tick(mousePos);
         }
         /////////////////////////////////////////////////////////////////////////////////////
         private void EnterDemolishMode()
@@ -55,11 +69,9 @@ namespace Placement
         private void ExitDemolishMode()
         {
             _isDemolishMode = false;
-            if (_hoveredBuilding != null)
-            {
-                _hoveredBuilding.Unhighlight();
-                _hoveredBuilding = null;
-            }
+            if (_hoveredBuilding == null) return;
+            _hoveredBuilding.Unhighlight();
+            _hoveredBuilding = null;
         }
         /////////////////////////////////////////////////////////////////////////////////////
         private void HandleDemolishMode(Vector3 mousePos)
@@ -77,12 +89,11 @@ namespace Placement
                 _hoveredBuilding = building;
                 if (_hoveredBuilding != null) _hoveredBuilding.Highlight(demolishHighlightMaterial);
             }
-            if (Mouse.current.leftButton.wasPressedThisFrame && _hoveredBuilding != null)
-            {
-                grid.RemoveBuilding(_hoveredBuilding);
-                Destroy(_hoveredBuilding.gameObject);
-                _hoveredBuilding = null;
-            }
+
+            if (!Mouse.current.leftButton.wasPressedThisFrame || _hoveredBuilding == null) return;
+            grid.RemoveBuilding(_hoveredBuilding);
+            Destroy(_hoveredBuilding.gameObject);
+            _hoveredBuilding = null;
         }
         /////////////////////////////////////////////////////////////////////////////////////
         private void HandlePreview(Vector3 mousePosition)
@@ -131,7 +142,7 @@ namespace Placement
             var zs = buildPosition.Select(p => Mathf.FloorToInt(p.z)).ToList();
             var centerX = (xs.Min() + xs.Max()) / 2f + CellSize / 2f;
             var centerZ = (zs.Min() + zs.Max()) / 2f + CellSize / 2f;
-            return new(centerX, 0, centerZ);
+            return new Vector3(centerX, 0, centerZ);
         }
         /////////////////////////////////////////////////////////////////////////////////////
         private Vector3 GetMousePosition()

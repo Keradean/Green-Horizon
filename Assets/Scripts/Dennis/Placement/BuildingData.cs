@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Placement
+namespace Dennis.Placement
 {
     [CreateAssetMenu(menuName = "Building/BuildingData",  fileName = "BuildingData")]
     public class BuildingData : ScriptableObject

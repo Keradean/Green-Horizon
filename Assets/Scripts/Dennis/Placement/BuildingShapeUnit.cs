@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Placement
+namespace Dennis.Placement
 {
     public class BuildingShapeUnit : MonoBehaviour
     {
