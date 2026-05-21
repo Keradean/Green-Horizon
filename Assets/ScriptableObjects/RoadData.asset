@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36d07d1105d47ea4d9d2bb338e8b41d6, type: 3}
+  m_Name: RoadData
+  m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.BuildingData
+  <Description>k__BackingField: "Star\xDFe"
+  <Cost>k__BackingField: 0
+  <Model>k__BackingField: {fileID: 2128517752057635087, guid: 227b477beafab7f43b16d51b9ced92e4, type: 3}
