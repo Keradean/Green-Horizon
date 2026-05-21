@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Manager;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -44,6 +45,7 @@ namespace MainMenu
             InitFullscreenToggle();
 
             ShowPanel(mainMenuPanel);
+            Audiomanager.Instance.PlayMainMenu();
         }
 
         private void OnDestroy()
@@ -63,7 +65,6 @@ namespace MainMenu
 
         private void InitResolutionDropdown()
         {
-            // Deduplicate: keep only one entry per unique width x height
             _resolutions = new List<Resolution>();
             var seen = new HashSet<string>();
 
@@ -90,7 +91,6 @@ namespace MainMenu
             resolutionDropdown.ClearOptions();
             resolutionDropdown.AddOptions(options);
 
-            // Suppress the callback firing during init
             resolutionDropdown.onValueChanged.RemoveListener(OnResolutionChanged);
             resolutionDropdown.value = currentIndex;
             resolutionDropdown.RefreshShownValue();
@@ -123,26 +123,26 @@ namespace MainMenu
 
         public void StartGame()
         {
-            Debug.Log("Starting game...");
+            Audiomanager.Instance.PlaySfx(1);
             SceneManager.LoadScene("Game");
         }
 
         public void OpenSettings()
         {
-            Debug.Log("Opening settings...");
+            Audiomanager.Instance.PlaySfx(1);
             ShowPanel(settingsPanel);
         }
 
         public void CloseSettings()
         {
-            Debug.Log("Closing settings...");
+            Audiomanager.Instance.PlaySfx(1);
             PlayerPrefs.Save();
             ShowPanel(mainMenuPanel);
         }
 
         public void QuitGame()
         {
-            Debug.Log("Quitting game...");
+            Audiomanager.Instance.PlaySfx(1);
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
 #else
@@ -168,7 +168,7 @@ namespace MainMenu
 
         private void OnGraphicsQualityChanged(int index)
         {
-            // 0 = Low, 1 = Medium, 2 = High — maps evenly across Unity quality levels
+           
             int maxLevel = QualitySettings.names.Length - 1;
             int mappedLevel = Mathf.RoundToInt(index * (maxLevel / 2f));
             QualitySettings.SetQualityLevel(mappedLevel);
@@ -181,7 +181,6 @@ namespace MainMenu
             Screen.SetResolution(r.width, r.height, Screen.fullScreen);
             PlayerPrefs.SetInt("ResW", r.width);
             PlayerPrefs.SetInt("ResH", r.height);
-            Debug.Log($"Resolution changed to {r.width} x {r.height}");
         }
 
         #endregion
