@@ -1,17 +1,26 @@
+using Dennis.Placement;
 using UnityEngine;
 using UnityEngine.InputSystem;
 //=== Andy ===//
 
-// Hört auf Escape-Taste und togglet zwischen Gameplay und Paused
-public class PauseControllerManager : MonoBehaviour
+namespace Andy.Manager
 {
-    void Update()
+    // Zuständig nur für Resume (Paused → Gameplay).
+    // Das Einleiten der Pause macht BuildingSystem.
+    // Wenn BuildingSystem Escape bereits verbraucht hat (ConsumedEscapeThisFrame),
+    // reagiert dieser Manager nicht.
+    public class PauseControllerManager : MonoBehaviour
     {
-        if (Keyboard.current[Key.Escape].wasPressedThisFrame)
+        private void Update()
         {
-            GameState current = GameStateManager.Instance.CurrentGameState;
-            GameState next = current == GameState.Gameplay ? GameState.Paused : GameState.Gameplay;
-            GameStateManager.Instance.SetState(next);
+            if (!Keyboard.current[Key.Escape].wasPressedThisFrame) return;
+
+            // BuildingSystem hat Escape bereits verbraucht → nicht eingreifen
+            if (BuildingSystem.Instance != null && BuildingSystem.Instance.ConsumedEscapeThisFrame) return;
+
+            // Nur Resume behandeln – Pause wird von BuildingSystem eingeleitet
+            if (GameStateManager.Instance.CurrentGameState == GameState.Paused)
+                GameStateManager.Instance.SetState(GameState.Gameplay);
         }
     }
 }

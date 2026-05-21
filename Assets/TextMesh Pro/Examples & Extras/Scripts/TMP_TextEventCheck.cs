@@ -1,7 +1,7 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 
-
-namespace TMPro.Examples
+namespace TextMesh_Pro.Examples___Extras.Scripts
 {
     public class TMP_TextEventCheck : MonoBehaviour
     {
@@ -63,7 +63,7 @@ namespace TMPro.Examples
         {
             if (m_TextComponent != null)
             {
-                TMP_LinkInfo linkInfo = m_TextComponent.textInfo.linkInfo[linkIndex];
+                var linkInfo = m_TextComponent.textInfo.linkInfo[linkIndex];
             }
             
             Debug.Log("Link Index: " + linkIndex + " with ID [" + linkID + "] and Text \"" + linkText + "\" has been selected.");

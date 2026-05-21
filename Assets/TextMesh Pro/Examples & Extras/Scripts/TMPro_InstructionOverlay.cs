@@ -1,8 +1,7 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using TMPro;
+using UnityEngine;
 
-
-namespace TMPro.Examples
+namespace TextMesh_Pro.Examples___Extras.Scripts
 {
     
     public class TMPro_InstructionOverlay : MonoBehaviour
@@ -28,7 +27,7 @@ namespace TMPro.Examples
 
             m_camera = Camera.main;
 
-            GameObject frameCounter = new GameObject("Frame Counter");
+            var frameCounter = new GameObject("Frame Counter");
             m_frameCounter_transform = frameCounter.transform;
             m_frameCounter_transform.parent = m_camera.transform;
             m_frameCounter_transform.localRotation = Quaternion.identity;

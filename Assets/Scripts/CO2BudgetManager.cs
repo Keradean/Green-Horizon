@@ -30,7 +30,7 @@ public class CO2BudgetManager : MonoBehaviour
     // Stufe 1 = klein, Stufe 2 = mittel, Stufe 3 = groß
     public void AddBadDecision(int level)
     {
-        float amount = 0f;
+        var amount = 0f;
         switch (level)
         {
             case 1:

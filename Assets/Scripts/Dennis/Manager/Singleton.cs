@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Extra
+namespace Dennis.Manager
 {
     public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     {
