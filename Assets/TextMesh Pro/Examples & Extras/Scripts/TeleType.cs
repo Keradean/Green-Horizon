@@ -1,8 +1,8 @@
-using UnityEngine;
 using System.Collections;
+using TMPro;
+using UnityEngine;
 
-
-namespace TMPro.Examples
+namespace TextMesh_Pro.Examples___Extras.Scripts
 {
 
     public class TeleType : MonoBehaviour
@@ -51,9 +51,9 @@ namespace TMPro.Examples
             m_textMeshPro.ForceMeshUpdate();
 
 
-            int totalVisibleCharacters = m_textMeshPro.textInfo.characterCount; // Get # of Visible Character in text object
-            int counter = 0;
-            int visibleCount = 0;
+            var totalVisibleCharacters = m_textMeshPro.textInfo.characterCount; // Get # of Visible Character in text object
+            var counter = 0;
+            var visibleCount = 0;
 
             while (true)
             {

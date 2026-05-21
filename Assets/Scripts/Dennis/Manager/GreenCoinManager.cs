@@ -1,6 +1,4 @@
-using Extra;
-
-namespace Manager
+namespace Dennis.Manager
 {
     public class GreenCoinManager : Singleton<GreenCoinManager>
     {

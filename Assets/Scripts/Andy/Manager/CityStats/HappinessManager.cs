@@ -1,53 +1,57 @@
 using UnityEngine;
 using UnityEngine.UI;
+
 //=== Andy ===//
 
-public class HappinessManager : MonoBehaviour
+namespace Andy.Manager.CityStats
 {
-    // Singleton - von überall erreichbar
-    public static HappinessManager Instance { get; private set; }
-
-    [Header("Happiness Wert")]
-    [Range(0f, 100f)]
-    public float happinessValue = 100f;
-
-    [Header("Icon")]
-    public Image happinessIcon;
-
-    [Header("Farb-Verlauf")]
-    public Gradient colorGradient;          // Im Inspector einstellbar
-
-    [Header("Schwellen")]
-    public HappinessThreshold[] thresholds;
-
-    void Awake()
+    public class HappinessManager : MonoBehaviour
     {
-        // Singleton Setup
-        if (Instance == null)
-            Instance = this;
-        else
-            Destroy(gameObject);
-    }
+        // Singleton - von überall erreichbar
+        public static HappinessManager Instance { get; private set; }
 
-    void Update()
-    {
-        // Farbe aus Gradient (0 = rot, 1 = grün)
-        happinessIcon.color = colorGradient.Evaluate(happinessValue / 100f);
+        [Header("Happiness Wert")]
+        [Range(0f, 100f)]
+        public float happinessValue = 100f;
 
-        // Passendes Icon finden
-        Sprite bestSprite = null;
-        float bestMin = -1f;
+        [Header("Icon")]
+        public Image happinessIcon;
 
-        foreach (HappinessThreshold t in thresholds)
+        [Header("Farb-Verlauf")]
+        public Gradient colorGradient;          // Im Inspector einstellbar
+
+        [Header("Schwellen")]
+        public HappinessThreshold[] thresholds;
+
+        private void Awake()
         {
-            if (happinessValue >= t.minValue && t.minValue >= bestMin)
-            {
-                bestSprite = t.icon;
-                bestMin = t.minValue;
-            }
+            // Singleton Setup
+            if (Instance == null)
+                Instance = this;
+            else
+                Destroy(gameObject);
         }
 
-        if (bestSprite != null)
-            happinessIcon.sprite = bestSprite;
+        private void Update()
+        {
+            // Farbe aus Gradient (0 = rot, 1 = grün)
+            happinessIcon.color = colorGradient.Evaluate(happinessValue / 100f);
+
+            // Passendes Icon finden
+            Sprite bestSprite = null;
+            var bestMin = -1f;
+
+            foreach (var t in thresholds)
+            {
+                if (happinessValue >= t.minValue && t.minValue >= bestMin)
+                {
+                    bestSprite = t.icon;
+                    bestMin = t.minValue;
+                }
+            }
+
+            if (bestSprite != null)
+                happinessIcon.sprite = bestSprite;
+        }
     }
 }

@@ -2,46 +2,79 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+//*** De Col ***\\
 namespace Dennis.Placement
 {
     public class BuildingSystem : MonoBehaviour
     {
+        public static BuildingSystem Instance { get; private set; }
         [SerializeField] private RoadDragHandler roadHandler;
-        private bool _isRoadMode;
-        public const float CellSize = 1f;
-        [SerializeField] private BuildingData smallHouse;
         [SerializeField] private BuildingPreview buildingPreviewPrefab;
         [SerializeField] private Building buildingPrefab;
         [SerializeField] private BuildingGrid grid;
         [SerializeField] private Material demolishHighlightMaterial;
+        public const float CellSize = 1f;
         private BuildingPreview _preview;
         private Building _hoveredBuilding;
         private bool _isDemolishMode;
+        private bool _isRoadMode;
         private Camera _camera;
+
+        public bool ConsumedEscapeThisFrame { get; private set; }
         /////////////////////////////////////////////////////////////////////////////////////
         private void Awake()
         {
+            Instance = this;
             _camera = Camera.main;
         }
         /////////////////////////////////////////////////////////////////////////////////////
         private void Update()
         {
+            ConsumedEscapeThisFrame = false;
+            if (Keyboard.current.escapeKey.wasPressedThisFrame)
+            {
+
+                if (_preview != null)  { CancelPreview();    ConsumedEscapeThisFrame = true; return; }
+                if (_isDemolishMode)   { ExitDemolishMode(); ConsumedEscapeThisFrame = true; return; }
+                if (_isRoadMode)       { ExitRoadMode();     ConsumedEscapeThisFrame = true; return; }
+                if (Andy.Manager.GameStateManager.Instance.CurrentGameState != Andy.Manager.GameState.Paused)
+                {
+                    Andy.Manager.GameStateManager.Instance.SetState(Andy.Manager.GameState.Paused);
+                    ConsumedEscapeThisFrame = true;
+                    return;
+                }
+            }
+            /////////////////////////////////////////////////////////////////////////////////////
+            if (Andy.Manager.GameStateManager.Instance.CurrentGameState == Andy.Manager.GameState.Paused) return;
+
             var mousePos = GetMousePosition();
 
             if (_isDemolishMode) { HandleDemolishMode(mousePos); return; }
             if (_isRoadMode)     { HandleRoadMode(mousePos);     return; }
             if (_preview != null){ HandlePreview(mousePos);      return; }
 
-            // Idle
             if (Keyboard.current.xKey.wasPressedThisFrame)
                 EnterDemolishMode();
-            else if (Keyboard.current.digit1Key.wasPressedThisFrame)
-                _preview = CreatePreview(smallHouse, mousePos);
-            else if (Keyboard.current.digit2Key.wasPressedThisFrame)
-                EnterRoadMode();
         }
-
+        /////////////////////////////////////////////////////////////////////////////////////
+        public void StartPlacing(BuildingData data)
+        {
+            CancelAll();
+            _preview = CreatePreview(data, GetMousePosition());
+        }
+        /////////////////////////////////////////////////////////////////////////////////////
+        public void StartRoadMode()
+        {
+            CancelAll();
+            EnterRoadMode();
+        }
+        /////////////////////////////////////////////////////////////////////////////////////
+        public void StartDemolishMode()
+        {
+            CancelAll();
+            EnterDemolishMode();
+        }
+        /////////////////////////////////////////////////////////////////////////////////////
         private void EnterRoadMode() => _isRoadMode = true;
 
         private void ExitRoadMode()
@@ -49,23 +82,8 @@ namespace Dennis.Placement
             _isRoadMode = false;
             roadHandler.Cancel();
         }
-
-        private void HandleRoadMode(Vector3 mousePos)
-        {
-            if (Keyboard.current.escapeKey.wasPressedThisFrame
-                || Keyboard.current.digit2Key.wasPressedThisFrame)
-            {
-                ExitRoadMode();
-                return;
-            }
-            roadHandler.Tick(mousePos);
-        }
-        /////////////////////////////////////////////////////////////////////////////////////
-        private void EnterDemolishMode()
-        {
-            _isDemolishMode = true;
-        }
-        /////////////////////////////////////////////////////////////////////////////////////
+        private void HandleRoadMode(Vector3 mousePos) => roadHandler.Tick(mousePos);
+        private void EnterDemolishMode() => _isDemolishMode = true;
         private void ExitDemolishMode()
         {
             _isDemolishMode = false;
@@ -76,12 +94,8 @@ namespace Dennis.Placement
         /////////////////////////////////////////////////////////////////////////////////////
         private void HandleDemolishMode(Vector3 mousePos)
         {
-            if (Keyboard.current.xKey.wasPressedThisFrame
-                || Keyboard.current.escapeKey.wasPressedThisFrame)
-            {
-                ExitDemolishMode();
-                return;
-            }
+            if (Keyboard.current.xKey.wasPressedThisFrame) { ExitDemolishMode(); return; }
+
             var building = grid.GetBuildingAt(mousePos);
             if (building != _hoveredBuilding)
             {
@@ -98,32 +112,31 @@ namespace Dennis.Placement
         /////////////////////////////////////////////////////////////////////////////////////
         private void HandlePreview(Vector3 mousePosition)
         {
-            if (Keyboard.current.escapeKey.wasPressedThisFrame)
-            {
-                Destroy(_preview.gameObject);
-                _preview = null;
-                return;
-            }
             _preview.transform.position = mousePosition;
+
             var buildPosition = _preview.BuildingModel.GetAllBuildingPositions();
             var canBuild = grid.CanBuild(buildPosition);
+
             if (canBuild)
             {
                 _preview.transform.position = GetSnappedCenterPosition(buildPosition);
                 _preview.ChangeState(BuildingPreview.BuildingPreviewState.Valid);
                 if (Mouse.current.leftButton.wasPressedThisFrame)
-                {
                     PlaceBuilding(buildPosition);
-                }
             }
             else
             {
                 _preview.ChangeState(BuildingPreview.BuildingPreviewState.Invalid);
             }
+
             if (Keyboard.current?.rKey.wasPressedThisFrame == true)
-            {
                 _preview.Rotate(90);
-            }
+        }
+        /////////////////////////////////////////////////////////////////////////////////////
+        private void CancelPreview()
+        {
+            Destroy(_preview.gameObject);
+            _preview = null;
         }
         /////////////////////////////////////////////////////////////////////////////////////
         private void PlaceBuilding(List<Vector3> buildPosition)
@@ -135,6 +148,14 @@ namespace Dennis.Placement
             Destroy(_preview.gameObject);
             _preview = null;
         }
+
+        private void CancelAll()
+        {
+            if (_preview != null) CancelPreview();
+            if (_isDemolishMode)  ExitDemolishMode();
+            if (_isRoadMode)      ExitRoadMode();
+        }
+
         /////////////////////////////////////////////////////////////////////////////////////
         private Vector3 GetSnappedCenterPosition(List<Vector3> buildPosition)
         {
@@ -149,15 +170,15 @@ namespace Dennis.Placement
         {
             if (!_camera || Mouse.current == null) return Vector3.zero;
             var ray = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
-            Plane groundPlane = new(Vector3.up, Vector3.zero);
+            var groundPlane = new Plane(Vector3.up, grid.transform.position);
             return groundPlane.Raycast(ray, out var distance) ? ray.GetPoint(distance) : Vector3.zero;
         }
         /////////////////////////////////////////////////////////////////////////////////////
         private BuildingPreview CreatePreview(BuildingData data, Vector3 position)
         {
-            var buildingPreview = Instantiate(buildingPreviewPrefab, position, Quaternion.identity, transform);
-            buildingPreview.Setup(data);
-            return buildingPreview;
+            var preview = Instantiate(buildingPreviewPrefab, position, Quaternion.identity, transform);
+            preview.Setup(data);
+            return preview;
         }
     }
 }

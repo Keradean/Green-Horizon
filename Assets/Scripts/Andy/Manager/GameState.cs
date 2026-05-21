@@ -1,6 +1,9 @@
-public enum GameState
-//=== Andy ===//
+namespace Andy.Manager
 {
-    Gameplay,
-    Paused
+    public enum GameState
+//=== Andy ===//
+    {
+        Gameplay,
+        Paused
+    }
 }

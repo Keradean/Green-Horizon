@@ -1,33 +1,40 @@
 //=== Andy ===//
-public class GameStateManager
+
+using UnityEngine;
+
+namespace Andy.Manager
 {
-    private static GameStateManager _instance;      // Überall erreichbar mit: GameStateManager.Instance
-    
-    public static GameStateManager Instance
+    public class GameStateManager
     {
-        get
+        private static GameStateManager _instance;      // Überall erreichbar mit: GameStateManager.Instance
+    
+        public static GameStateManager Instance
         {
-            if (_instance == null)
-                _instance = new GameStateManager();
-            return _instance;
+            get
+            {
+                if (_instance == null)
+                    _instance = new GameStateManager();
+                return _instance;
+            }
         }
-    }
 
-    public GameState CurrentGameState { get; private set; }
+        public GameState CurrentGameState { get; private set; }
     
-    // Andere Scripts können sich hier anmelden um auf State-Änderungen zu reagieren
-    public delegate void GameStateChangeHandler(GameState newGameState);
-    public event GameStateChangeHandler OnGameStateChanged;
+        // Andere Scripts können sich hier anmelden um auf State-Änderungen zu reagieren
+        public delegate void GameStateChangeHandler(GameState newGameState);
+        public event GameStateChangeHandler OnGameStateChanged;
 
-    private GameStateManager() { }
+        private GameStateManager() { }
 
-    // State setzen - ignoriert wenn neuer State gleich dem aktuellen ist
-    public void SetState(GameState newGameState)
-    {
-        if (newGameState == CurrentGameState)
-            return;
+        // State setzen - ignoriert wenn neuer State gleich dem aktuellen ist
+        public void SetState(GameState newGameState)
+        {
+            if (newGameState == CurrentGameState)
+                return;
 
-        CurrentGameState = newGameState;
-        OnGameStateChanged?.Invoke(newGameState);   // Alle angemeldeten Scripts benachrichtigen
+            CurrentGameState = newGameState;
+            //Debug.Log("GameStateManager: SetState → " + newGameState);
+            OnGameStateChanged?.Invoke(newGameState);   // Alle angemeldeten Scripts benachrichtigen
+        }
     }
 }

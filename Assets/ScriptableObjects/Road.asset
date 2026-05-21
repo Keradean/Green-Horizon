@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36d07d1105d47ea4d9d2bb338e8b41d6, type: 3}
-  m_Name: RoadData
+  m_Name: Road
   m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.BuildingData
   <Description>k__BackingField: "Star\xDFe"
   <Cost>k__BackingField: 0
