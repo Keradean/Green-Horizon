@@ -1148,6 +1148,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
+  - {fileID: 2100000, guid: d4db8834088400d488c9d5f30b3e6c13, type: 2}
   - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -1466,6 +1467,7 @@ GameObject:
   - component: {fileID: 196000191}
   - component: {fileID: 196000190}
   - component: {fileID: 196000189}
+  - component: {fileID: 196000192}
   m_Layer: 5
   m_Name: Button - Building
   m_TagString: Untagged
@@ -1575,6 +1577,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 196000187}
   m_CullTransparentMesh: 1
+--- !u!114 &196000192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 196000187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c030b2d31dfc0804b9accd7353f55e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.BuildingButton
+  buildingData: {fileID: 0}
+  isRoadButton: 0
+  isDemolishButton: 0
 --- !u!1 &202144270
 GameObject:
   m_ObjectHideFlags: 0
@@ -2143,6 +2160,7 @@ GameObject:
   - component: {fileID: 282927744}
   - component: {fileID: 282927743}
   - component: {fileID: 282927742}
+  - component: {fileID: 282927745}
   m_Layer: 5
   m_Name: Button - Building (1)
   m_TagString: Untagged
@@ -2252,6 +2270,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 282927740}
   m_CullTransparentMesh: 1
+--- !u!114 &282927745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 282927740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c030b2d31dfc0804b9accd7353f55e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.BuildingButton
+  buildingData: {fileID: 0}
+  isRoadButton: 0
+  isDemolishButton: 0
 --- !u!1 &289255870
 GameObject:
   m_ObjectHideFlags: 0
@@ -2401,6 +2434,7 @@ GameObject:
   - component: {fileID: 306183542}
   - component: {fileID: 306183541}
   - component: {fileID: 306183540}
+  - component: {fileID: 306183543}
   m_Layer: 5
   m_Name: Button - Building (6)
   m_TagString: Untagged
@@ -2510,6 +2544,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 306183538}
   m_CullTransparentMesh: 1
+--- !u!114 &306183543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 306183538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c030b2d31dfc0804b9accd7353f55e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.BuildingButton
+  buildingData: {fileID: 0}
+  isRoadButton: 0
+  isDemolishButton: 0
 --- !u!1 &316864417
 GameObject:
   m_ObjectHideFlags: 0
@@ -2659,6 +2708,7 @@ GameObject:
   - component: {fileID: 322640929}
   - component: {fileID: 322640928}
   - component: {fileID: 322640927}
+  - component: {fileID: 322640930}
   m_Layer: 5
   m_Name: Button - Building
   m_TagString: Untagged
@@ -2768,6 +2818,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 322640925}
   m_CullTransparentMesh: 1
+--- !u!114 &322640930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 322640925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c030b2d31dfc0804b9accd7353f55e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.BuildingButton
+  buildingData: {fileID: 0}
+  isRoadButton: 0
+  isDemolishButton: 0
 --- !u!1 &342627252
 GameObject:
   m_ObjectHideFlags: 0
@@ -3134,6 +3199,7 @@ GameObject:
   - component: {fileID: 412422963}
   - component: {fileID: 412422962}
   - component: {fileID: 412422961}
+  - component: {fileID: 412422964}
   m_Layer: 5
   m_Name: Button - Building (7)
   m_TagString: Untagged
@@ -3243,6 +3309,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 412422959}
   m_CullTransparentMesh: 1
+--- !u!114 &412422964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 412422959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c030b2d31dfc0804b9accd7353f55e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.BuildingButton
+  buildingData: {fileID: 0}
+  isRoadButton: 0
+  isDemolishButton: 0
 --- !u!1 &424252181
 GameObject:
   m_ObjectHideFlags: 0
@@ -3752,6 +3833,7 @@ GameObject:
   - component: {fileID: 488078866}
   - component: {fileID: 488078865}
   - component: {fileID: 488078864}
+  - component: {fileID: 488078867}
   m_Layer: 5
   m_Name: Button - Building (5)
   m_TagString: Untagged
@@ -3861,6 +3943,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 488078862}
   m_CullTransparentMesh: 1
+--- !u!114 &488078867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 488078862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c030b2d31dfc0804b9accd7353f55e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.BuildingButton
+  buildingData: {fileID: 0}
+  isRoadButton: 0
+  isDemolishButton: 0
 --- !u!1 &491277625
 GameObject:
   m_ObjectHideFlags: 0
@@ -4280,6 +4377,7 @@ GameObject:
   - component: {fileID: 532982621}
   - component: {fileID: 532982620}
   - component: {fileID: 532982619}
+  - component: {fileID: 532982622}
   m_Layer: 5
   m_Name: Button - Building (14)
   m_TagString: Untagged
@@ -4389,6 +4487,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 532982617}
   m_CullTransparentMesh: 1
+--- !u!114 &532982622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 532982617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c030b2d31dfc0804b9accd7353f55e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.BuildingButton
+  buildingData: {fileID: 0}
+  isRoadButton: 0
+  isDemolishButton: 0
 --- !u!1 &586712678
 GameObject:
   m_ObjectHideFlags: 0
@@ -4675,6 +4788,7 @@ GameObject:
   - component: {fileID: 596471085}
   - component: {fileID: 596471084}
   - component: {fileID: 596471083}
+  - component: {fileID: 596471086}
   m_Layer: 5
   m_Name: Button - Building (7)
   m_TagString: Untagged
@@ -4784,6 +4898,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 596471081}
   m_CullTransparentMesh: 1
+--- !u!114 &596471086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 596471081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c030b2d31dfc0804b9accd7353f55e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.BuildingButton
+  buildingData: {fileID: 0}
+  isRoadButton: 0
+  isDemolishButton: 0
 --- !u!1 &620375841
 GameObject:
   m_ObjectHideFlags: 0
@@ -5060,6 +5189,7 @@ GameObject:
   - component: {fileID: 639128818}
   - component: {fileID: 639128817}
   - component: {fileID: 639128816}
+  - component: {fileID: 639128819}
   m_Layer: 5
   m_Name: Button - Building (4)
   m_TagString: Untagged
@@ -5169,6 +5299,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 639128814}
   m_CullTransparentMesh: 1
+--- !u!114 &639128819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 639128814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c030b2d31dfc0804b9accd7353f55e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.BuildingButton
+  buildingData: {fileID: 0}
+  isRoadButton: 0
+  isDemolishButton: 0
 --- !u!1 &642363749
 GameObject:
   m_ObjectHideFlags: 0
@@ -5646,6 +5791,7 @@ GameObject:
   - component: {fileID: 676412475}
   - component: {fileID: 676412474}
   - component: {fileID: 676412473}
+  - component: {fileID: 676412476}
   m_Layer: 5
   m_Name: Button - Building (19)
   m_TagString: Untagged
@@ -5755,6 +5901,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 676412471}
   m_CullTransparentMesh: 1
+--- !u!114 &676412476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 676412471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c030b2d31dfc0804b9accd7353f55e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.BuildingButton
+  buildingData: {fileID: 0}
+  isRoadButton: 0
+  isDemolishButton: 0
 --- !u!1 &684811284
 GameObject:
   m_ObjectHideFlags: 0
@@ -5935,6 +6096,7 @@ GameObject:
   - component: {fileID: 723082919}
   - component: {fileID: 723082918}
   - component: {fileID: 723082917}
+  - component: {fileID: 723082920}
   m_Layer: 5
   m_Name: Button - Building (12)
   m_TagString: Untagged
@@ -6044,6 +6206,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 723082915}
   m_CullTransparentMesh: 1
+--- !u!114 &723082920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 723082915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c030b2d31dfc0804b9accd7353f55e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.BuildingButton
+  buildingData: {fileID: 0}
+  isRoadButton: 0
+  isDemolishButton: 0
 --- !u!1 &726726755
 GameObject:
   m_ObjectHideFlags: 0
@@ -7218,6 +7395,7 @@ GameObject:
   - component: {fileID: 864163981}
   - component: {fileID: 864163980}
   - component: {fileID: 864163979}
+  - component: {fileID: 864163982}
   m_Layer: 5
   m_Name: Button - Building (13)
   m_TagString: Untagged
@@ -7327,6 +7505,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 864163977}
   m_CullTransparentMesh: 1
+--- !u!114 &864163982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 864163977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c030b2d31dfc0804b9accd7353f55e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.BuildingButton
+  buildingData: {fileID: 0}
+  isRoadButton: 0
+  isDemolishButton: 0
 --- !u!1 &888772301
 GameObject:
   m_ObjectHideFlags: 0
@@ -7339,6 +7532,7 @@ GameObject:
   - component: {fileID: 888772305}
   - component: {fileID: 888772304}
   - component: {fileID: 888772303}
+  - component: {fileID: 888772306}
   m_Layer: 5
   m_Name: Button - Building (1)
   m_TagString: Untagged
@@ -7448,6 +7642,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 888772301}
   m_CullTransparentMesh: 1
+--- !u!114 &888772306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 888772301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c030b2d31dfc0804b9accd7353f55e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.BuildingButton
+  buildingData: {fileID: 0}
+  isRoadButton: 0
+  isDemolishButton: 0
 --- !u!1 &890892441
 GameObject:
   m_ObjectHideFlags: 0
@@ -7716,6 +7925,7 @@ GameObject:
   - component: {fileID: 946974402}
   - component: {fileID: 946974401}
   - component: {fileID: 946974400}
+  - component: {fileID: 946974403}
   m_Layer: 5
   m_Name: Button - Building
   m_TagString: Untagged
@@ -7825,6 +8035,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 946974398}
   m_CullTransparentMesh: 1
+--- !u!114 &946974403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 946974398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c030b2d31dfc0804b9accd7353f55e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.BuildingButton
+  buildingData: {fileID: 0}
+  isRoadButton: 0
+  isDemolishButton: 0
 --- !u!1 &963862339
 GameObject:
   m_ObjectHideFlags: 0
@@ -8293,6 +8518,7 @@ GameObject:
   - component: {fileID: 1020758613}
   - component: {fileID: 1020758612}
   - component: {fileID: 1020758611}
+  - component: {fileID: 1020758614}
   m_Layer: 5
   m_Name: Button - Building (17)
   m_TagString: Untagged
@@ -8402,6 +8628,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1020758609}
   m_CullTransparentMesh: 1
+--- !u!114 &1020758614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1020758609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c030b2d31dfc0804b9accd7353f55e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.BuildingButton
+  buildingData: {fileID: 0}
+  isRoadButton: 0
+  isDemolishButton: 0
 --- !u!1 &1053678470
 GameObject:
   m_ObjectHideFlags: 0
@@ -8492,6 +8733,7 @@ GameObject:
   - component: {fileID: 1061354739}
   - component: {fileID: 1061354738}
   - component: {fileID: 1061354737}
+  - component: {fileID: 1061354740}
   m_Layer: 5
   m_Name: Button - Building (1)
   m_TagString: Untagged
@@ -8601,6 +8843,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1061354735}
   m_CullTransparentMesh: 1
+--- !u!114 &1061354740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1061354735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c030b2d31dfc0804b9accd7353f55e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.BuildingButton
+  buildingData: {fileID: 0}
+  isRoadButton: 0
+  isDemolishButton: 0
 --- !u!1 &1089571275
 GameObject:
   m_ObjectHideFlags: 0
@@ -8613,6 +8870,7 @@ GameObject:
   - component: {fileID: 1089571279}
   - component: {fileID: 1089571278}
   - component: {fileID: 1089571277}
+  - component: {fileID: 1089571280}
   m_Layer: 5
   m_Name: Button - Building (9)
   m_TagString: Untagged
@@ -8722,6 +8980,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1089571275}
   m_CullTransparentMesh: 1
+--- !u!114 &1089571280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1089571275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c030b2d31dfc0804b9accd7353f55e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.BuildingButton
+  buildingData: {fileID: 0}
+  isRoadButton: 0
+  isDemolishButton: 0
 --- !u!1 &1111249705
 GameObject:
   m_ObjectHideFlags: 0
@@ -8732,6 +9005,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1111249706}
   - component: {fileID: 1111249707}
+  - component: {fileID: 1111249708}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -8768,6 +9042,55 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Placement.BuildingGrid
   width: 10
   height: 10
+--- !u!23 &1111249708
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1111249705}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: d4db8834088400d488c9d5f30b3e6c13, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1124172089
 GameObject:
   m_ObjectHideFlags: 0
@@ -10002,6 +10325,7 @@ GameObject:
   - component: {fileID: 1244416582}
   - component: {fileID: 1244416581}
   - component: {fileID: 1244416580}
+  - component: {fileID: 1244416583}
   m_Layer: 5
   m_Name: Button - Building (6)
   m_TagString: Untagged
@@ -10111,6 +10435,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1244416578}
   m_CullTransparentMesh: 1
+--- !u!114 &1244416583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1244416578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c030b2d31dfc0804b9accd7353f55e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.BuildingButton
+  buildingData: {fileID: 0}
+  isRoadButton: 0
+  isDemolishButton: 0
 --- !u!1 &1260360546
 GameObject:
   m_ObjectHideFlags: 0
@@ -10123,6 +10462,7 @@ GameObject:
   - component: {fileID: 1260360550}
   - component: {fileID: 1260360549}
   - component: {fileID: 1260360548}
+  - component: {fileID: 1260360551}
   m_Layer: 5
   m_Name: Button - Building (4)
   m_TagString: Untagged
@@ -10232,6 +10572,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1260360546}
   m_CullTransparentMesh: 1
+--- !u!114 &1260360551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1260360546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c030b2d31dfc0804b9accd7353f55e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.BuildingButton
+  buildingData: {fileID: 0}
+  isRoadButton: 0
+  isDemolishButton: 0
 --- !u!1 &1260516501
 GameObject:
   m_ObjectHideFlags: 0
@@ -10518,6 +10873,7 @@ GameObject:
   - component: {fileID: 1272713701}
   - component: {fileID: 1272713700}
   - component: {fileID: 1272713699}
+  - component: {fileID: 1272713702}
   m_Layer: 5
   m_Name: Button - Building (10)
   m_TagString: Untagged
@@ -10627,6 +10983,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1272713697}
   m_CullTransparentMesh: 1
+--- !u!114 &1272713702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1272713697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c030b2d31dfc0804b9accd7353f55e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.BuildingButton
+  buildingData: {fileID: 0}
+  isRoadButton: 0
+  isDemolishButton: 0
 --- !u!1 &1275059777
 GameObject:
   m_ObjectHideFlags: 0
@@ -10776,6 +11147,7 @@ GameObject:
   - component: {fileID: 1284324039}
   - component: {fileID: 1284324038}
   - component: {fileID: 1284324037}
+  - component: {fileID: 1284324040}
   m_Layer: 5
   m_Name: Button - Building (8)
   m_TagString: Untagged
@@ -10885,6 +11257,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1284324035}
   m_CullTransparentMesh: 1
+--- !u!114 &1284324040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1284324035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c030b2d31dfc0804b9accd7353f55e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.BuildingButton
+  buildingData: {fileID: 0}
+  isRoadButton: 0
+  isDemolishButton: 0
 --- !u!1 &1284396534
 GameObject:
   m_ObjectHideFlags: 0
@@ -10996,6 +11383,7 @@ GameObject:
   - component: {fileID: 1295012312}
   - component: {fileID: 1295012311}
   - component: {fileID: 1295012310}
+  - component: {fileID: 1295012313}
   m_Layer: 5
   m_Name: Button - Building (5)
   m_TagString: Untagged
@@ -11105,6 +11493,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1295012308}
   m_CullTransparentMesh: 1
+--- !u!114 &1295012313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1295012308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c030b2d31dfc0804b9accd7353f55e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.BuildingButton
+  buildingData: {fileID: 0}
+  isRoadButton: 0
+  isDemolishButton: 0
 --- !u!1 &1372534840
 GameObject:
   m_ObjectHideFlags: 0
@@ -11916,6 +12319,7 @@ GameObject:
   - component: {fileID: 1428862543}
   - component: {fileID: 1428862542}
   - component: {fileID: 1428862541}
+  - component: {fileID: 1428862544}
   m_Layer: 5
   m_Name: Button - Building (2)
   m_TagString: Untagged
@@ -12025,6 +12429,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1428862539}
   m_CullTransparentMesh: 1
+--- !u!114 &1428862544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1428862539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c030b2d31dfc0804b9accd7353f55e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.BuildingButton
+  buildingData: {fileID: 0}
+  isRoadButton: 0
+  isDemolishButton: 0
 --- !u!1 &1429976485
 GameObject:
   m_ObjectHideFlags: 0
@@ -12174,6 +12593,7 @@ GameObject:
   - component: {fileID: 1430472529}
   - component: {fileID: 1430472528}
   - component: {fileID: 1430472527}
+  - component: {fileID: 1430472530}
   m_Layer: 5
   m_Name: Button - Building (15)
   m_TagString: Untagged
@@ -12283,6 +12703,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1430472525}
   m_CullTransparentMesh: 1
+--- !u!114 &1430472530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1430472525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c030b2d31dfc0804b9accd7353f55e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.BuildingButton
+  buildingData: {fileID: 0}
+  isRoadButton: 0
+  isDemolishButton: 0
 --- !u!1 &1430706870
 GameObject:
   m_ObjectHideFlags: 0
@@ -12432,6 +12867,7 @@ GameObject:
   - component: {fileID: 1437594298}
   - component: {fileID: 1437594297}
   - component: {fileID: 1437594296}
+  - component: {fileID: 1437594299}
   m_Layer: 5
   m_Name: Button - Building (1)
   m_TagString: Untagged
@@ -12541,6 +12977,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1437594294}
   m_CullTransparentMesh: 1
+--- !u!114 &1437594299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1437594294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c030b2d31dfc0804b9accd7353f55e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.BuildingButton
+  buildingData: {fileID: 0}
+  isRoadButton: 0
+  isDemolishButton: 0
 --- !u!1 &1444758882
 GameObject:
   m_ObjectHideFlags: 0
@@ -12553,6 +13004,7 @@ GameObject:
   - component: {fileID: 1444758886}
   - component: {fileID: 1444758885}
   - component: {fileID: 1444758884}
+  - component: {fileID: 1444758887}
   m_Layer: 5
   m_Name: Button - Building (11)
   m_TagString: Untagged
@@ -12662,6 +13114,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1444758882}
   m_CullTransparentMesh: 1
+--- !u!114 &1444758887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1444758882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c030b2d31dfc0804b9accd7353f55e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.BuildingButton
+  buildingData: {fileID: 0}
+  isRoadButton: 0
+  isDemolishButton: 0
 --- !u!1 &1480707143
 GameObject:
   m_ObjectHideFlags: 0
@@ -14417,6 +14884,7 @@ GameObject:
   - component: {fileID: 1707106397}
   - component: {fileID: 1707106396}
   - component: {fileID: 1707106395}
+  - component: {fileID: 1707106398}
   m_Layer: 5
   m_Name: Button - Building (3)
   m_TagString: Untagged
@@ -14526,6 +14994,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1707106393}
   m_CullTransparentMesh: 1
+--- !u!114 &1707106398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1707106393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c030b2d31dfc0804b9accd7353f55e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.BuildingButton
+  buildingData: {fileID: 0}
+  isRoadButton: 0
+  isDemolishButton: 0
 --- !u!1 &1712349968
 GameObject:
   m_ObjectHideFlags: 0
@@ -14949,6 +15432,7 @@ GameObject:
   - component: {fileID: 1740763318}
   - component: {fileID: 1740763317}
   - component: {fileID: 1740763316}
+  - component: {fileID: 1740763319}
   m_Layer: 5
   m_Name: Button - Building
   m_TagString: Untagged
@@ -15058,6 +15542,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1740763314}
   m_CullTransparentMesh: 1
+--- !u!114 &1740763319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1740763314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c030b2d31dfc0804b9accd7353f55e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.BuildingButton
+  buildingData: {fileID: 0}
+  isRoadButton: 0
+  isDemolishButton: 0
 --- !u!1 &1741932516
 GameObject:
   m_ObjectHideFlags: 0
@@ -16138,7 +16637,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BottomBarToggle
   bottomBar: {fileID: 133612210}
   tabManager: {fileID: 1284396535}
-  toggleKey: 9
+  gridVisual: {fileID: 136760173}
   slideSpeed: 8
 --- !u!1 &1904869166
 GameObject:
@@ -16805,6 +17304,7 @@ GameObject:
   - component: {fileID: 1966140612}
   - component: {fileID: 1966140611}
   - component: {fileID: 1966140610}
+  - component: {fileID: 1966140613}
   m_Layer: 5
   m_Name: Button - Building (3)
   m_TagString: Untagged
@@ -16914,6 +17414,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1966140608}
   m_CullTransparentMesh: 1
+--- !u!114 &1966140613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1966140608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c030b2d31dfc0804b9accd7353f55e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.BuildingButton
+  buildingData: {fileID: 0}
+  isRoadButton: 0
+  isDemolishButton: 0
 --- !u!1 &1970818324
 GameObject:
   m_ObjectHideFlags: 0
@@ -17335,6 +17850,7 @@ GameObject:
   - component: {fileID: 2056262408}
   - component: {fileID: 2056262407}
   - component: {fileID: 2056262406}
+  - component: {fileID: 2056262409}
   m_Layer: 5
   m_Name: Button - Building (8)
   m_TagString: Untagged
@@ -17444,6 +17960,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2056262404}
   m_CullTransparentMesh: 1
+--- !u!114 &2056262409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056262404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c030b2d31dfc0804b9accd7353f55e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.BuildingButton
+  buildingData: {fileID: 0}
+  isRoadButton: 0
+  isDemolishButton: 0
 --- !u!1 &2059918689
 GameObject:
   m_ObjectHideFlags: 0
@@ -17456,6 +17987,7 @@ GameObject:
   - component: {fileID: 2059918693}
   - component: {fileID: 2059918692}
   - component: {fileID: 2059918691}
+  - component: {fileID: 2059918694}
   m_Layer: 5
   m_Name: Button - Building (2)
   m_TagString: Untagged
@@ -17565,6 +18097,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2059918689}
   m_CullTransparentMesh: 1
+--- !u!114 &2059918694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2059918689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c030b2d31dfc0804b9accd7353f55e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.BuildingButton
+  buildingData: {fileID: 0}
+  isRoadButton: 0
+  isDemolishButton: 0
 --- !u!1 &2085408991
 GameObject:
   m_ObjectHideFlags: 0
@@ -17577,6 +18124,7 @@ GameObject:
   - component: {fileID: 2085408995}
   - component: {fileID: 2085408994}
   - component: {fileID: 2085408993}
+  - component: {fileID: 2085408996}
   m_Layer: 5
   m_Name: Button - Building (2)
   m_TagString: Untagged
@@ -17686,6 +18234,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2085408991}
   m_CullTransparentMesh: 1
+--- !u!114 &2085408996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2085408991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c030b2d31dfc0804b9accd7353f55e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.BuildingButton
+  buildingData: {fileID: 0}
+  isRoadButton: 0
+  isDemolishButton: 0
 --- !u!1 &2092188029
 GameObject:
   m_ObjectHideFlags: 0
@@ -18109,6 +18672,7 @@ GameObject:
   - component: {fileID: 2101478461}
   - component: {fileID: 2101478460}
   - component: {fileID: 2101478459}
+  - component: {fileID: 2101478462}
   m_Layer: 5
   m_Name: Button - Building (16)
   m_TagString: Untagged
@@ -18218,6 +18782,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2101478457}
   m_CullTransparentMesh: 1
+--- !u!114 &2101478462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2101478457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c030b2d31dfc0804b9accd7353f55e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.BuildingButton
+  buildingData: {fileID: 0}
+  isRoadButton: 0
+  isDemolishButton: 0
 --- !u!1 &2140246196
 GameObject:
   m_ObjectHideFlags: 0
@@ -18230,6 +18809,7 @@ GameObject:
   - component: {fileID: 2140246200}
   - component: {fileID: 2140246199}
   - component: {fileID: 2140246198}
+  - component: {fileID: 2140246201}
   m_Layer: 5
   m_Name: Button - Building (18)
   m_TagString: Untagged
@@ -18339,6 +18919,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2140246196}
   m_CullTransparentMesh: 1
+--- !u!114 &2140246201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2140246196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c030b2d31dfc0804b9accd7353f55e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.BuildingButton
+  buildingData: {fileID: 0}
+  isRoadButton: 0
+  isDemolishButton: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

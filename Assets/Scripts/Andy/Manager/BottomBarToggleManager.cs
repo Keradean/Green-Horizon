@@ -6,45 +6,48 @@ namespace Andy.Manager
     public class BottomBarToggle : MonoBehaviour
     {
         [Header("Bottom Bar")]
-        public RectTransform bottomBar;         // Panel - BottomBar
+        public RectTransform bottomBar;
 
         [Header("Tab Manager")]
         public TabManager tabManager;
 
+        [Header("Grid")]
+        public GameObject gridVisual;           // Grid - Visual im Inspector zuweisen
+
         [Header("Einstellungen")]
-        public KeyCode toggleKey = KeyCode.Tab; // Taste zum Öffnen/Schließen
-        public float slideSpeed = 8f;           // Geschwindigkeit der Animation
+        public float slideSpeed = 8f;
 
         private bool _isOpen = false;
-        private float _closedY;                  // Position wenn geschlossen (unten versteckt)
-        private float _openY = 150f;             // Position wenn offen
+        private float _closedY;
+        private float _openY = 150f;
 
         private void Start()
         {
             _closedY = -bottomBar.rect.height;
             bottomBar.anchoredPosition = new Vector2(0, _closedY);
+            gridVisual.SetActive(false);        // Grid startet unsichtbar
         }
-    
+
         public void CloseBar()
         {
             _isOpen = false;
+            gridVisual.SetActive(false);
         }
 
         private void Update()
         {
-            // Nicht reagieren wenn pausiert - aber Animation noch laufen lassen
             if (GameStateManager.Instance.CurrentGameState == GameState.Paused)
             {
-                // Nur Animation updaten, kein Input
                 AnimateBar();
                 return;
             }
 
-            // Bottom Bar togglen
             if (Keyboard.current[Key.Tab].wasPressedThisFrame)
+            {
                 _isOpen = !_isOpen;
+                gridVisual.SetActive(_isOpen);  // Grid mit BottomBar togglen
+            }
 
-            // Tabs per Zahlentasten
             if (Keyboard.current[Key.Digit1].wasPressedThisFrame) tabManager.ShowPanel(0);
             if (Keyboard.current[Key.Digit2].wasPressedThisFrame) tabManager.ShowPanel(1);
             if (Keyboard.current[Key.Digit3].wasPressedThisFrame) tabManager.ShowPanel(2);
