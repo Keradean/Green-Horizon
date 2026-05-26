@@ -5,10 +5,10 @@ using UnityEngine.UI;
 
 namespace Andy.Manager.CityStats
 {
-    public class HappinessManager : MonoBehaviour
+    public class HappinessUiManager : MonoBehaviour
     {
         // Singleton - von überall erreichbar
-        public static HappinessManager Instance { get; private set; }
+        public static HappinessUiManager Instance { get; private set; }
 
         [Header("Happiness Wert")]
         [Range(0f, 100f)]

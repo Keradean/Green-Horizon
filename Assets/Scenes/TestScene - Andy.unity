@@ -7562,7 +7562,7 @@ GameObject:
   - component: {fileID: 930233115}
   - component: {fileID: 930233116}
   m_Layer: 0
-  m_Name: Manager - Happiness
+  m_Name: Manager - Ui Happiness
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
