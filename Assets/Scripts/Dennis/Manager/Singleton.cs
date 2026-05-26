@@ -13,7 +13,9 @@ namespace Dennis.Manager
             if (!Instance)
             {
                 Instance = this as T;
-                if(PersistAcrossScenes) DontDestroyOnLoad(gameObject);
+                if (!PersistAcrossScenes) return;
+                transform.SetParent(null);
+                DontDestroyOnLoad(gameObject);
             }
             else
             {

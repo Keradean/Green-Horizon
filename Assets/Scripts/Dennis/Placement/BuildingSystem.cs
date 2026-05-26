@@ -149,7 +149,7 @@ namespace Dennis.Placement
             _preview = null;
         }
 
-        private void CancelAll()
+        public void CancelAll()
         {
             if (_preview != null) CancelPreview();
             if (_isDemolishMode)  ExitDemolishMode();
@@ -157,7 +157,7 @@ namespace Dennis.Placement
         }
 
         /////////////////////////////////////////////////////////////////////////////////////
-        private Vector3 GetSnappedCenterPosition(List<Vector3> buildPosition)
+        private static Vector3 GetSnappedCenterPosition(List<Vector3> buildPosition)
         {
             var xs = buildPosition.Select(p => Mathf.FloorToInt(p.x)).ToList();
             var zs = buildPosition.Select(p => Mathf.FloorToInt(p.z)).ToList();
