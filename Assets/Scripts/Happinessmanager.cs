@@ -29,7 +29,9 @@ public class HappinessManager : MonoBehaviour
         Healthcare,
         Education,
         Taxes,
-        Entertainment
+        Entertainment,
+        Mobility,
+        FairWages
     }
 
     // =========================
@@ -49,11 +51,11 @@ public class HappinessManager : MonoBehaviour
     }
 
     // =========================
-    // BUILDING DATA
+    // HAPPINESS BUILDING DATA
     // =========================
 
     [System.Serializable]
-    public class BuildingData
+    public class HappinessBuildingData
     {
         public string BuildingName;
 
@@ -79,8 +81,8 @@ public class HappinessManager : MonoBehaviour
     // BUILDINGS
     // =========================
 
-    public List<BuildingData> Buildings =
-        new List<BuildingData>();
+    public List<HappinessBuildingData> Buildings =
+        new List<HappinessBuildingData>();
 
     // =========================
     // UPDATE LOOP
@@ -90,7 +92,7 @@ public class HappinessManager : MonoBehaviour
     {
         for (int i = 0; i < Buildings.Count; i++)
         {
-            BuildingData building = Buildings[i];
+            HappinessBuildingData building = Buildings[i];
 
             UpdateModifierDurations(building);
 
@@ -109,7 +111,7 @@ public class HappinessManager : MonoBehaviour
     // RECALCULATE
     // =========================
 
-    private void RecalculateHappiness(BuildingData building)
+    private void RecalculateHappiness(HappinessBuildingData building)
     {
         float happiness = building.BaseHappiness;
 
@@ -131,18 +133,13 @@ public class HappinessManager : MonoBehaviour
 
         building.CurrentHappiness =
             Mathf.Clamp(happiness, 0f, 100f);
-
-        Debug.Log(
-            building.BuildingName +
-            " Happiness: " +
-            building.CurrentHappiness);
     }
 
     // =========================
     // UPDATE MODIFIER TIMERS
     // =========================
 
-    private void UpdateModifierDurations(BuildingData building)
+    private void UpdateModifierDurations(HappinessBuildingData building)
     {
         for (int i = building.Modifiers.Count - 1; i >= 0; i--)
         {
@@ -173,7 +170,7 @@ public class HappinessManager : MonoBehaviour
         bool isPercent = false,
         float duration = -1f)
     {
-        BuildingData building =
+        HappinessBuildingData building =
             Buildings.Find(b => b.BuildingName == buildingName);
 
         if (building == null)
@@ -201,7 +198,7 @@ public class HappinessManager : MonoBehaviour
         string buildingName,
         HappinessType type)
     {
-        BuildingData building =
+        HappinessBuildingData building =
             Buildings.Find(b => b.BuildingName == buildingName);
 
         if (building == null)
@@ -219,7 +216,7 @@ public class HappinessManager : MonoBehaviour
 
     public float GetHappiness(string buildingName)
     {
-        BuildingData building =
+        HappinessBuildingData building =
             Buildings.Find(b => b.BuildingName == buildingName);
 
         if (building == null)
@@ -232,7 +229,7 @@ public class HappinessManager : MonoBehaviour
     // UI
     // =========================
 
-    private void UpdateUI(BuildingData building)
+    private void UpdateUI(HappinessBuildingData building)
     {
         if (building.HappinessSlider != null)
         {
