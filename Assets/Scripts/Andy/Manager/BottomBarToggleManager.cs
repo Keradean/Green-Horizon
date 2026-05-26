@@ -1,3 +1,4 @@
+using Dennis.Placement;
 using UnityEngine;
 using UnityEngine.InputSystem;
 //=== Andy ===//
@@ -15,7 +16,7 @@ namespace Andy.Manager
         public KeyCode toggleKey = KeyCode.Tab; // Taste zum Öffnen/Schließen
         public float slideSpeed = 8f;           // Geschwindigkeit der Animation
 
-        private bool _isOpen = false;
+        private bool _isOpen;
         private float _closedY;                  // Position wenn geschlossen (unten versteckt)
         private float _openY = 150f;             // Position wenn offen
 
@@ -42,7 +43,12 @@ namespace Andy.Manager
 
             // Bottom Bar togglen
             if (Keyboard.current[Key.Tab].wasPressedThisFrame)
+            {
+                if (BuildingSystem.Instance != null)
+                    BuildingSystem.Instance.CancelAll();
                 _isOpen = !_isOpen;
+            }
+
 
             // Tabs per Zahlentasten
             if (Keyboard.current[Key.Digit1].wasPressedThisFrame) tabManager.ShowPanel(0);
