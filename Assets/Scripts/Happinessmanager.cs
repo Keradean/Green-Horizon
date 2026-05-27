@@ -57,9 +57,7 @@ public class HappinessManager : MonoBehaviour
     [System.Serializable]
     public class HappinessBuildingData
     {
-        public string BuildingName;
-
-        public GameObject BuildingObject;
+        public int BuildingID;
 
         [Range(0, 100)]
         public float BaseHappiness = 50f;
@@ -73,7 +71,6 @@ public class HappinessManager : MonoBehaviour
         [HideInInspector]
         public bool IsDirty = true;
 
-        // Optional UI Slider
         public Slider HappinessSlider;
     }
 
@@ -164,28 +161,25 @@ public class HappinessManager : MonoBehaviour
     // =========================
 
     public void AddModifier(
-        string buildingName,
+        int buildingID,
         HappinessType type,
         float value,
         bool isPercent = false,
         float duration = -1f)
     {
         HappinessBuildingData building =
-            Buildings.Find(b => b.BuildingName == buildingName);
+            Buildings.Find(b => b.BuildingID == buildingID);
 
         if (building == null)
             return;
 
-        HappinessModifier modifier =
-            new HappinessModifier
-            {
-                Type = type,
-                Value = value,
-                IsPercent = isPercent,
-                Duration = duration
-            };
-
-        building.Modifiers.Add(modifier);
+        building.Modifiers.Add(new HappinessModifier
+        {
+            Type = type,
+            Value = value,
+            IsPercent = isPercent,
+            Duration = duration
+        });
 
         building.IsDirty = true;
     }
@@ -195,11 +189,11 @@ public class HappinessManager : MonoBehaviour
     // =========================
 
     public void RemoveModifier(
-        string buildingName,
+        int buildingID,
         HappinessType type)
     {
         HappinessBuildingData building =
-            Buildings.Find(b => b.BuildingName == buildingName);
+            Buildings.Find(b => b.BuildingID == buildingID);
 
         if (building == null)
             return;
@@ -214,10 +208,10 @@ public class HappinessManager : MonoBehaviour
     // GET HAPPINESS
     // =========================
 
-    public float GetHappiness(string buildingName)
+    public float GetHappiness(int buildingID)
     {
         HappinessBuildingData building =
-            Buildings.Find(b => b.BuildingName == buildingName);
+            Buildings.Find(b => b.BuildingID == buildingID);
 
         if (building == null)
             return 0f;
@@ -249,7 +243,7 @@ public class HappinessManager : MonoBehaviour
             return;
 
         AddModifier(
-            Buildings[0].BuildingName,
+            Buildings[0].BuildingID,
             HappinessType.Parks,
             15f);
     }
@@ -261,7 +255,7 @@ public class HappinessManager : MonoBehaviour
             return;
 
         AddModifier(
-            Buildings[0].BuildingName,
+            Buildings[0].BuildingID,
             HappinessType.Pollution,
             -25f);
     }
