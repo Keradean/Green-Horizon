@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
+
 //*** De Col ***\\
-namespace Dennis.Placement
+namespace Dennis.Placement.Building
 {
     public class BuildingPreview : MonoBehaviour
     {

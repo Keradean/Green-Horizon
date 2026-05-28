@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 //*** De Col ***\\
-namespace Dennis.Placement
+namespace Dennis.Placement.Building
 {
     [RequireComponent(typeof(Button))]
     public class BuildingButton : MonoBehaviour
