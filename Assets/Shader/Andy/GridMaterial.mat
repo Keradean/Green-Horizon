@@ -102,7 +102,7 @@ Material:
     - _GlossyReflections: 0
     - _GridHeight: 10
     - _GridWidth: 10
-    - _LineThickness: 0.97
+    - _LineThickness: 0.95
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
@@ -122,7 +122,7 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _LineColor: {r: 0.01918364, g: 0, b: 1, a: 1}
+    - _LineColor: {r: 0.6828242, g: 0.9245283, b: 0.6541474, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

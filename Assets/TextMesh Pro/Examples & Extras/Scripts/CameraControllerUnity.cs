@@ -3,7 +3,7 @@ using UnityEngine;
 namespace TextMesh_Pro.Examples___Extras.Scripts
 {
     
-    public class CameraController : MonoBehaviour
+    public class CameraControllerUnity : MonoBehaviour
     {
         public enum CameraModes { Follow, Isometric, Free }
 
