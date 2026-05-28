@@ -65,6 +65,9 @@ namespace Andy.Manager
 
         private void HandleZoom()
         {
+            // Nicht zoomen wenn Maus über UI ist
+            if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) return;
+
             var scroll = Mouse.current.scroll.ReadValue().y;
             if (scroll == 0) return;
 
