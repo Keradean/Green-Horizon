@@ -53,6 +53,7 @@ namespace Andy.Manager
             if (Keyboard.current[Key.Digit3].wasPressedThisFrame) tabManager.ShowPanel(2);
             if (Keyboard.current[Key.Digit4].wasPressedThisFrame) tabManager.ShowPanel(3);
             if (Keyboard.current[Key.Digit5].wasPressedThisFrame) tabManager.ShowPanel(4);
+            if (Keyboard.current[Key.Digit6].wasPressedThisFrame) tabManager.ShowPanel(5);
 
             AnimateBar();
         }
