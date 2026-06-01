@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1bd6632b90e020643b87e57e8606d354, type: 3}
-  m_Name: New Road Data
+  m_Name: RoadData
   m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.Road.RoadData
-  straightPrefab: {fileID: 7191208938670615435, guid: 4bb6488d4e2ef1c4dab9a6d520d4df73, type: 3}
-  cornerPrefab: {fileID: 919132149155446097, guid: a1db22e3ca99a1040abc8863b6c9ae28, type: 3}
-  tJunctionPrefab: {fileID: 4627985427446832256, guid: b18d58eb4dc4c8145bc894942303f381, type: 3}
-  crossPrefab: {fileID: 5584401280704933480, guid: 21254c3aa5fe53443a3a80a974f58786, type: 3}
+  straightPrefab: {fileID: 8758240626261215827, guid: 739e1149a57ea5c48b006c00c4991dfe, type: 3}
+  cornerPrefab: {fileID: 8758240626261215827, guid: 8be3fa7b1ea049547bc81af948f11eb2, type: 3}
+  tJunctionPrefab: {fileID: 8758240626261215827, guid: f9ea51850bb602a4eb56c9bf611acfef, type: 3}
+  crossPrefab: {fileID: 8758240626261215827, guid: 64cf92c6e9b9fcb4a8a32c878438091a, type: 3}

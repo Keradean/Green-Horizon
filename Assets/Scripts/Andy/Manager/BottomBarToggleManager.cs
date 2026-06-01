@@ -18,11 +18,9 @@ namespace Andy.Manager
 
         [Header("Einstellungen")]
         public float slideSpeed = 8f;
-
+        
+        
         private bool _isOpen = false;
-        private float _closedY;
-        private float _openY = 150f;
-        private bool _isOpen;
         private float _closedY;                  // Position wenn geschlossen (unten versteckt)
         private float _openY = 150f;             // Position wenn offen
 
@@ -52,6 +50,7 @@ namespace Andy.Manager
                 if (BuildingSystem.Instance != null)
                     BuildingSystem.Instance.CancelAll();
                 _isOpen = !_isOpen;
+                gridVisual.SetActive(_isOpen);
             }
 
 
