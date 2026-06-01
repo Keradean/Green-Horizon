@@ -19,18 +19,20 @@ namespace Dennis.Placement.Road
                 // ── Kreuzung ──────────────────────────────────────
                 4 => (data.crossPrefab, 0f),
                 // ── T-Kreuzungen ──────────────────────────────────
-                3 when n && s && e => (data.tJunctionPrefab,   0f),
-                3 when n && s && w => (data.tJunctionPrefab, 180f),
-                3 when s && e && w => (data.tJunctionPrefab,  90f),
-                3 when n && e && w => (data.tJunctionPrefab, 270f),
+                3 when n && s && e => (data.tJunctionPrefab,  180f),
+                3 when n && s && w => (data.tJunctionPrefab, 0f),
+                3 when s && e && w => (data.tJunctionPrefab,   -90f),
+                3 when n && e && w => (data.tJunctionPrefab, -270f),
                 // ── Ecken ─────────────────────────────────────────
-                2 when n && e      => (data.cornerPrefab,   0f),
-                2 when n && w      => (data.cornerPrefab,  90f),
-                2 when s && w      => (data.cornerPrefab, 180f),
-                2 when s && e      => (data.cornerPrefab, 270f),
+                2 when n && e      => (data.cornerPrefab,  -90f),
+                2 when n && w      => (data.cornerPrefab, 180f),
+                2 when s && w      => (data.cornerPrefab, -270f),
+                2 when s && e      => (data.cornerPrefab,   0f),
                 // ── Gerade ────────────────────────────────────────
-                2 when n && s      => (data.straightPrefab,  90f),
-                _                  => (data.straightPrefab,   0f),
+                2 when n && s => (data.straightPrefab,  90f),
+                2 when e && w => (data.straightPrefab,   0f),
+                1 when n || s => (data.straightPrefab,  90f),  // einzelne mit N oder S Verbindung
+                _             => (data.straightPrefab,   0f),   // einzelne mit E oder W
             };
         }
     }

@@ -15,7 +15,7 @@ namespace Dennis.Placement.Building
         [SerializeField] private Building buildingPrefab;
         [SerializeField] private BuildingGrid grid;
         [SerializeField] private Material demolishHighlightMaterial;
-        public const float CellSize = 0.5f;
+        public const float CellSize = 1f;
         private BuildingPreview _preview;
         private Building _hoveredBuilding;
         private bool _isDemolishMode;

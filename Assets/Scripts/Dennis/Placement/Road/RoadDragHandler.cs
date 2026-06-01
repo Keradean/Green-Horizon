@@ -134,6 +134,7 @@ namespace Dennis.Placement.Road
             while (_pool.Count < needed)
             {
                 var p = Instantiate(previewPrefab, transform);
+                p.Setup(roadData);
                 p.gameObject.SetActive(false);
                 _pool.Add(p);
             }
