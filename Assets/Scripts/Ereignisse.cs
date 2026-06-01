@@ -1,88 +1,85 @@
 using UnityEngine;
+using System;
 using System.Collections.Generic;
 
-public class Ereignisse : MonoBehaviour
+namespace Furkan.Ereignisse
 {
-    public static Ereignisse Instance { get; private set; }
-
-    private Queue<string> eventPool = new Queue<string>();
-    private List<string> allEvents = new List<string>
+    public class Ereignisse : MonoBehaviour
     {
-        "Dürren",
-        "Überflutungen",
-        "Hitzewellen",
-        "Politische Unruhen"
-    };
+        public static Ereignisse Instance { get; private set; }
 
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
+        private Dictionary<string, Action> events;
+
+        private void Awake()
         {
-            Destroy(this.gameObject);
-            return;
-        }
-        Instance = this;
-        DontDestroyOnLoad(this.gameObject);
-        InitializePool();
-    }
+            if (Instance != null && Instance != this)
+            {
+                Destroy(this.gameObject);
+                return;
+            }
 
-    private void InitializePool()
-    {
-        // Fülle den Pool mit allen Ereignis-Namen
-        foreach (string eventName in allEvents)
-        {
-            eventPool.Enqueue(eventName);
+            Instance = this;
+            DontDestroyOnLoad(this.gameObject);
+            InitializeEvents();
         }
-        Debug.Log($"Ereignis-Pool initialisiert mit {eventPool.Count} Ereignissen");
-    }
 
-    /// <summary>
-    /// Holt das nächste Ereignis aus dem Pool
-    /// </summary>
-    public string Get()
-    {
-        if (eventPool.Count > 0)
+        private void InitializeEvents()
         {
-            string eventName = eventPool.Dequeue();
-            Debug.Log($"[Pool] Ereignis abgerufen: {eventName}. Verbleibend: {eventPool.Count}");
-            return eventName;
-        }
-        else
-        {
-            Debug.LogWarning("Ereignis-Pool ist leer!");
-            return null;
-        }
-    }
+            // Dictionary mit allen Event-Namen und deren Funktionen
+            events = new Dictionary<string, Action>
+            {
+                { "Dürren", TriggerDrought },
+                { "Überflutungen", TriggerFloods },
+                { "Hitzewellen", TriggerHeatWave },
+                { "Politische Unruhen", TriggerPoliticalUnrest }
+            };
 
-    /// <summary>
-    /// Gibt ein Ereignis an den Pool zurück
-    /// </summary>
-    public void Release(string eventName)
-    {
-        if (!string.IsNullOrEmpty(eventName))
-        {
-            eventPool.Enqueue(eventName);
-            Debug.Log($"[Pool] Ereignis freigegeben: {eventName}. Verfügbar: {eventPool.Count}");
+            Debug.Log($"Events initialisiert mit {events.Count} Einträgen");
         }
-        else
+
+        // Event-Funktionen
+        private void TriggerDrought()
         {
-            Debug.LogWarning("Versuch, null an den Pool zurückzugeben");
+            Debug.Log("🌵 Dürren-Event ausgelöst!");
         }
-    }
 
-    /// <summary>
-    /// Gibt die Anzahl der verfügbaren Ereignisse zurück
-    /// </summary>
-    public int GetAvailableEventCount()
-    {
-        return eventPool.Count;
-    }
+        private void TriggerFloods()
+        {
+            Debug.Log("💧 Überflutungs-Event ausgelöst!");
+        }
 
-    /// <summary>
-    /// Gibt alle Ereignis-Namen aus
-    /// </summary>
-    public List<string> GetAllEventNames()
-    {
-        return allEvents;
+        private void TriggerHeatWave()
+        {
+            Debug.Log("Hitzewellen-Event ausgelöst!");
+        }
+
+        private void TriggerPoliticalUnrest()
+        {
+            Debug.Log(" Politische Unruhen-Event ausgelöst!");
+        }
+
+        /// Ruft ein Event anhand des Namens auf
+
+        /// <param name="eventName">Name des Events: "Dürren", "Überflutungen", "Hitzewellen", "Politische Unruhen"</param>
+        public void TriggerEvent(string eventName)
+        {
+            if (events.ContainsKey(eventName))
+            {
+                Debug.Log($"✓ Event '{eventName}' wird aufgerufen...");
+                events[eventName]?.Invoke();
+            }
+            else
+            {
+                Debug.LogWarning($"✗ Event '{eventName}' nicht gefunden!");
+            }
+        }
+
+        /// <summary>
+        /// Gibt alle verfügbaren Event-Namen zurück
+        /// </summary>
+        public List<string> GetAllEventNames()
+        {
+            return new List<string>(events.Keys);
+        }
     }
 }
