@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Dennis.Placement
+namespace Dennis.Placement.Building
 {
     public class Building : MonoBehaviour
     {

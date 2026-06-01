@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bd6632b90e020643b87e57e8606d354, type: 3}
+  m_Name: New Road Data
+  m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.Road.RoadData
+  straightPrefab: {fileID: 7191208938670615435, guid: 4bb6488d4e2ef1c4dab9a6d520d4df73, type: 3}
+  cornerPrefab: {fileID: 919132149155446097, guid: a1db22e3ca99a1040abc8863b6c9ae28, type: 3}
+  tJunctionPrefab: {fileID: 4627985427446832256, guid: b18d58eb4dc4c8145bc894942303f381, type: 3}
+  crossPrefab: {fileID: 5584401280704933480, guid: 21254c3aa5fe53443a3a80a974f58786, type: 3}
