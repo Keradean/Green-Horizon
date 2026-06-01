@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using TMPro;
-using Dennis.Placement;
+using Dennis.Placement.Building;
 //=== Andy ===//
 
 namespace Andy.Manager
