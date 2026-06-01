@@ -1,11 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using Andy.Manager;
 
 //*** De Col ***\\
 namespace Dennis.Placement.Building
 {
     [RequireComponent(typeof(Button))]
-    public class BuildingButton : MonoBehaviour
+    public class BuildingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         [Header("Gebäude")]
         [Tooltip("Das ScriptableObject des Gebäudes das platziert werden soll")]
@@ -38,9 +40,20 @@ namespace Dennis.Placement.Building
                 BuildingSystem.Instance.StartDemolishMode();
                 return;
             }
-        
+
             if (buildingData != null)
                 BuildingSystem.Instance.StartPlacing(buildingData);
+        }
+        /////////////////////////////////////////////////////////////////////////////////////
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            if (buildingData == null || isRoadButton || isDemolishButton) return;
+            TooltipManager.Instance.Show(buildingData);
+        }
+        /////////////////////////////////////////////////////////////////////////////////////
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            TooltipManager.Instance.Hide();
         }
     }
 }
