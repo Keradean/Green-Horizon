@@ -6343,6 +6343,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1606151226}
   m_CullTransparentMesh: 1
+--- !u!1 &1649787907
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1649787908}
+  - component: {fileID: 1649787909}
+  m_Layer: 0
+  m_Name: 'renewable energy  '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1649787908
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1649787907}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1649787909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1649787907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dac8d6bdcf6437249bbd497eaef53878, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  Investments:
+  - Type: 0
+    InvestmentCost: 0
+    EnergyOutput: 0
+    HappinessBonus: 0
+    CO2ReductionLevel: 0
+    IsBuilt: 0
+  - Type: 0
+    InvestmentCost: 0
+    EnergyOutput: 0
+    HappinessBonus: 0
+    CO2ReductionLevel: 0
+    IsBuilt: 0
 --- !u!1 &1684534555
 GameObject:
   m_ObjectHideFlags: 0
@@ -6863,6 +6920,61 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1808280417}
   m_CullTransparentMesh: 1
+--- !u!1 &1900674115
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1900674117}
+  - component: {fileID: 1900674116}
+  m_Layer: 0
+  m_Name: happinessmanager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1900674116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1900674115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34527deabf9ff294cadcef39e961d676, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HappinessManager
+  Buildings:
+  - BuildingID: 0
+    BaseHappiness: 10.9
+    CurrentHappiness: 8.6
+    Modifiers:
+    - Type: 0
+      Value: 0
+      IsPercent: 0
+      Duration: 0
+    IsDirty: 0
+    HappinessSlider: {fileID: 0}
+--- !u!4 &1900674117
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1900674115}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1930163778
 GameObject:
   m_ObjectHideFlags: 0
@@ -7347,3 +7459,5 @@ SceneRoots:
   - {fileID: 740844857}
   - {fileID: 102667872}
   - {fileID: 941774792}
+  - {fileID: 1900674117}
+  - {fileID: 1649787908}
