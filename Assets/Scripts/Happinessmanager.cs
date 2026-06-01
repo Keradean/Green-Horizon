@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+//=== Can Özbal ===//
 
 public class HappinessManager : MonoBehaviour
 {
