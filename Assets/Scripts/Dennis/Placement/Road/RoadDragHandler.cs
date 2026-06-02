@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Dennis.Placement.Building; // für BuildingGrid
+using Dennis.Placement.Building;
 //*** De Col ***\\
 namespace Dennis.Placement.Road
 {
@@ -14,6 +14,8 @@ namespace Dennis.Placement.Road
 
         private readonly List<BuildingPreview> _pool        = new();
         private readonly List<Vector2Int>      _scratchPath = new();
+        private readonly List<Vector2Int>      _toRecheck   = new();
+        private readonly HashSet<Vector2Int>   _tempRoads   = new(); // temporäre Straßen für Preview
         private int _activeCount;
 
         private bool       _isDragging;
@@ -52,7 +54,6 @@ namespace Dennis.Placement.Road
                     return;
             }
 
-            // Hover – einzelne Preview unter dem Cursor
             if (_hasHover && _hoverCell == cell) return;
             _hoverCell = cell;
             _hasHover  = true;
@@ -110,16 +111,26 @@ namespace Dennis.Placement.Road
         {
             EnsurePoolSize(path.Count);
 
+            // Temporäre Straßen für Resolver aufbauen
+            _tempRoads.Clear();
+            foreach (var c in path)
+                _tempRoads.Add(c);
+
             for (var i = 0; i < path.Count; i++)
             {
                 var p = _pool[i];
                 p.gameObject.SetActive(true);
                 p.transform.position = grid.CellToWorld(path[i]);
 
-                var canBuild = grid.CanBuildAt(path[i]);
-                p.ChangeState(canBuild
+                var canPlace = grid.CanBuildAt(path[i]) || grid.IsRoad(path[i]);
+                p.ChangeState(canPlace
                     ? BuildingPreview.BuildingPreviewState.Valid
                     : BuildingPreview.BuildingPreviewState.Invalid);
+
+                // Richtigen Straßentyp für Preview berechnen
+                var (prefab, rotation) = RoadResolver.Resolve(path[i], grid, roadData, _tempRoads);
+                if (prefab != null)
+                    p.SwapModel(prefab, rotation);
             }
 
             for (var i = path.Count; i < _activeCount; i++)
@@ -134,7 +145,7 @@ namespace Dennis.Placement.Road
             while (_pool.Count < needed)
             {
                 var p = Instantiate(previewPrefab, transform);
-                p.Setup(roadData);
+                p.Setup(roadData.previewData);
                 p.gameObject.SetActive(false);
                 _pool.Add(p);
             }
@@ -143,31 +154,26 @@ namespace Dennis.Placement.Road
         /////////////////////////////////////////////////////////////////////////////////////
         private void Commit()
         {
-            // 1. Alle neuen Zellen als Straße im Grid markieren
+            _toRecheck.Clear();
+
             foreach (var c in _scratchPath)
             {
-                if (!grid.CanBuildAt(c)) continue;
-                grid.SetRoad(c, null);
+                if (!grid.CanBuildAt(c) && !grid.IsRoad(c)) continue;
+                if (grid.CanBuildAt(c))
+                    grid.SetRoad(c);
+
+                _toRecheck.Add(c + Vector2Int.up);
+                _toRecheck.Add(c + Vector2Int.down);
+                _toRecheck.Add(c + Vector2Int.right);
+                _toRecheck.Add(c + Vector2Int.left);
             }
 
-            // 2. Alle betroffenen Zellen + Nachbarn sammeln
-            var toUpdate = new HashSet<Vector2Int>();
-            foreach (var c in _scratchPath)
-            {
-                toUpdate.Add(c);
-                toUpdate.Add(c + Vector2Int.up);
-                toUpdate.Add(c + Vector2Int.down);
-                toUpdate.Add(c + Vector2Int.right);
-                toUpdate.Add(c + Vector2Int.left);
-            }
-
-            // 3. Jede Straßenzelle neu auswerten und visuell updaten
-            foreach (var c in toUpdate.Where(c => grid.IsRoad(c)))
-            {
+            foreach (var c in _scratchPath.Where(c => grid.IsRoad(c)))
                 UpdateRoadVisual(c);
-            }
 
-            // Previews ausblenden
+            foreach (var c in _toRecheck.Where(c => grid.IsRoad(c) && !_scratchPath.Contains(c)))
+                UpdateRoadVisual(c);
+
             for (var i = 0; i < _activeCount; i++)
                 _pool[i].gameObject.SetActive(false);
             _activeCount = 0;
@@ -180,14 +186,11 @@ namespace Dennis.Placement.Road
 
             if (prefab == null)
             {
-                Debug.LogWarning($"RoadData: kein Prefab für Zelle {cell} – bitte im Inspector zuweisen.");
+                Debug.LogWarning($"RoadData: kein Prefab für Zelle {cell}");
                 return;
             }
 
-            var world     = grid.CellToWorld(cell);
-            var newObject = Instantiate(prefab, world, Quaternion.Euler(0, rotation, 0));
-
-            grid.ReplaceRoadObject(cell, newObject);
+            grid.SwapRoadModel(cell, prefab, rotation);
         }
     }
 }

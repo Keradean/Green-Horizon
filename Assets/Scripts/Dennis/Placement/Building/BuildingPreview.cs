@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-
 //*** De Col ***\\
 namespace Dennis.Placement.Building
 {
@@ -17,6 +16,7 @@ namespace Dennis.Placement.Building
 
         private readonly List<Renderer> _renderers = new();
         private readonly List<Collider> _colliders = new();
+
         /////////////////////////////////////////////////////////////////////////////////////
         public void Setup(BuildingData data)
         {
@@ -24,11 +24,34 @@ namespace Dennis.Placement.Building
             BuildingModel = Instantiate(data.Model, transform.position, Quaternion.identity, transform);
             _renderers.AddRange(BuildingModel.GetComponentsInChildren<Renderer>());
             _colliders.AddRange(BuildingModel.GetComponentsInChildren<Collider>());
-
             foreach (var col in _colliders) col.enabled = false;
-
             SetPreviewMaterial(State);
         }
+
+        /////////////////////////////////////////////////////////////////////////////////////
+        // Tauscht das angezeigte Modell für die Road Preview
+        public void SwapModel(GameObject prefab, float rotation)
+        {
+            // Altes Modell löschen
+            foreach (Transform child in transform)
+                Destroy(child.gameObject);
+
+            _renderers.Clear();
+
+            // Neues Modell instantiieren
+            var go = Instantiate(prefab, transform);
+            go.transform.localPosition = Vector3.zero;
+            go.transform.localRotation = Quaternion.Euler(0, rotation, 0);
+
+            // Collider deaktivieren
+            foreach (var col in go.GetComponentsInChildren<Collider>())
+                col.enabled = false;
+
+            // Renderer neu sammeln und Preview Material anwenden
+            _renderers.AddRange(go.GetComponentsInChildren<Renderer>());
+            SetPreviewMaterial(State);
+        }
+
         /////////////////////////////////////////////////////////////////////////////////////
         public void ChangeState(BuildingPreviewState newState)
         {
@@ -36,11 +59,13 @@ namespace Dennis.Placement.Building
             State = newState;
             SetPreviewMaterial(State);
         }
+
         /////////////////////////////////////////////////////////////////////////////////////
         public void Rotate(int rotationStep)
         {
-            BuildingModel.Rotate(rotationStep);
+            BuildingModel?.Rotate(rotationStep);
         }
+
         /////////////////////////////////////////////////////////////////////////////////////
         private void SetPreviewMaterial(BuildingPreviewState newState)
         {

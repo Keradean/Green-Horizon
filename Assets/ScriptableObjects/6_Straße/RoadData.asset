@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bd6632b90e020643b87e57e8606d354, type: 3}
   m_Name: RoadData
   m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.Road.RoadData
+  previewData: {fileID: 11400000, guid: 6be1f1e52aedf904c9bfff19c83823ab, type: 2}
   straightPrefab: {fileID: 8758240626261215827, guid: 739e1149a57ea5c48b006c00c4991dfe, type: 3}
   cornerPrefab: {fileID: 8758240626261215827, guid: 8be3fa7b1ea049547bc81af948f11eb2, type: 3}
   tJunctionPrefab: {fileID: 8758240626261215827, guid: f9ea51850bb602a4eb56c9bf611acfef, type: 3}

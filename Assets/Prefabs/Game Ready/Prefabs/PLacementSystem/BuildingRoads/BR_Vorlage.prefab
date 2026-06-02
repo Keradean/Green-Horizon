@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 91837493810930498}
   - component: {fileID: 7938737080107574164}
   m_Layer: 0
-  m_Name: 1BR_Vorlage
+  m_Name: BR_Vorlage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
