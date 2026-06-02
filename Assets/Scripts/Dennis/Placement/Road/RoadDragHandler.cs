@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Dennis.Placement.Building;
 //*** De Col ***\\
+//=== Andy ===//
 namespace Dennis.Placement.Road
 {
     public class RoadDragHandler : MonoBehaviour
@@ -15,7 +16,7 @@ namespace Dennis.Placement.Road
         private readonly List<BuildingPreview> _pool        = new();
         private readonly List<Vector2Int>      _scratchPath = new();
         private readonly List<Vector2Int>      _toRecheck   = new();
-        private readonly HashSet<Vector2Int>   _tempRoads   = new(); // temporäre Straßen für Preview
+        private readonly HashSet<Vector2Int>   _tempRoads   = new();
         private int _activeCount;
 
         private bool       _isDragging;
@@ -31,6 +32,7 @@ namespace Dennis.Placement.Road
 
             if (Mouse.current.leftButton.wasPressedThisFrame)
             {
+                if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) return;
                 _isDragging = true;
                 _start = cell;
                 _last  = cell;
@@ -111,7 +113,6 @@ namespace Dennis.Placement.Road
         {
             EnsurePoolSize(path.Count);
 
-            // Temporäre Straßen für Resolver aufbauen
             _tempRoads.Clear();
             foreach (var c in path)
                 _tempRoads.Add(c);
@@ -127,7 +128,6 @@ namespace Dennis.Placement.Road
                     ? BuildingPreview.BuildingPreviewState.Valid
                     : BuildingPreview.BuildingPreviewState.Invalid);
 
-                // Richtigen Straßentyp für Preview berechnen
                 var (prefab, rotation) = RoadResolver.Resolve(path[i], grid, roadData, _tempRoads);
                 if (prefab != null)
                     p.SwapModel(prefab, rotation);
@@ -192,5 +192,8 @@ namespace Dennis.Placement.Road
 
             grid.SwapRoadModel(cell, prefab, rotation);
         }
+
+        /////////////////////////////////////////////////////////////////////////////////////
+        public void UpdateRoadVisualPublic(Vector2Int cell) => UpdateRoadVisual(cell);
     }
 }

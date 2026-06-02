@@ -4940,7 +4940,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c030b2d31dfc0804b9accd7353f55e47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.BuildingButton
-  buildingData: {fileID: 0}
+  buildingData: {fileID: 11400000, guid: 451704c1f2e40d24f86199a9566fdb31, type: 2}
   isRoadButton: 0
   isDemolishButton: 0
 --- !u!1 &491277625
@@ -6497,7 +6497,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c030b2d31dfc0804b9accd7353f55e47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.BuildingButton
-  buildingData: {fileID: 0}
+  buildingData: {fileID: 11400000, guid: 28c98f4ccdf3a4a42af7dc6838d3fd3c, type: 2}
   isRoadButton: 0
   isDemolishButton: 0
 --- !u!1 &642363749
