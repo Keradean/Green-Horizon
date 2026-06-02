@@ -8,7 +8,13 @@ namespace Furkan.Ereignisse
     {
         public static Ereignisse Instance { get; private set; }
 
-        private Dictionary<string, Action> events;
+        public int Geld = 0;
+        public int müll = 0;
+
+        private bool droughtTriggered = false;
+        private bool floodsTriggered = false;
+        private bool heatWaveTriggered = false;
+        private bool politicalUnrestTriggered = false;
 
         private void Awake()
         {
@@ -20,66 +26,92 @@ namespace Furkan.Ereignisse
 
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
-            InitializeEvents();
         }
 
-        private void InitializeEvents()
+        private void Update()
         {
-            // Dictionary mit allen Event-Namen und deren Funktionen
-            events = new Dictionary<string, Action>
+            if (CO2BudgetManager.Instance != null)
             {
-                { "Dürren", TriggerDrought },
-                { "Überflutungen", TriggerFloods },
-                { "Hitzewellen", TriggerHeatWave },
-                { "Politische Unruhen", TriggerPoliticalUnrest }
-            };
+                float currentCo2 = CO2BudgetManager.Instance.currentFootprint;
+                
+                // Dürren-Trigger
+                if (currentCo2 == 70 && !droughtTriggered)
+                {
+                    TriggerDrought();
+                    droughtTriggered = true;
+                }
+                else if (currentCo2 != 70)
+                {
+                    droughtTriggered = false;
+                }
 
-            Debug.Log($"Events initialisiert mit {events.Count} Einträgen");
+                // Überflutungen-Trigger
+                if (currentCo2 == 75 && müll > 50 && !floodsTriggered)
+                {
+                    TriggerFloods();
+                    floodsTriggered = true;
+                }
+                else if (currentCo2 != 75 || müll <= 50)
+                {
+                    floodsTriggered = false;
+                }
+
+                // Hitzewellen-Trigger
+                if (currentCo2 == 50 && !heatWaveTriggered)
+                {
+                    TriggerHeatWave();
+                    heatWaveTriggered = true;
+                }
+                else if (currentCo2 != 50)
+                {
+                    heatWaveTriggered = false;
+                }
+                
+                if (currentCo2 == 50 && Geld < 30 && !politicalUnrestTriggered)
+                {
+                    TriggerPoliticalUnrest();
+                    politicalUnrestTriggered = true;
+                }
+                else if (currentCo2 != 50 || Geld >= 30)
+                {
+                    politicalUnrestTriggered = false;
+                }
+            }
         }
 
         // Event-Funktionen
         private void TriggerDrought()
         {
-            Debug.Log("🌵 Dürren-Event ausgelöst!");
+            Geld -= 10;
+            müll += 5;
+            if (CO2BudgetManager.Instance != null)
+            {
+                CO2BudgetManager.Instance.AddBadDecision(1); // CO2 steigt leicht an (z.B. durch Waldbrände)
+            }
+            Debug.Log("Dürren-Event ausgelöst! Geld -10, Müll +5, CO2 +10");
         }
 
         private void TriggerFloods()
         {
-            Debug.Log("💧 Überflutungs-Event ausgelöst!");
+            Geld -= 40;
+            müll += 20;
+            Debug.Log("Überflutungs-Event ausgelöst! Geld -40, Müll +20");
         }
 
         private void TriggerHeatWave()
         {
-            Debug.Log("Hitzewellen-Event ausgelöst!");
+            Geld -= 10;
+            Debug.Log("Hitzewellen-Event ausgelöst! Geld -10");
         }
 
         private void TriggerPoliticalUnrest()
         {
-            Debug.Log(" Politische Unruhen-Event ausgelöst!");
-        }
-
-        /// Ruft ein Event anhand des Namens auf
-
-        /// <param name="eventName">Name des Events: "Dürren", "Überflutungen", "Hitzewellen", "Politische Unruhen"</param>
-        public void TriggerEvent(string eventName)
-        {
-            if (events.ContainsKey(eventName))
+            müll += 35;
+            if (CO2BudgetManager.Instance != null)
             {
-                Debug.Log($"✓ Event '{eventName}' wird aufgerufen...");
-                events[eventName]?.Invoke();
+                CO2BudgetManager.Instance.AddBadDecision(2);
             }
-            else
-            {
-                Debug.LogWarning($"✗ Event '{eventName}' nicht gefunden!");
-            }
-        }
-
-        /// <summary>
-        /// Gibt alle verfügbaren Event-Namen zurück
-        /// </summary>
-        public List<string> GetAllEventNames()
-        {
-            return new List<string>(events.Keys);
+            Debug.Log("Politische Unruhen-Event ausgelöst! Müll +35, CO2 +50");
         }
     }
 }
