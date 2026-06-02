@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-//=== Can Özbal ===//
+
 
 public class CircularEconomyManager : MonoBehaviour
 {
@@ -35,16 +35,21 @@ public class CircularEconomyManager : MonoBehaviour
     {
         public CircularMechanicType Type;
 
-        public float InvestmentCost;
+        // Kosten in GreenCoins zum Aktivieren
+        public int InvestmentCost;
 
-        public float CO2Reduction;
+        // CO2 Stufe (1=klein, 2=mittel, 3=groß) für CO2BudgetManager
+        [Range(1, 3)]
+        public int CO2ReductionLevel = 1;
 
+        // Happiness Bonus
         public float HappinessBonus;
 
+        // Zurückgewonnene Energie
         public float EnergyRecovered;
 
-        [Range(1, 10)]
-        public int CO2ReductionLevel = 1;
+        // GreenCoins die pro Tick zurückgewonnen werden
+        public int CostSavingsPerTick;
 
         public bool IsActive;
     }
@@ -60,9 +65,37 @@ public class CircularEconomyManager : MonoBehaviour
     // TOTALS
     // =========================
 
-    public float TotalCO2Reduction   { get; private set; }
-    public float TotalHappinessBonus { get; private set; }
+    public float TotalHappinessBonus  { get; private set; }
     public float TotalEnergyRecovered { get; private set; }
+    public int   TotalCostSavings     { get; private set; }
+
+    // =========================
+    // SAVINGS TICK
+    // =========================
+
+    [Tooltip("Wie oft pro Sekunde GreenCoins zurückgewonnen werden")]
+    public float savingsTickRate = 10f;
+
+    private float _savingsTimer;
+
+    private void Update()
+    {
+        _savingsTimer += Time.deltaTime;
+
+        if (_savingsTimer >= savingsTickRate)
+        {
+            _savingsTimer = 0f;
+            ApplyCostSavings();
+        }
+    }
+
+    private void ApplyCostSavings()
+    {
+        if (TotalCostSavings <= 0) return;
+
+     //   if (GreenCoinManager.Instance != null)
+     //       GreenCoinManager.Instance.AddGold(TotalCostSavings);
+    }
 
     // =========================
     // ACTIVATE
@@ -82,13 +115,23 @@ public class CircularEconomyManager : MonoBehaviour
             return false;
         }
 
+        // Kosten abziehen
+     //   if (GreenCoinManager.Instance != null)
+        {
+      //      if (!GreenCoinManager.Instance.SpendGold(mechanic.InvestmentCost))
+            {
+                Debug.Log("Nicht genug GreenCoins für " + type);
+                return false;
+            }
+        }
+
         mechanic.IsActive = true;
 
         RecalculateTotals();
 
         // CO2 senken
-   //     if (CO2BudgetManager.Instance != null)
-   //         CO2BudgetManager.Instance.AddGoodDecision(mechanic.CO2ReductionLevel);
+      //  if (CO2BudgetManager.Instance != null)
+      //      CO2BudgetManager.Instance.AddGoodDecision(mechanic.CO2ReductionLevel);
 
         // Happiness erhöhen
         if (HappinessManager.Instance != null)
@@ -97,7 +140,7 @@ public class CircularEconomyManager : MonoBehaviour
                 HappinessManager.HappinessType.Parks,
                 mechanic.HappinessBonus);
 
-        Debug.Log(type + " aktiviert! CO2 Reduktion: " + mechanic.CO2Reduction);
+        Debug.Log(type + " aktiviert!");
         return true;
     }
 
@@ -118,8 +161,8 @@ public class CircularEconomyManager : MonoBehaviour
         RecalculateTotals();
 
         // CO2 wieder erhöhen
-       // if (CO2BudgetManager.Instance != null)
-        //    CO2BudgetManager.Instance.AddBadDecision(mechanic.CO2ReductionLevel);
+    //    if (CO2BudgetManager.Instance != null)
+     //       CO2BudgetManager.Instance.AddBadDecision(mechanic.CO2ReductionLevel);
 
         // Happiness wieder senken
         if (HappinessManager.Instance != null)
@@ -136,18 +179,18 @@ public class CircularEconomyManager : MonoBehaviour
 
     private void RecalculateTotals()
     {
-        TotalCO2Reduction    = 0f;
         TotalHappinessBonus  = 0f;
         TotalEnergyRecovered = 0f;
+        TotalCostSavings     = 0;
 
         foreach (var mechanic in Mechanics)
         {
             if (!mechanic.IsActive)
                 continue;
 
-            TotalCO2Reduction    += mechanic.CO2Reduction;
             TotalHappinessBonus  += mechanic.HappinessBonus;
             TotalEnergyRecovered += mechanic.EnergyRecovered;
+            TotalCostSavings     += mechanic.CostSavingsPerTick;
         }
     }
 
