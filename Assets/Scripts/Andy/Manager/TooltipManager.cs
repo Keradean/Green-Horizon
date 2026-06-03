@@ -19,7 +19,7 @@ namespace Andy.Manager
         public TextMeshProUGUI descriptionText;
         public TextMeshProUGUI residentsText;
         public TextMeshProUGUI incomeText;
-        public TextMeshProUGUI energyText;
+        public TextMeshProUGUI gridText;
         public TextMeshProUGUI pollutionText;
 
         [Header("Icon")]
@@ -64,7 +64,7 @@ namespace Andy.Manager
             descriptionText.text = data.Description;
             residentsText.text   = "+" + data.Residents;
             incomeText.text      = "+" + data.IncomePerHour + "/h";
-            energyText.text      = "-" + data.EnergyUsage + "%";
+            gridText.text        = data.GridSize;
             pollutionText.text   = "+" + data.Pollution + "%/Tag";
 
             if (data.Icon != null)

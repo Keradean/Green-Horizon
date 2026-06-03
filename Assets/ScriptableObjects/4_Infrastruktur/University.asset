@@ -20,5 +20,5 @@ MonoBehaviour:
   <Icon>k__BackingField: {fileID: 21300000, guid: 3a87a8d08fa53554cb073bf60e2a36cb, type: 3}
   <Residents>k__BackingField: 0
   <IncomePerHour>k__BackingField: 0
-  <EnergyUsage>k__BackingField: 0
+  <GridSize>k__BackingField: 6x4
   <Pollution>k__BackingField: 0

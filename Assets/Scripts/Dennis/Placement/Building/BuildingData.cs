@@ -16,7 +16,7 @@ namespace Dennis.Placement.Building
         [field: SerializeField] public Sprite Icon { get; private set; }
         [field: SerializeField] public int Residents { get; private set; }       // Einwohner
         [field: SerializeField] public int IncomePerHour { get; private set; }   // Geld pro Stunde
-        [field: SerializeField] public int EnergyUsage { get; private set; }     // Energie Verbrauch
+        [field: SerializeField] public string GridSize { get; private set; }  // z.B. "2x3" oder "1x1"
         [field: SerializeField] public int Pollution { get; private set; }       // Umweltverschmutzung
     }
 }
