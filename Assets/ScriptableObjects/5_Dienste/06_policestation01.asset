@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36d07d1105d47ea4d9d2bb338e8b41d6, type: 3}
+  m_Name: 06_policestation01
+  m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.Building.BuildingData
+  <Cost>k__BackingField: 0
+  <Model>k__BackingField: {fileID: 7938737080107574164, guid: 30baea212840c244b9d5d64065679300, type: 3}
+  <BuildingName>k__BackingField: 
+  <Description>k__BackingField: 
+  <Icon>k__BackingField: {fileID: 0}
+  <Residents>k__BackingField: 0
+  <IncomePerHour>k__BackingField: 0
+  <GridSize>k__BackingField: 
+  <Pollution>k__BackingField: 0
