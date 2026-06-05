@@ -16,7 +16,7 @@ MonoBehaviour:
   <Model>k__BackingField: {fileID: 7938737080107574164, guid: a2002ab86a05d604a9c2327c38edbff9, type: 3}
   <BuildingName>k__BackingField: 
   <Description>k__BackingField: 
-  <Icon>k__BackingField: {fileID: 0}
+  <Icon>k__BackingField: {fileID: 21300000, guid: 476dd02ae8a8f3e98aa650747a221a41, type: 3}
   <Residents>k__BackingField: 0
   <IncomePerHour>k__BackingField: 0
   <GridSize>k__BackingField: 

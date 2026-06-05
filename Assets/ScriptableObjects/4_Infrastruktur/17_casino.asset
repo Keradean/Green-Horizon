@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: 17_casino
   m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.Building.BuildingData
   <Cost>k__BackingField: 0
-  <Model>k__BackingField: {fileID: 7938737080107574164, guid: f76d621c4fce0354d9655ed751f68ed7, type: 3}
+  <Model>k__BackingField: {fileID: 7938737080107574164, guid: e28dbf463eff6ac49b7655edd3ad9671, type: 3}
   <BuildingName>k__BackingField: 
   <Description>k__BackingField: 
-  <Icon>k__BackingField: {fileID: 0}
+  <Icon>k__BackingField: {fileID: 21300000, guid: 9c045154a7f74bff79af36fb3f334eef, type: 3}
   <Residents>k__BackingField: 0
   <IncomePerHour>k__BackingField: 0
   <GridSize>k__BackingField: 
