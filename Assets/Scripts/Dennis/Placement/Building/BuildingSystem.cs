@@ -4,7 +4,7 @@ using Dennis.Placement.Road;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-//*** De Col ***\\
+//*** De Col ***//
 namespace Dennis.Placement.Building
 {
     public class BuildingSystem : MonoBehaviour
@@ -15,12 +15,16 @@ namespace Dennis.Placement.Building
         [SerializeField] private Building buildingPrefab;
         [SerializeField] private BuildingGrid grid;
         [SerializeField] private Material demolishHighlightMaterial;
-        public const float CellSize = 0.5f;
+        public const float CellSize = 1f;
         private BuildingPreview _preview;
         private Building _hoveredBuilding;
         private bool _isDemolishMode;
         private bool _isRoadMode;
         private Camera _camera;
+
+        private bool _isDraggingDemolish;
+        private Vector2Int _demolishLast;
+        private GameObject _demolishPreviewPlane;
 
         public bool ConsumedEscapeThisFrame { get; private set; }
         /////////////////////////////////////////////////////////////////////////////////////
@@ -28,6 +32,14 @@ namespace Dennis.Placement.Building
         {
             Instance = this;
             _camera = Camera.main;
+
+            // Demolish Preview Plane erstellen
+            _demolishPreviewPlane = GameObject.CreatePrimitive(PrimitiveType.Quad);
+            _demolishPreviewPlane.GetComponent<Renderer>().material = demolishHighlightMaterial;
+            _demolishPreviewPlane.transform.rotation = Quaternion.Euler(90, 0, 0);
+            _demolishPreviewPlane.transform.localScale = new Vector3(CellSize, CellSize, CellSize);
+            Destroy(_demolishPreviewPlane.GetComponent<Collider>());
+            _demolishPreviewPlane.SetActive(false);
         }
         /////////////////////////////////////////////////////////////////////////////////////
         private void Update()
@@ -35,7 +47,6 @@ namespace Dennis.Placement.Building
             ConsumedEscapeThisFrame = false;
             if (Keyboard.current.escapeKey.wasPressedThisFrame)
             {
-
                 if (_preview != null)  { CancelPreview();    ConsumedEscapeThisFrame = true; return; }
                 if (_isDemolishMode)   { ExitDemolishMode(); ConsumedEscapeThisFrame = true; return; }
                 if (_isRoadMode)       { ExitRoadMode();     ConsumedEscapeThisFrame = true; return; }
@@ -46,7 +57,7 @@ namespace Dennis.Placement.Building
                     return;
                 }
             }
-            /////////////////////////////////////////////////////////////////////////////////////
+
             if (Andy.Manager.GameStateManager.Instance.CurrentGameState == Andy.Manager.GameState.Paused) return;
 
             var mousePos = GetMousePosition();
@@ -89,6 +100,8 @@ namespace Dennis.Placement.Building
         private void ExitDemolishMode()
         {
             _isDemolishMode = false;
+            _isDraggingDemolish = false;
+            _demolishPreviewPlane.SetActive(false);
             if (_hoveredBuilding == null) return;
             _hoveredBuilding.Unhighlight();
             _hoveredBuilding = null;
@@ -98,6 +111,45 @@ namespace Dennis.Placement.Building
         {
             if (Keyboard.current.xKey.wasPressedThisFrame) { ExitDemolishMode(); return; }
 
+            var cell = grid.WorldToCell(mousePos);
+
+            // Preview Plane positionieren
+            if (grid.IsRoad(cell) || grid.GetBuildingAt(mousePos) != null)
+            {
+                _demolishPreviewPlane.SetActive(true);
+                _demolishPreviewPlane.transform.position = grid.CellToWorld(cell) + new Vector3(0, 0.02f, 0);
+            }
+            else
+            {
+                _demolishPreviewPlane.SetActive(false);
+            }
+
+            // Straßen Drag-Demolish
+            if (Mouse.current.leftButton.wasPressedThisFrame)
+            {
+                _isDraggingDemolish = true;
+                _demolishLast = cell;
+                TryDemolishCell(cell);
+                return;
+            }
+
+            if (_isDraggingDemolish && Mouse.current.leftButton.isPressed)
+            {
+                if (cell != _demolishLast)
+                {
+                    _demolishLast = cell;
+                    TryDemolishCell(cell);
+                }
+                return;
+            }
+
+            if (Mouse.current.leftButton.wasReleasedThisFrame)
+            {
+                _isDraggingDemolish = false;
+                return;
+            }
+
+            // Gebäude hover highlight
             var building = grid.GetBuildingAt(mousePos);
             if (building != _hoveredBuilding)
             {
@@ -105,25 +157,56 @@ namespace Dennis.Placement.Building
                 _hoveredBuilding = building;
                 if (_hoveredBuilding != null) _hoveredBuilding.Highlight(demolishHighlightMaterial);
             }
-
-            if (!Mouse.current.leftButton.wasPressedThisFrame || _hoveredBuilding == null) return;
-            grid.RemoveBuilding(_hoveredBuilding);
-            Destroy(_hoveredBuilding.gameObject);
-            _hoveredBuilding = null;
         }
+
+        /////////////////////////////////////////////////////////////////////////////////////
+        private void TryDemolishCell(Vector2Int cell)
+        {
+            // Straße löschen
+            if (grid.IsRoad(cell))
+            {
+                grid.RemoveRoad(cell);
+
+                var neighbours = new[]
+                {
+                    cell + Vector2Int.up,
+                    cell + Vector2Int.down,
+                    cell + Vector2Int.right,
+                    cell + Vector2Int.left
+                };
+                foreach (var n in neighbours.Where(n => grid.IsRoad(n)))
+                    roadHandler.UpdateRoadVisualPublic(n);
+
+                return;
+            }
+
+            // Gebäude löschen
+            var building = grid.GetBuildingAt(grid.CellToWorld(cell));
+            if (building == null) return;
+            if (_hoveredBuilding == building)
+            {
+                _hoveredBuilding.Unhighlight();
+                _hoveredBuilding = null;
+            }
+            grid.RemoveBuilding(building);
+            Destroy(building.gameObject);
+        }
+
         /////////////////////////////////////////////////////////////////////////////////////
         private void HandlePreview(Vector3 mousePosition)
         {
             _preview.transform.position = mousePosition;
 
             var buildPosition = _preview.BuildingModel.GetAllBuildingPositions();
-            var canBuild = grid.CanBuild(buildPosition);
+            var canBuild = grid.CanBuild(buildPosition) &&
+                           buildPosition.All(p => !grid.IsRoad(grid.WorldToCell(p)));
 
             if (canBuild)
             {
                 _preview.transform.position = GetSnappedCenterPosition(buildPosition);
                 _preview.ChangeState(BuildingPreview.BuildingPreviewState.Valid);
-                if (Mouse.current.leftButton.wasPressedThisFrame)
+                if (Mouse.current.leftButton.wasPressedThisFrame &&
+                    !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
                     PlaceBuilding(buildPosition);
             }
             else

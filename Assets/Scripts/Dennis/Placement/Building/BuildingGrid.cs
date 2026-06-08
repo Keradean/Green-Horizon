@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Dennis.Placement.Building; 
+using Dennis.Placement.Building;
 //*** De Col ***\\
+//=== Andy ===//
 namespace Dennis.Placement.Building
 {
     public class BuildingGrid : MonoBehaviour
@@ -12,9 +13,8 @@ namespace Dennis.Placement.Building
         private BuildingGridCell[,] _grid;
         private readonly Dictionary<Building, List<(int x, int y)>> _buildingCells = new();
 
-        // ── Road Tracking ──────────────────────────────────────────────────────
-        private readonly HashSet<Vector2Int>                _roadCells   = new();
-        private readonly Dictionary<Vector2Int, GameObject> _roadObjects = new();
+        private readonly HashSet<Vector2Int>                _roadCells      = new();
+        private readonly Dictionary<Vector2Int, GameObject> _roadContainers = new(); // feste Container pro Zelle
 
         /////////////////////////////////////////////////////////////////////////////////////////////////
         private void Start()
@@ -26,8 +26,6 @@ namespace Dennis.Placement.Building
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////////
-        // ── Building Placement ────────────────────────────────────────────────
-
         public void SetBuilding(Building building, List<Vector3> allBuildingPositions)
         {
             var cells = new List<(int x, int y)>();
@@ -72,41 +70,45 @@ namespace Dennis.Placement.Building
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////////
-        // ── Road Tracking ─────────────────────────────────────────────────────
-
-        /// <summary>Markiert eine Zelle als Straße und speichert das GameObject.</summary>
-        public void SetRoad(Vector2Int cell, GameObject roadObject)
+        public void SetRoad(Vector2Int cell)
         {
             _roadCells.Add(cell);
-            _roadObjects[cell] = roadObject;
+            // Container erstellen falls noch nicht vorhanden
+            if (!_roadContainers.ContainsKey(cell))
+            {
+                var container = new GameObject($"Road_{cell.x}_{cell.y}");
+                container.transform.SetParent(transform);
+                container.transform.position = CellToWorld(cell);
+                _roadContainers[cell] = container;
+            }
         }
 
-        /// <summary>Gibt true zurück wenn die Zelle eine Straße enthält.</summary>
         public bool IsRoad(Vector2Int cell) => _roadCells.Contains(cell);
 
-        /// <summary>
-        /// Ersetzt das visuelle GameObject einer Straßenzelle.
-        /// Das alte Objekt wird zerstört, das neue gespeichert.
-        /// </summary>
-        public void ReplaceRoadObject(Vector2Int cell, GameObject newObject)
+        // Tauscht das Modell im Container aus — löscht alle Kinder und instantiiert neu
+        public void SwapRoadModel(Vector2Int cell, GameObject prefab, float rotation)
         {
-            if (_roadObjects.TryGetValue(cell, out var old) && old != null)
-                Destroy(old);
-            _roadObjects[cell] = newObject;
+            if (!_roadContainers.TryGetValue(cell, out var container)) return;
+
+            // Alle alten Kinder löschen
+            foreach (Transform child in container.transform)
+                Destroy(child.gameObject);
+
+            // Neues Modell als Kind instantiieren
+            var model = Instantiate(prefab, container.transform);
+            model.transform.localPosition = Vector3.zero;
+            model.transform.localRotation = Quaternion.Euler(0, rotation, 0);
         }
 
-        /// <summary>Entfernt eine Straßenzelle komplett (Grid + Visual).</summary>
         public void RemoveRoad(Vector2Int cell)
         {
             _roadCells.Remove(cell);
-            if (_roadObjects.TryGetValue(cell, out var obj) && obj != null)
-                Destroy(obj);
-            _roadObjects.Remove(cell);
+            if (_roadContainers.TryGetValue(cell, out var container) && container != null)
+                Destroy(container);
+            _roadContainers.Remove(cell);
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////////
-        // ── Koordinaten ───────────────────────────────────────────────────────
-
         public Vector2Int WorldToCell(Vector3 worldPosition)
         {
             var (x, y) = WorldToGridPosition(worldPosition);
@@ -148,11 +150,10 @@ namespace Dennis.Placement.Building
             }
         }
     }
-    /************************************************************************************************/
+
     public class BuildingGridCell
     {
         private Building _building;
-
         public BuildingGridCell(Building building) => _building = building;
         public void SetBuilding(Building building)  => _building = building;
         public void Clear()                          => _building = null;
