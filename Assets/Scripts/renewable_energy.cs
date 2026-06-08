@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+//=== Can Özbal ===//
 
 public class renewable_energy : MonoBehaviour
 {
@@ -33,11 +34,8 @@ public class renewable_energy : MonoBehaviour
     public class EnergyInvestment
     {
         public EnergyType Type;
-
         public float InvestmentCost;
-
         public float EnergyOutput;
-
         public float HappinessBonus;
 
         // CO2-Stufe die beim Bauen als gute Entscheidung gemeldet wird (1-3)

@@ -1,4 +1,6 @@
 using UnityEngine;
+using Random = UnityEngine.Random;
+//=== Can Özbal ===//
 
 public class Audiomanager : MonoBehaviour
 {
