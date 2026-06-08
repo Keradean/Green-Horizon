@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+//=== Can Özbal ===//
 
 public class MainMenu : MonoBehaviour
 {
@@ -27,7 +28,6 @@ public class MainMenu : MonoBehaviour
         settingsButton.onClick.AddListener(OpenSettings);
         quitButton.onClick.AddListener(QuitGame);
         settingsBackButton.onClick.AddListener(CloseSettings);
-
         volumeSlider.onValueChanged.AddListener(OnVolumeChanged);
         fullscreenToggle.onValueChanged.AddListener(OnFullscreenChanged);
         graphicsDropdown.onValueChanged.AddListener(OnGraphicsQualityChanged);
@@ -51,15 +51,12 @@ public class MainMenu : MonoBehaviour
         settingsButton.onClick.RemoveListener(OpenSettings);
         quitButton.onClick.RemoveListener(QuitGame);
         settingsBackButton.onClick.RemoveListener(CloseSettings);
-
         volumeSlider.onValueChanged.RemoveListener(OnVolumeChanged);
         fullscreenToggle.onValueChanged.RemoveListener(OnFullscreenChanged);
         graphicsDropdown.onValueChanged.RemoveListener(OnGraphicsQualityChanged);
         resolutionDropdown.onValueChanged.RemoveListener(OnResolutionChanged);
     }
-
     #region Initialisation
-
     private void InitResolutionDropdown()
     {
         _resolutions = new List<Resolution>();
@@ -71,12 +68,10 @@ public class MainMenu : MonoBehaviour
             if (seen.Add(key))
                 _resolutions.Add(r);
         }
-
         var options = new List<string>();
         var currentIndex = 0;
         var savedW = PlayerPrefs.GetInt("ResW", Screen.currentResolution.width);
         var savedH = PlayerPrefs.GetInt("ResH", Screen.currentResolution.height);
-
         for (var i = 0; i < _resolutions.Count; i++)
         {
             options.Add($"{_resolutions[i].width} x {_resolutions[i].height}");
@@ -84,16 +79,13 @@ public class MainMenu : MonoBehaviour
             if (_resolutions[i].width == savedW && _resolutions[i].height == savedH)
                 currentIndex = i;
         }
-
         resolutionDropdown.ClearOptions();
         resolutionDropdown.AddOptions(options);
-
         resolutionDropdown.onValueChanged.RemoveListener(OnResolutionChanged);
         resolutionDropdown.value = currentIndex;
         resolutionDropdown.RefreshShownValue();
         resolutionDropdown.onValueChanged.AddListener(OnResolutionChanged);
     }
-
     private void InitGraphicsDropdown()
     {
         graphicsDropdown.ClearOptions();
@@ -118,26 +110,26 @@ public class MainMenu : MonoBehaviour
 
     #region Menu Button Functions
 
-    public void StartGame()
+    private static void StartGame()
     {
         Audiomanager.Instance.PlaySfx(1);
         SceneManager.LoadScene("Game");
     }
 
-    public void OpenSettings()
+    private void OpenSettings()
     {
         Audiomanager.Instance.PlaySfx(1);
         ShowPanel(settingsPanel);
     }
 
-    public void CloseSettings()
+    private void CloseSettings()
     {
         Audiomanager.Instance.PlaySfx(1);
         PlayerPrefs.Save();
         ShowPanel(mainMenuPanel);
     }
 
-    public void QuitGame()
+    private void QuitGame()
     {
         Audiomanager.Instance.PlaySfx(1);
 #if UNITY_EDITOR

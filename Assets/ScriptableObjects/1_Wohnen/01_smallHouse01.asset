@@ -17,7 +17,7 @@ MonoBehaviour:
   <BuildingName>k__BackingField: Small House
   <Description>k__BackingField: Seid lieb zu eurer Mutter ihr frechen Kinder
   <Icon>k__BackingField: {fileID: 21300000, guid: 6e9d2bda1079bdce5a68ef9172828204, type: 3}
-  <Residents>k__BackingField: 0
-  <IncomePerHour>k__BackingField: 0
+  <Residents>k__BackingField: 3
+  <IncomePerHour>k__BackingField: 2
   <GridSize>k__BackingField: 2x2
   <Pollution>k__BackingField: 0

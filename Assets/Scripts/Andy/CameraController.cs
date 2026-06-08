@@ -1,9 +1,11 @@
-using UnityEngine;
-using UnityEngine.InputSystem;
 using Andy.Manager;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
+
 //=== Andy ===//
 
-namespace Andy.Manager
+namespace Andy
 {
     public class CameraController : MonoBehaviour
     {
@@ -65,6 +67,7 @@ namespace Andy.Manager
 
         private void HandleZoom()
         {
+            if (EventSystem.current == null) return; 
             // Nicht zoomen wenn Maus über UI ist
             if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) return;
 

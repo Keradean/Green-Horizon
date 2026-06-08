@@ -1,30 +1,18 @@
 using UnityEngine;
+using Dennis.Manager;
+using Random = UnityEngine.Random;
+//=== Can Özbal ===//
 
-public class Audiomanager : MonoBehaviour
+public class Audiomanager : Singleton<Audiomanager>
 {
-    public static Audiomanager Instance { get; private set; }
-
-    [SerializeField] public AudioSource menuMusic;
-    [SerializeField] public AudioSource[] bgm;
-    [SerializeField] public AudioSource[] sfx;
+    public AudioSource menuMusic;
+    public AudioSource[] bgm;
+    public AudioSource[] sfx;
 
     private int _currentBGM;
     private bool _playingBGM;
 
     #region Lifecycle
-
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-    }
-
     private void Update()
     {
         IsBGMPlaying();
@@ -48,7 +36,7 @@ public class Audiomanager : MonoBehaviour
         _playingBGM = true;
     }
 
-    public void StopMusic()
+    private void StopMusic()
     {
         menuMusic.Stop();
 
@@ -62,10 +50,8 @@ public class Audiomanager : MonoBehaviour
     {
         if (!_playingBGM) return;
         if (bgm[_currentBGM].isPlaying) return;
-
         // Wenn die Musik nicht mehr spielt, gehe zum nächsten Element
         _currentBGM++;
-
         // Ist der Array durchgelaufen, fange von vorne an
         if (_currentBGM >= bgm.Length)
             _currentBGM = 0;
@@ -79,7 +65,8 @@ public class Audiomanager : MonoBehaviour
 
     public void PlaySfx(int sfxToPlay)
     {
-        sfx[sfxToPlay].PlayOneShot(sfx[sfxToPlay].clip);
+        if (sfx == null || sfxToPlay < 0 || sfxToPlay >= sfx.Length) return; 
+        sfx[sfxToPlay].Play();
     }
 
     #endregion

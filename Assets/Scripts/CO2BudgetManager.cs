@@ -50,6 +50,30 @@ public class CO2BudgetManager : MonoBehaviour
         OnBudgetChanged?.Invoke(currentFootprint);
     }
 
+    public void AddGoodDecision(int level)
+    {
+        float amount = 0f;
+        switch (level)
+        {
+            case 1:
+                amount = 10f; // Beispielwert für kleine gute Entscheidung
+                break;
+            case 2:
+                amount = 50f; // Beispielwert für mittlere gute Entscheidung
+                break;
+            case 3:
+                amount = 200f; // Beispielwert für große gute Entscheidung
+                break;
+            default:
+                amount = 0f;
+                break;
+        }
+
+        // Fußabdruck verringern, aber nicht < 0
+        currentFootprint = Mathf.Max(0f, currentFootprint - amount);
+        OnBudgetChanged?.Invoke(currentFootprint);
+    }
+
     public float GetCurrentFootprint()
     {
         return currentFootprint;
