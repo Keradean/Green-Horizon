@@ -1,79 +1,124 @@
-using System.Collections.Generic;
-using Andy.Manager;
-using Andy.Manager.CityStats;
-using Dennis.Manager;
-using Dennis.Placement.Building;
 using UnityEngine;
+
+// =========================
+// CityTickManager
+// Berechnet happinessValue aus dem Stadtzustand.
+// Alle Gewichte im Inspector justierbar.
+// =========================
 
 public class CityTickManager : MonoBehaviour
 {
-    public static CityTickManager Instance { get; private set; }
+    // =========================
+    // SINGLETON
+    // =========================
+
+    public static CityTickManager Instance;
+
     private void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this.gameObject);
-            return;
-        }
         Instance = this;
-        DontDestroyOnLoad(this.gameObject);
     }
 
-    [SerializeField]
-    private float daysPerSecond = 1f; // Anzahl der Tage, die pro Sekunde vergehen
+    // =========================
+    // TICK SETTINGS
+    // =========================
 
-    [SerializeField]
-    private TMPro.TMP_Text goldText; // UI-Text, um das aktuelle Gold anzuzeigen
+    [Header("Tick")]
+    [Tooltip("Sekunden zwischen zwei Berechnungen")]
+    public float tickInterval = 3f;
 
-    [SerializeField]
-    private TMPro.TMP_Text residentText;
+    private float _timer;
 
-    public int daysPassed = 0; // Anzahl der Tage, die seit Beginn des Spiels vergangen sind
+    // =========================
+    // FORMEL GEWICHTE
+    // =========================
 
-    private float tickPassed = 0f;
-    public List<BuildingData> Buildings { get; private set; } = new List<BuildingData>();
+    [Header("Basiswert")]
+    [Range(0f, 100f)]
+    [Tooltip("Happiness ohne irgendwelche Einflüsse")]
+    public float baseHappiness = 60f;
+
+    [Header("CO2 Einfluss (Co2Manager)")]
+    [Tooltip("Wie stark co2Value (0-1) die Happiness senkt")]
+    [Range(0f, 100f)]
+    public float co2Penalty = 40f;
+
+    [Header("Kreislaufwirtschaft Bonus")]
+    [Tooltip("Bonus wenn Circular Economy aktiv ist")]
+    [Range(0f, 30f)]
+    public float circularEconomyBonus = 15f;
+
+    [Header("Erneuerbare Energie Bonus")]
+    [Tooltip("Bonus pro gebautem Energieprojekt")]
+    [Range(0f, 20f)]
+    public float renewableEnergyBonus = 10f;
+
+    // =========================
+    // UPDATE
+    // =========================
 
     private void Update()
     {
-        // Berechne die Anzahl der Tage, die seit dem letzten Frame vergangen sind
-        if (GameStateManager.Instance.CurrentGameState == GameState.Paused) return;
+        _timer += Time.deltaTime;
 
-        this.tickPassed += Time.deltaTime * daysPerSecond;
-        int newDaysPassed = Mathf.FloorToInt(this.tickPassed);
-        if (newDaysPassed > this.daysPassed)
+        if (_timer >= tickInterval)
         {
-            UpdateDaysPassed(newDaysPassed);
+            _timer = 0f;
+            Tick();
         }
-        this.daysPassed = newDaysPassed;
     }
 
-    private void UpdateDaysPassed(int newDaysPassed)
+    // =========================
+    // TICK
+    // =========================
+
+    private void Tick()
     {
-        Debug.Log("Tag updated " + newDaysPassed);
-        Buildings.ForEach(building =>
+        float happiness = baseHappiness;
+
+        // CO2 Last senkt Happiness (co2Value: 0.035 = leer, 1 = voll)
+       // if (Co2Manager.Instance != null)
+   //         happiness -= Co2Manager.Instance.co2Value * co2Penalty;
+
+        // Kreislaufwirtschaft Bonus
+      //  if (CircularEconomyManager.Instance != null)
         {
-            GreenCoinManager.Instance.AddGold(building.IncomePerHour * 24);
-        });
-        // CO2BudgetManager.Instance.AddBadDecision(1);
-        // renewable_energy.Instance.Investments.ForEach(investment =>
-        // {
-        //     if (investment.IsBuilt)
-        //     {
-        //         CO2BudgetManager.Instance.AddGoodDecision(investment.CO2ReductionLevel);
-        //     }
-        // });
-        UpdateUI();
-        HappinessUiManager.Instance.happinessValue -= 5f; // Beispiel: Jeden Tag 0.5% Glücklichkeitsverlust
-        Co2Manager.Instance.co2Value += 0.1f; // Beispiel: Jeden Tag 0.01 CO2-Anstieg
-        Debug.Log(HappinessUiManager.Instance.happinessValue);
+            int activeCount = 0;
+
+        //    foreach (var mechanic in CircularEconomyManager.Instance.Mechanics)
+    //            if (mechanic.IsActive) activeCount++;
+
+            happiness += activeCount * circularEconomyBonus;
+        }
+
+        // Erneuerbare Energie Bonus
+     //   if (RenewableEnergyManager.Instance != null)
+        {
+            int builtCount = 0;
+
+      //      foreach (var inv in RenewableEnergyManager.Instance.Investments)
+    //            if (inv.IsBuilt) builtCount++;
+
+            happiness += builtCount * renewableEnergyBonus;
+        }
+
+        // Auf 0-100 klemmen und anwenden
+        happiness = Mathf.Clamp(happiness, 0f, 100f);
+
+    //    if (HappinessUiManager.Instance != null)
+   //         HappinessUiManager.Instance.happinessValue = happiness;
     }
 
-    private void UpdateUI()
+#if UNITY_EDITOR
+    // =========================
+    // DEBUG
+    // =========================
+
+    [ContextMenu("Tick manuell auslösen")]
+    private void DebugTick()
     {
-        // Format with comma as thousand separator
-        goldText.text = GreenCoinManager.Instance.CurrentGold.ToString("N0");
-        int residents = 0;
-        Buildings.ForEach(building => residents += building.Residents);
-        residentText.text = residents.ToString("N0");
+        Tick();
+   //     Debug.Log("Happiness nach Tick: " + HappinessUiManager.Instance?.happinessValue);
     }
+#endif
 }
