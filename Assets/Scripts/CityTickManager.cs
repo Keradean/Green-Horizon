@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Andy.Manager;
+using Andy.Manager.CityStats;
 using Dennis.Manager;
 using Dennis.Placement.Building;
 using UnityEngine;
@@ -62,13 +63,17 @@ public class CityTickManager : MonoBehaviour
         //     }
         // });
         UpdateUI();
+        HappinessUiManager.Instance.happinessValue -= 5f; // Beispiel: Jeden Tag 0.5% Glücklichkeitsverlust
+        Co2Manager.Instance.co2Value += 0.1f; // Beispiel: Jeden Tag 0.01 CO2-Anstieg
+        Debug.Log(HappinessUiManager.Instance.happinessValue);
     }
 
     private void UpdateUI()
     {
-        goldText.text = GreenCoinManager.Instance.CurrentGold.ToString();
+        // Format with comma as thousand separator
+        goldText.text = GreenCoinManager.Instance.CurrentGold.ToString("N0");
         int residents = 0;
         Buildings.ForEach(building => residents += building.Residents);
-        residentText.text = residents.ToString();
+        residentText.text = residents.ToString("N0");
     }
 }
