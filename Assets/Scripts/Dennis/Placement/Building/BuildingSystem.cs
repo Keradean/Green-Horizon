@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 //*** De Col ***//
+//=== Andy ===//
 namespace Dennis.Placement.Building
 {
     public class BuildingSystem : MonoBehaviour
@@ -33,7 +34,6 @@ namespace Dennis.Placement.Building
             Instance = this;
             _camera = Camera.main;
 
-            // Demolish Preview Plane erstellen
             _demolishPreviewPlane = GameObject.CreatePrimitive(PrimitiveType.Quad);
             _demolishPreviewPlane.GetComponent<Renderer>().material = demolishHighlightMaterial;
             _demolishPreviewPlane.transform.rotation = Quaternion.Euler(90, 0, 0);
@@ -124,9 +124,10 @@ namespace Dennis.Placement.Building
                 _demolishPreviewPlane.SetActive(false);
             }
 
-            // Straßen Drag-Demolish
+            // Drag-Demolish
             if (Mouse.current.leftButton.wasPressedThisFrame)
             {
+                if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) return;
                 _isDraggingDemolish = true;
                 _demolishLast = cell;
                 TryDemolishCell(cell);
@@ -143,14 +144,11 @@ namespace Dennis.Placement.Building
                 return;
             }
 
-            if (Mouse.current.leftButton.wasPressedThisFrame)
-                {
-                    if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) return;
-                    _isDraggingDemolish = true;
-                    _demolishLast = cell;
-                    TryDemolishCell(cell);
-                    return;
-                }
+            if (Mouse.current.leftButton.wasReleasedThisFrame)
+            {
+                _isDraggingDemolish = false;
+                return;
+            }
 
             // Gebäude hover highlight
             var building = grid.GetBuildingAt(mousePos);
@@ -165,7 +163,6 @@ namespace Dennis.Placement.Building
         /////////////////////////////////////////////////////////////////////////////////////
         private void TryDemolishCell(Vector2Int cell)
         {
-            // Straße löschen
             if (grid.IsRoad(cell))
             {
                 grid.RemoveRoad(cell);
@@ -183,7 +180,6 @@ namespace Dennis.Placement.Building
                 return;
             }
 
-            // Gebäude löschen
             var building = grid.GetBuildingAt(grid.CellToWorld(cell));
             if (building == null) return;
             if (_hoveredBuilding == building)

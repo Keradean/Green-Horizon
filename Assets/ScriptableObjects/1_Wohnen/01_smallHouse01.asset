@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36d07d1105d47ea4d9d2bb338e8b41d6, type: 3}
   m_Name: 01_smallHouse01
   m_EditorClassIdentifier: Assembly-CSharp::Placement.BuildingData
-  <Cost>k__BackingField: 1
+  <Cost>k__BackingField: 100
   <Model>k__BackingField: {fileID: 7938737080107574164, guid: d5500aa5fdc919643a0f8e69f025a783, type: 3}
   <BuildingName>k__BackingField: Small House
   <Description>k__BackingField: Seid lieb zu eurer Mutter ihr frechen Kinder

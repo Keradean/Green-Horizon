@@ -2762,7 +2762,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c7b1935e328c2824d9ac77e2ab4f7014, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 32dd8b42bf6b76f41a4e90097a64007a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2792,7 +2792,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c030b2d31dfc0804b9accd7353f55e47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.BuildingButton
-  buildingData: {fileID: 0}
+  buildingData: {fileID: 11400000, guid: a76ce973eb92e244496d0f8513a3daa9, type: 2}
   isRoadButton: 0
   isDemolishButton: 0
 --- !u!1 &202144270
@@ -4067,8 +4067,8 @@ MonoBehaviour:
   maxZoom: 5
   enableRotation: 1
   rotationSpeed: 20
-  minBounds: {x: -15, y: -15}
-  maxBounds: {x: 15, y: 15}
+  minBounds: {x: -20, y: -20}
+  maxBounds: {x: 20, y: 20}
 --- !u!1 &281801925
 GameObject:
   m_ObjectHideFlags: 0
@@ -6011,7 +6011,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 123,456,789
+  m_text: 123.456.789
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
   m_sharedMaterial: {fileID: 2147374, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
@@ -21643,7 +21643,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 704f438a25e444048a67cd4202111f49, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7676a5df6418b2c4d8d373a767c3b8d2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
