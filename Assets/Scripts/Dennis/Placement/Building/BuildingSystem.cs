@@ -144,11 +144,14 @@ namespace Dennis.Placement.Building
                 return;
             }
 
-            if (Mouse.current.leftButton.wasReleasedThisFrame)
-            {
-                _isDraggingDemolish = false;
-                return;
-            }
+            if (Mouse.current.leftButton.wasPressedThisFrame)
+                {
+                    if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) return;
+                    _isDraggingDemolish = true;
+                    _demolishLast = cell;
+                    TryDemolishCell(cell);
+                    return;
+                }
 
             // Gebäude hover highlight
             var building = grid.GetBuildingAt(mousePos);
