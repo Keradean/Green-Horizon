@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using Andy.Manager;
-using Andy.Manager.CityStats;
 using Dennis.Manager;
 using Dennis.Placement.Building;
 using UnityEngine;
 
-public class CityTickManager : MonoBehaviour
+namespace Samil.Manager
 {
+    public class CityTickManager : MonoBehaviour
+    {
     public static CityTickManager Instance { get; private set; }
     private void Awake()
     {
@@ -72,4 +73,5 @@ public class CityTickManager : MonoBehaviour
         Buildings.ForEach(building => residents += building.Residents);
         residentText.text = residents.ToString("N0");
     }
+}
 }
