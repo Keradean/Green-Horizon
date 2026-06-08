@@ -25,6 +25,7 @@ namespace Andy.Manager
 
         public void ShowPanel(int index)
         {
+            if (index < 0 || index >= buildingPanels.Length) return;
             for (var i = 0; i < buildingPanels.Length; i++)
             {
                 buildingPanels[i].SetActive(i == index);
