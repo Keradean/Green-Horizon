@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Andy.Manager;
 using Dennis.Manager;
 using Dennis.Placement.Building;
 using UnityEngine;
@@ -74,11 +73,9 @@ public class CityTickManager : MonoBehaviour
     {
         _timer += Time.deltaTime;
 
-        if (_timer >= tickInterval)
-        {
-            _timer = 0f;
-            Tick();
-        }
+        if (!(_timer >= tickInterval)) return;
+        _timer = 0f;
+        Tick();
     }
 
     // =========================
@@ -87,7 +84,6 @@ public class CityTickManager : MonoBehaviour
 
     private void Tick()
     {
-        Debug.Log("Tag updated " + newDaysPassed);
         Buildings.ForEach(building =>
         {
             GreenCoinManager.Instance.AddGold(building.IncomePerHour * 24);
@@ -106,7 +102,7 @@ public class CityTickManager : MonoBehaviour
     private void UpdateUI()
     {
         goldText.text = GreenCoinManager.Instance.CurrentGold.ToString();
-        int residents = 0;
+        var residents = 0;
         Buildings.ForEach(building => residents += building.Residents);
         residentText.text = residents.ToString();
     }
