@@ -2,20 +2,20 @@ namespace Dennis.Manager
 {
     public class GreenCoinManager : Singleton<GreenCoinManager>
     {
-        public int currentGold;
+        public int CurrentGold { get; private set; } = 1000; // Startwert für das Gold
         ////////////////////////////////////////////////////////////////////////////////////////////////
         public void AddGold(int amount)
         {
-            currentGold += amount;
+            CurrentGold += amount;
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////
         public bool SpendGold(int amount)
         {
             var canSpendGold = false;
-            if (amount <= currentGold)
+            if (amount <= CurrentGold)
             {
                 canSpendGold = true;
-                currentGold -=  amount;
+                CurrentGold -=  amount;
             }
             return canSpendGold;
         }

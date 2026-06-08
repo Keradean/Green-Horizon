@@ -145,9 +145,10 @@ namespace Dennis.Placement.Building
         private void PlaceBuilding(List<Vector3> buildPosition)
         {
             if (_preview == null) return;
-            if (GreenCoinManager.Instance.currentGold < _preview.Data.Cost) return;
+            if (GreenCoinManager.Instance.CurrentGold < _preview.Data.Cost) return;
 
             GreenCoinManager.Instance.SpendGold(_preview.Data.Cost);
+            CityTickManager.Instance.Buildings.Add(_preview.Data);
             var rotation = Quaternion.Euler(0, _preview.BuildingModel.Rotation, 0);
             var building = Instantiate(buildingPrefab, _preview.transform.position, rotation);
             building.Setup(_preview.Data, _preview.BuildingModel.Rotation);
