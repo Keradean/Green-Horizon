@@ -1,8 +1,9 @@
-using System.Collections.Generic;
-using System.Linq;
+using Andy.Manager;
 using Dennis.Manager;
 using Dennis.Placement.Road;
 using Samil.Manager;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -17,6 +18,7 @@ namespace Dennis.Placement.Building
         [SerializeField] private BuildingPreview buildingPreviewPrefab;
         [SerializeField] private Building buildingPrefab;
         [SerializeField] private BuildingGrid grid;
+        [SerializeField] private DemolishButton demolishButton;
         [SerializeField] private Material demolishHighlightMaterial;
         public const float CellSize = 1f;
         private BuildingPreview _preview;
@@ -98,12 +100,19 @@ namespace Dennis.Placement.Building
             roadHandler.Cancel();
         }
         private void HandleRoadMode(Vector3 mousePos) => roadHandler.Tick(mousePos);
-        private void EnterDemolishMode() => _isDemolishMode = true;
+
+        private void EnterDemolishMode()
+        {
+            _isDemolishMode = true;
+            demolishButton?.SetActive(true);
+        }
+
         private void ExitDemolishMode()
         {
             _isDemolishMode = false;
             _isDraggingDemolish = false;
             _demolishPreviewPlane.SetActive(false);
+            demolishButton?.SetActive(false);
             if (_hoveredBuilding == null) return;
             _hoveredBuilding.Unhighlight();
             _hoveredBuilding = null;
@@ -233,7 +242,6 @@ namespace Dennis.Placement.Building
             var building = Instantiate(buildingPrefab, _preview.transform.position, rotation);
             building.Setup(_preview.Data, _preview.BuildingModel.Rotation);
 
-            // Pfeile im platzierten Gebäude zerstören
             foreach (var arrow in building.GetComponentsInChildren<DestroyOnPlace>())
                 arrow.OnPlaced();
 
