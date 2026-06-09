@@ -50,10 +50,18 @@ namespace Samil.Manager
 
     private void UpdateDaysPassed(int newDaysPassed)
     {
+        var totalPollution = 0f;
         Buildings.ForEach(building =>
         {
             GreenCoinManager.Instance.AddGold(building.IncomePerHour * 24);
+            totalPollution += building.Pollution;
         });
+
+        if (totalPollution > 0)
+        {
+            Co2BudgetManager.Instance.AddPollution(totalPollution);
+        }
+
         // CO2BudgetManager.Instance.AddBadDecision(1);
         // renewable_energy.Instance.Investments.ForEach(investment =>
         // {
