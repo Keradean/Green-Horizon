@@ -11,6 +11,16 @@ namespace Furkan
         [Tooltip("Startwert des CO2-Fußabdrucks in Tonnen")]
         public float startFootprint = 0f;
 
+        [Tooltip("Maximaler CO2-Fußabdruck, bevor Strafen anfallen")]
+        public float maxFootprint = 1000f;
+
+        [Tooltip("Prozentualer Schwellenwert für die Warnung (0.0 bis 1.0)")]
+        [Range(0f, 1f)]
+        public float warningThreshold = 0.8f;
+
+        [Tooltip("Geldstrafe pro Tag, wenn das CO2-Limit überschritten ist")]
+        public int pollutionPenalty = 100;
+
         [Tooltip("Aktueller CO2-Fußabdruck in Tonnen")]
         public float currentFootprint;
 
@@ -61,6 +71,26 @@ namespace Furkan
 
             // Fußabdruck verringern, aber nicht < 0
             currentFootprint = Mathf.Max(0f, currentFootprint - amount);
+            OnBudgetChanged?.Invoke(currentFootprint);
+        }
+
+        public void AddPollution(float amount)
+        {
+            currentFootprint += amount;
+
+            // Warnung prüfen
+            if (currentFootprint >= maxFootprint * warningThreshold && currentFootprint < maxFootprint)
+            {
+                Debug.LogWarning($"[CO2 Warnung] Dein CO2-Fußabdruck ist hoch ({currentFootprint:F1}/{maxFootprint})!");
+            }
+
+            // Strafe prüfen
+            if (currentFootprint >= maxFootprint)
+            {
+                Debug.LogError($"[CO2 ALARM] Limit überschritten! Strafe von {pollutionPenalty} Gold fällig.");
+                Dennis.Manager.GreenCoinManager.Instance.SpendGold(pollutionPenalty);
+            }
+
             OnBudgetChanged?.Invoke(currentFootprint);
         }
 
