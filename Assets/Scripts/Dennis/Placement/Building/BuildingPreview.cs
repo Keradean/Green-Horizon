@@ -23,7 +23,14 @@ namespace Dennis.Placement.Building
         {
             Data = data;
             BuildingModel = Instantiate(data.Model, transform.position, Quaternion.identity, transform);
-            _renderers.AddRange(BuildingModel.GetComponentsInChildren<Renderer>());
+
+            // Nur Renderer sammeln die KEIN DestroyOnPlace haben (also kein Pfeil)
+            foreach (var r in BuildingModel.GetComponentsInChildren<Renderer>())
+            {
+                if (r.GetComponentInParent<DestroyOnPlace>() == null)
+                    _renderers.Add(r);
+            }
+
             _colliders.AddRange(BuildingModel.GetComponentsInChildren<Collider>());
             foreach (var col in _colliders) col.enabled = false;
             SetPreviewMaterial(State);

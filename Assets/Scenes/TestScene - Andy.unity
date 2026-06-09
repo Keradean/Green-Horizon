@@ -11137,7 +11137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e656f422a3be4b4288973a5d3ed8d1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Manager.GreenCoinManager
-  <CurrentGold>k__BackingField: 1000
+  <CurrentGold>k__BackingField: 10000000
 --- !u!1 &1010926197
 GameObject:
   m_ObjectHideFlags: 0

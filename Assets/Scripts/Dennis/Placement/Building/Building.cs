@@ -18,7 +18,13 @@ namespace Dennis.Placement.Building
             _data = data;
             _model = Instantiate(data.Model, transform.position, Quaternion.identity, transform);
             _model.Rotate(rotation);
-            _renderers.AddRange(_model.GetComponentsInChildren<Renderer>());
+
+            // Nur Renderer sammeln die kein DestroyOnPlace haben (kein Pfeil)
+            foreach (var r in _model.GetComponentsInChildren<Renderer>())
+            {
+                if (r.GetComponentInParent<DestroyOnPlace>() == null)
+                    _renderers.Add(r);
+            }
         }
         /////////////////////////////////////////////////////////////////////////////////////
         public void Highlight(Material highlightMaterial)
