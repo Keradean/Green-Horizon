@@ -10,7 +10,6 @@
     <list default="true" id="445b1f86-ba65-42be-9e98-d8cba4e68774" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CO2BudgetManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CO2BudgetManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Samil/Manager/CityTickManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Samil/Manager/CityTickManager.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
