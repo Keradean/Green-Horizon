@@ -1,88 +1,117 @@
 using UnityEngine;
+using System;
 using System.Collections.Generic;
 
-public class Ereignisse : MonoBehaviour
+namespace Furkan.Ereignisse
 {
-    public static Ereignisse Instance { get; private set; }
-
-    private Queue<string> eventPool = new Queue<string>();
-    private List<string> allEvents = new List<string>
+    public class Ereignisse : MonoBehaviour
     {
-        "Dürren",
-        "Überflutungen",
-        "Hitzewellen",
-        "Politische Unruhen"
-    };
+        public static Ereignisse Instance { get; private set; }
 
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
+        public int Geld = 0;
+        public int müll = 0;
+
+        private bool droughtTriggered = false;
+        private bool floodsTriggered = false;
+        private bool heatWaveTriggered = false;
+        private bool politicalUnrestTriggered = false;
+
+        private void Awake()
         {
-            Destroy(this.gameObject);
-            return;
-        }
-        Instance = this;
-        DontDestroyOnLoad(this.gameObject);
-        InitializePool();
-    }
+            if (Instance != null && Instance != this)
+            {
+                Destroy(this.gameObject);
+                return;
+            }
 
-    private void InitializePool()
-    {
-        // Fülle den Pool mit allen Ereignis-Namen
-        foreach (string eventName in allEvents)
-        {
-            eventPool.Enqueue(eventName);
+            Instance = this;
+            DontDestroyOnLoad(this.gameObject);
         }
-        Debug.Log($"Ereignis-Pool initialisiert mit {eventPool.Count} Ereignissen");
-    }
 
-    /// <summary>
-    /// Holt das nächste Ereignis aus dem Pool
-    /// </summary>
-    public string Get()
-    {
-        if (eventPool.Count > 0)
+        private void Update()
         {
-            string eventName = eventPool.Dequeue();
-            Debug.Log($"[Pool] Ereignis abgerufen: {eventName}. Verbleibend: {eventPool.Count}");
-            return eventName;
-        }
-        else
-        {
-            Debug.LogWarning("Ereignis-Pool ist leer!");
-            return null;
-        }
-    }
+            if (CO2BudgetManager.Instance != null)
+            {
+                float currentCo2 = CO2BudgetManager.Instance.currentFootprint;
+                
+                // Dürren-Trigger
+                if (currentCo2 == 70 && !droughtTriggered)
+                {
+                    TriggerDrought();
+                    droughtTriggered = true;
+                }
+                else if (currentCo2 != 70)
+                {
+                    droughtTriggered = false;
+                }
 
-    /// <summary>
-    /// Gibt ein Ereignis an den Pool zurück
-    /// </summary>
-    public void Release(string eventName)
-    {
-        if (!string.IsNullOrEmpty(eventName))
-        {
-            eventPool.Enqueue(eventName);
-            Debug.Log($"[Pool] Ereignis freigegeben: {eventName}. Verfügbar: {eventPool.Count}");
-        }
-        else
-        {
-            Debug.LogWarning("Versuch, null an den Pool zurückzugeben");
-        }
-    }
+                // Überflutungen-Trigger
+                if (currentCo2 == 75 && müll > 50 && !floodsTriggered)
+                {
+                    TriggerFloods();
+                    floodsTriggered = true;
+                }
+                else if (currentCo2 != 75 || müll <= 50)
+                {
+                    floodsTriggered = false;
+                }
 
-    /// <summary>
-    /// Gibt die Anzahl der verfügbaren Ereignisse zurück
-    /// </summary>
-    public int GetAvailableEventCount()
-    {
-        return eventPool.Count;
-    }
+                // Hitzewellen-Trigger
+                if (currentCo2 == 50 && !heatWaveTriggered)
+                {
+                    TriggerHeatWave();
+                    heatWaveTriggered = true;
+                }
+                else if (currentCo2 != 50)
+                {
+                    heatWaveTriggered = false;
+                }
+                
+                if (currentCo2 == 50 && Geld < 30 && !politicalUnrestTriggered)
+                {
+                    TriggerPoliticalUnrest();
+                    politicalUnrestTriggered = true;
+                }
+                else if (currentCo2 != 50 || Geld >= 30)
+                {
+                    politicalUnrestTriggered = false;
+                }
+            }
+        }
 
-    /// <summary>
-    /// Gibt alle Ereignis-Namen aus
-    /// </summary>
-    public List<string> GetAllEventNames()
-    {
-        return allEvents;
+        // Event-Funktionen
+        private void TriggerDrought()
+        {
+            Geld -= 10;
+            müll += 5;
+            if (CO2BudgetManager.Instance != null)
+            {
+                CO2BudgetManager.Instance.AddBadDecision(1); // CO2 steigt leicht an (z.B. durch Waldbrände)
+            }
+            Debug.Log("Dürren-Event ausgelöst! Geld -10, Müll +5, CO2 +10");
+        }
+
+        private void TriggerFloods()
+        {
+            Geld -= 40;
+            müll += 20;
+            Debug.Log("Überflutungs-Event ausgelöst! Geld -40, Müll +20");
+        }
+
+        private void TriggerHeatWave()
+        {
+            Geld -= 10;
+            Debug.Log("Hitzewellen-Event ausgelöst! Geld -10");
+        }
+
+        private void TriggerPoliticalUnrest()
+        {
+            müll += 35;
+            if (CO2BudgetManager.Instance != null)
+            {
+                CO2BudgetManager.Instance.AddBadDecision(2);
+            }
+            Debug.Log("Politische Unruhen-Event ausgelöst! Müll +35, CO2 +50");
+        }
     }
 }
