@@ -49,9 +49,9 @@ namespace Dennis.Placement.Building
             ConsumedEscapeThisFrame = false;
             if (Keyboard.current.escapeKey.wasPressedThisFrame)
             {
-                if (_preview != null)  { CancelPreview();    ConsumedEscapeThisFrame = true; return; }
-                if (_isDemolishMode)   { ExitDemolishMode(); ConsumedEscapeThisFrame = true; return; }
-                if (_isRoadMode)       { ExitRoadMode();     ConsumedEscapeThisFrame = true; return; }
+                if (_preview != null) { CancelPreview(); ConsumedEscapeThisFrame = true; return; }
+                if (_isDemolishMode) { ExitDemolishMode(); ConsumedEscapeThisFrame = true; return; }
+                if (_isRoadMode) { ExitRoadMode(); ConsumedEscapeThisFrame = true; return; }
                 if (Andy.Manager.GameStateManager.Instance.CurrentGameState != Andy.Manager.GameState.Paused)
                 {
                     Andy.Manager.GameStateManager.Instance.SetState(Andy.Manager.GameState.Paused);
@@ -65,8 +65,8 @@ namespace Dennis.Placement.Building
             var mousePos = GetMousePosition();
 
             if (_isDemolishMode) { HandleDemolishMode(mousePos); return; }
-            if (_isRoadMode)     { HandleRoadMode(mousePos);     return; }
-            if (_preview != null){ HandlePreview(mousePos);      return; }
+            if (_isRoadMode) { HandleRoadMode(mousePos); return; }
+            if (_preview != null) { HandlePreview(mousePos); return; }
 
             if (Keyboard.current.xKey.wasPressedThisFrame)
                 EnterDemolishMode();
@@ -115,7 +115,6 @@ namespace Dennis.Placement.Building
 
             var cell = grid.WorldToCell(mousePos);
 
-            // Preview Plane positionieren
             if (grid.IsRoad(cell) || grid.GetBuildingAt(mousePos) != null)
             {
                 _demolishPreviewPlane.SetActive(true);
@@ -126,7 +125,6 @@ namespace Dennis.Placement.Building
                 _demolishPreviewPlane.SetActive(false);
             }
 
-            // Drag-Demolish
             if (Mouse.current.leftButton.wasPressedThisFrame)
             {
                 if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) return;
@@ -152,7 +150,6 @@ namespace Dennis.Placement.Building
                 return;
             }
 
-            // Gebäude hover highlight
             var building = grid.GetBuildingAt(mousePos);
             if (building != _hoveredBuilding)
             {
@@ -229,13 +226,17 @@ namespace Dennis.Placement.Building
         {
             if (_preview == null) return;
             if (GreenCoinManager.Instance.CurrentGold < _preview.Data.Cost) return;
-            Debug.Log($"GreenCoinManager: {GreenCoinManager.Instance}");
-            Debug.Log($"Preview.Data: {_preview.Data}");
             GreenCoinManager.Instance.SpendGold(_preview.Data.Cost);
             CityTickManager.Instance.Buildings.Add(_preview.Data);
+
             var rotation = Quaternion.Euler(0, _preview.BuildingModel.Rotation, 0);
             var building = Instantiate(buildingPrefab, _preview.transform.position, rotation);
             building.Setup(_preview.Data, _preview.BuildingModel.Rotation);
+
+            // Pfeile im platzierten Gebäude zerstören
+            foreach (var arrow in building.GetComponentsInChildren<DestroyOnPlace>())
+                arrow.OnPlaced();
+
             grid.SetBuilding(building, buildPosition);
             Destroy(_preview.gameObject);
             _preview = null;
@@ -244,8 +245,8 @@ namespace Dennis.Placement.Building
         public void CancelAll()
         {
             if (_preview != null) CancelPreview();
-            if (_isDemolishMode)  ExitDemolishMode();
-            if (_isRoadMode)      ExitRoadMode();
+            if (_isDemolishMode) ExitDemolishMode();
+            if (_isRoadMode) ExitRoadMode();
         }
 
         /////////////////////////////////////////////////////////////////////////////////////

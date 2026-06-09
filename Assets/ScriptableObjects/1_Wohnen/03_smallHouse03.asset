@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36d07d1105d47ea4d9d2bb338e8b41d6, type: 3}
   m_Name: 03_smallHouse03
   m_EditorClassIdentifier: Assembly-CSharp::Placement.BuildingData
-  <Cost>k__BackingField: 1
+  <Cost>k__BackingField: 1000
   <Model>k__BackingField: {fileID: 7938737080107574164, guid: 0141d210e72611b43bbe80cc7185c5df, type: 3}
   <BuildingName>k__BackingField: 
   <Description>k__BackingField: 
