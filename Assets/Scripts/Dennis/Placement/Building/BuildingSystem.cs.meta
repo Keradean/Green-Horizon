@@ -8,7 +8,9 @@ MonoImporter:
   - buildingPreviewPrefab: {instanceID: 0}
   - buildingPrefab: {instanceID: 0}
   - grid: {instanceID: 0}
+  - demolishButton: {instanceID: 0}
   - demolishHighlightMaterial: {fileID: 2100000, guid: b68c54cee97e8dc43908d014ee566015, type: 2}
+  - noRoadAnnouncement: {instanceID: 0}
   executionOrder: 100
   icon: {instanceID: 0}
   userData: 

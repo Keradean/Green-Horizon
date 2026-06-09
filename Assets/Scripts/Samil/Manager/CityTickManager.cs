@@ -58,7 +58,7 @@ namespace Samil.Manager
             totalPollution += building.Pollution;
         });
 
-        if (totalPollution > 0)
+        if (totalPollution > 0 && Co2BudgetManager.Instance != null)
         {
             Co2BudgetManager.Instance.AddPollution(totalPollution);
         }

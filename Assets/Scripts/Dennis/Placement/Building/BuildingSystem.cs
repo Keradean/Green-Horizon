@@ -20,6 +20,7 @@ namespace Dennis.Placement.Building
         [SerializeField] private BuildingGrid grid;
         [SerializeField] private DemolishButton demolishButton;
         [SerializeField] private Material demolishHighlightMaterial;
+        [SerializeField] private AnnouncementData noRoadAnnouncement;
         public const float CellSize = 1f;
         private BuildingPreview _preview;
         private Building _hoveredBuilding;
@@ -205,8 +206,19 @@ namespace Dennis.Placement.Building
             _preview.transform.position = mousePosition;
 
             var buildPosition = _preview.BuildingModel.GetAllBuildingPositions();
+
+            var hasRoadNeighbour = buildPosition.Any(p =>
+            {
+                var cell = grid.WorldToCell(p);
+                return grid.IsRoad(cell + Vector2Int.up) ||
+                       grid.IsRoad(cell + Vector2Int.down) ||
+                       grid.IsRoad(cell + Vector2Int.right) ||
+                       grid.IsRoad(cell + Vector2Int.left);
+            });
+
             var canBuild = grid.CanBuild(buildPosition) &&
-                           buildPosition.All(p => !grid.IsRoad(grid.WorldToCell(p)));
+                           buildPosition.All(p => !grid.IsRoad(grid.WorldToCell(p))) &&
+                           hasRoadNeighbour;
 
             if (canBuild)
             {
@@ -219,6 +231,14 @@ namespace Dennis.Placement.Building
             else
             {
                 _preview.ChangeState(BuildingPreview.BuildingPreviewState.Invalid);
+
+                // Announcement nur wenn Klick auf ungültige Position ohne Straße
+                if (Mouse.current.leftButton.wasPressedThisFrame &&
+                    !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject() &&
+                    !hasRoadNeighbour)
+                {
+                    AnnouncementManager.Instance.Show(noRoadAnnouncement);
+                }
             }
 
             if (Keyboard.current?.rKey.wasPressedThisFrame == true)
@@ -242,7 +262,7 @@ namespace Dennis.Placement.Building
             var building = Instantiate(buildingPrefab, _preview.transform.position, rotation);
             building.Setup(_preview.Data, _preview.BuildingModel.Rotation);
 
-            foreach (var arrow in building.GetComponentsInChildren<DestroyOnPlace>())
+            foreach (var arrow in building.GetComponentsInChildren<Andy.DestroyOnPlace>())
                 arrow.OnPlaced();
 
             grid.SetBuilding(building, buildPosition);
