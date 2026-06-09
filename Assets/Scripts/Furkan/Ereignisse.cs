@@ -1,9 +1,7 @@
 using UnityEngine;
-using System;
-using System.Collections.Generic;
 using UnityEngine.Serialization;
 
-namespace Furkan.Ereignisse
+namespace Furkan
 {
     public class Ereignisse : MonoBehaviour
     {
