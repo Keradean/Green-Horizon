@@ -1,14 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
+
 //=== Can Özbal ===//
 
-public class renewable_energy : MonoBehaviour
+public class RenewableEnergy : MonoBehaviour
 {
     // =========================
     // SINGLETON
     // =========================
 
-    public static renewable_energy Instance;
+    public static RenewableEnergy Instance;
 
     private void Awake()
     {
@@ -33,23 +35,23 @@ public class renewable_energy : MonoBehaviour
     [System.Serializable]
     public class EnergyInvestment
     {
-        public EnergyType Type;
-        public float InvestmentCost;
-        public float EnergyOutput;
-        public float HappinessBonus;
+        [FormerlySerializedAs("Type")] public EnergyType type;
+        [FormerlySerializedAs("InvestmentCost")] public float investmentCost;
+        [FormerlySerializedAs("EnergyOutput")] public float energyOutput;
+        [FormerlySerializedAs("HappinessBonus")] public float happinessBonus;
 
         // CO2-Stufe die beim Bauen als gute Entscheidung gemeldet wird (1-3)
-        [Range(1, 3)]
-        public int CO2ReductionLevel = 1;
+        [FormerlySerializedAs("CO2ReductionLevel")] [Range(1, 3)]
+        public int co2ReductionLevel = 1;
 
-        public bool IsBuilt;
+        [FormerlySerializedAs("IsBuilt")] public bool isBuilt;
     }
 
     // =========================
     // INVESTMENTS
     // =========================
 
-    public List<EnergyInvestment> Investments =
+    [FormerlySerializedAs("Investments")] public List<EnergyInvestment> investments =
         new List<EnergyInvestment>();
 
     // =========================
@@ -66,18 +68,18 @@ public class renewable_energy : MonoBehaviour
     public bool Invest(EnergyType type)
     {
         EnergyInvestment investment =
-            Investments.Find(i => i.Type == type);
+            investments.Find(i => i.type == type);
 
         if (investment == null)
             return false;
 
-        if (investment.IsBuilt)
+        if (investment.isBuilt)
         {
             Debug.Log(type + " bereits gebaut.");
             return false;
         }
 
-        investment.IsBuilt = true;
+        investment.isBuilt = true;
 
         RecalculateTotals();
 
@@ -90,9 +92,9 @@ public class renewable_energy : MonoBehaviour
             HappinessManager.Instance.AddModifier(
                 0,
                 HappinessManager.HappinessType.Parks,
-                investment.HappinessBonus);
+                investment.happinessBonus);
 
-        Debug.Log(type + " gebaut! Output: " + investment.EnergyOutput);
+        Debug.Log(type + " gebaut! Output: " + investment.energyOutput);
         return true;
     }
 
@@ -103,12 +105,12 @@ public class renewable_energy : MonoBehaviour
     public void Remove(EnergyType type)
     {
         EnergyInvestment investment =
-            Investments.Find(i => i.Type == type);
+            investments.Find(i => i.type == type);
 
-        if (investment == null || !investment.IsBuilt)
+        if (investment == null || !investment.isBuilt)
             return;
 
-        investment.IsBuilt = false;
+        investment.isBuilt = false;
 
         RecalculateTotals();
 
@@ -134,13 +136,13 @@ public class renewable_energy : MonoBehaviour
         TotalEnergyOutput   = 0f;
         TotalHappinessBonus = 0f;
 
-        foreach (var inv in Investments)
+        foreach (var inv in investments)
         {
-            if (!inv.IsBuilt)
+            if (!inv.isBuilt)
                 continue;
 
-            TotalEnergyOutput   += inv.EnergyOutput;
-            TotalHappinessBonus += inv.HappinessBonus;
+            TotalEnergyOutput   += inv.energyOutput;
+            TotalHappinessBonus += inv.happinessBonus;
         }
     }
 
@@ -151,18 +153,18 @@ public class renewable_energy : MonoBehaviour
     public bool IsBuilt(EnergyType type)
     {
         EnergyInvestment investment =
-            Investments.Find(i => i.Type == type);
+            investments.Find(i => i.type == type);
 
-        return investment != null && investment.IsBuilt;
+        return investment != null && investment.isBuilt;
     }
 
     public float GetOutput(EnergyType type)
     {
         EnergyInvestment investment =
-            Investments.Find(i => i.Type == type);
+            investments.Find(i => i.type == type);
 
-        return investment != null && investment.IsBuilt
-            ? investment.EnergyOutput
+        return investment != null && investment.isBuilt
+            ? investment.energyOutput
             : 0f;
     }
 }

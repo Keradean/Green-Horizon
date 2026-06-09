@@ -31,7 +31,7 @@ namespace Samil.Manager
 
     public int daysPassed = 0; // Anzahl der Tage, die seit Beginn des Spiels vergangen sind
 
-    private float tickPassed = 0f;
+    private float _tickPassed = 0f;
     public List<BuildingData> Buildings { get; private set; } = new List<BuildingData>();
 
     private void Update()
@@ -39,8 +39,8 @@ namespace Samil.Manager
         // Berechne die Anzahl der Tage, die seit dem letzten Frame vergangen sind
         if (GameStateManager.Instance.CurrentGameState == GameState.Paused) return;
 
-        tickPassed += Time.deltaTime * daysPerSecond;
-        var newDaysPassed = Mathf.FloorToInt(tickPassed);
+        _tickPassed += Time.deltaTime * daysPerSecond;
+        var newDaysPassed = Mathf.FloorToInt(_tickPassed);
         if (newDaysPassed > daysPassed)
         {
             UpdateDaysPassed(newDaysPassed);

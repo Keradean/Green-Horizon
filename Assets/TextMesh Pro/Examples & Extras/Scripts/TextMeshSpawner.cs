@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace TextMesh_Pro.Examples___Extras.Scripts
 {
@@ -7,12 +8,12 @@ namespace TextMesh_Pro.Examples___Extras.Scripts
     public class TextMeshSpawner : MonoBehaviour
     {
 
-        public int SpawnType = 0;
-        public int NumberOfNPC = 12;
+        [FormerlySerializedAs("SpawnType")] public int spawnType = 0;
+        [FormerlySerializedAs("NumberOfNPC")] public int numberOfNpc = 12;
 
-        public Font TheFont;
+        [FormerlySerializedAs("TheFont")] public Font theFont;
 
-        private TextMeshProFloatingText floatingText_Script;
+        private TextMeshProFloatingText _floatingTextScript;
 
         void Awake()
         {
@@ -22,9 +23,9 @@ namespace TextMesh_Pro.Examples___Extras.Scripts
         void Start()
         {
 
-            for (var i = 0; i < NumberOfNPC; i++)
+            for (var i = 0; i < numberOfNpc; i++)
             {
-                if (SpawnType == 0)
+                if (spawnType == 0)
                 {
                     // TextMesh Pro Implementation     
                     //go.transform.localScale = new Vector3(2, 2, 2);
@@ -47,8 +48,8 @@ namespace TextMesh_Pro.Examples___Extras.Scripts
 
 
                     // Spawn Floating Text
-                    floatingText_Script = go.AddComponent<TextMeshProFloatingText>();
-                    floatingText_Script.SpawnType = 0;
+                    _floatingTextScript = go.AddComponent<TextMeshProFloatingText>();
+                    _floatingTextScript.spawnType = 0;
                 }
                 else
                 {
@@ -59,8 +60,8 @@ namespace TextMesh_Pro.Examples___Extras.Scripts
                     //go.transform.position = new Vector3(0, 1.01f, 0);
 
                     var textMesh = go.AddComponent<TextMesh>();
-                    textMesh.GetComponent<Renderer>().sharedMaterial = TheFont.material;
-                    textMesh.font = TheFont;
+                    textMesh.GetComponent<Renderer>().sharedMaterial = theFont.material;
+                    textMesh.font = theFont;
                     textMesh.anchor = TextAnchor.LowerCenter;
                     textMesh.fontSize = 96;
 
@@ -68,8 +69,8 @@ namespace TextMesh_Pro.Examples___Extras.Scripts
                     textMesh.text = "!";
 
                     // Spawn Floating Text
-                    floatingText_Script = go.AddComponent<TextMeshProFloatingText>();
-                    floatingText_Script.SpawnType = 1;
+                    _floatingTextScript = go.AddComponent<TextMeshProFloatingText>();
+                    _floatingTextScript.spawnType = 1;
                 }
             }
         }

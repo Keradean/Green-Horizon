@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 //=== Can Özbal ===//
 
@@ -42,13 +43,13 @@ public class HappinessManager : MonoBehaviour
     [System.Serializable]
     public class HappinessModifier
     {
-        public HappinessType Type;
+        [FormerlySerializedAs("Type")] public HappinessType type;
 
-        public float Value;
+        [FormerlySerializedAs("Value")] public float value;
 
-        public bool IsPercent;
+        [FormerlySerializedAs("IsPercent")] public bool isPercent;
 
-        public float Duration = -1f;
+        [FormerlySerializedAs("Duration")] public float duration = -1f;
     }
 
     // =========================
@@ -58,28 +59,28 @@ public class HappinessManager : MonoBehaviour
     [System.Serializable]
     public class HappinessBuildingData
     {
-        public int BuildingID;
+        [FormerlySerializedAs("BuildingID")] public int buildingID;
 
-        [Range(0, 100)]
-        public float BaseHappiness = 50f;
+        [FormerlySerializedAs("BaseHappiness")] [Range(0, 100)]
+        public float baseHappiness = 50f;
 
-        [Range(0, 100)]
-        public float CurrentHappiness = 50f;
+        [FormerlySerializedAs("CurrentHappiness")] [Range(0, 100)]
+        public float currentHappiness = 50f;
 
-        public List<HappinessModifier> Modifiers =
+        [FormerlySerializedAs("Modifiers")] public List<HappinessModifier> modifiers =
             new List<HappinessModifier>();
 
-        [HideInInspector]
-        public bool IsDirty = true;
+        [FormerlySerializedAs("IsDirty")] [HideInInspector]
+        public bool isDirty = true;
 
-        public Slider HappinessSlider;
+        [FormerlySerializedAs("HappinessSlider")] public Slider happinessSlider;
     }
 
     // =========================
     // BUILDINGS
     // =========================
 
-    public List<HappinessBuildingData> Buildings =
+    [FormerlySerializedAs("Buildings")] public List<HappinessBuildingData> buildings =
         new List<HappinessBuildingData>();
 
     // =========================
@@ -88,17 +89,17 @@ public class HappinessManager : MonoBehaviour
 
     private void Update()
     {
-        for (int i = 0; i < Buildings.Count; i++)
+        for (int i = 0; i < buildings.Count; i++)
         {
-            HappinessBuildingData building = Buildings[i];
+            HappinessBuildingData building = buildings[i];
 
             UpdateModifierDurations(building);
 
-            if (building.IsDirty)
+            if (building.isDirty)
             {
                 RecalculateHappiness(building);
 
-                building.IsDirty = false;
+                building.isDirty = false;
             }
 
             UpdateUI(building);
@@ -111,25 +112,25 @@ public class HappinessManager : MonoBehaviour
 
     private void RecalculateHappiness(HappinessBuildingData building)
     {
-        float happiness = building.BaseHappiness;
+        float happiness = building.baseHappiness;
 
         float percentMultiplier = 1f;
 
-        foreach (var mod in building.Modifiers)
+        foreach (var mod in building.modifiers)
         {
-            if (mod.IsPercent)
+            if (mod.isPercent)
             {
-                percentMultiplier += mod.Value;
+                percentMultiplier += mod.value;
             }
             else
             {
-                happiness += mod.Value;
+                happiness += mod.value;
             }
         }
 
         happiness *= percentMultiplier;
 
-        building.CurrentHappiness =
+        building.currentHappiness =
             Mathf.Clamp(happiness, 0f, 100f);
     }
 
@@ -139,19 +140,19 @@ public class HappinessManager : MonoBehaviour
 
     private void UpdateModifierDurations(HappinessBuildingData building)
     {
-        for (int i = building.Modifiers.Count - 1; i >= 0; i--)
+        for (int i = building.modifiers.Count - 1; i >= 0; i--)
         {
-            HappinessModifier mod = building.Modifiers[i];
+            HappinessModifier mod = building.modifiers[i];
 
-            if (mod.Duration > 0)
+            if (mod.duration > 0)
             {
-                mod.Duration -= Time.deltaTime;
+                mod.duration -= Time.deltaTime;
 
-                if (mod.Duration <= 0)
+                if (mod.duration <= 0)
                 {
-                    building.Modifiers.RemoveAt(i);
+                    building.modifiers.RemoveAt(i);
 
-                    building.IsDirty = true;
+                    building.isDirty = true;
                 }
             }
         }
@@ -169,20 +170,20 @@ public class HappinessManager : MonoBehaviour
         float duration = -1f)
     {
         HappinessBuildingData building =
-            Buildings.Find(b => b.BuildingID == buildingID);
+            buildings.Find(b => b.buildingID == buildingID);
 
         if (building == null)
             return;
 
-        building.Modifiers.Add(new HappinessModifier
+        building.modifiers.Add(new HappinessModifier
         {
-            Type = type,
-            Value = value,
-            IsPercent = isPercent,
-            Duration = duration
+            type = type,
+            value = value,
+            isPercent = isPercent,
+            duration = duration
         });
 
-        building.IsDirty = true;
+        building.isDirty = true;
     }
 
     // =========================
@@ -194,15 +195,15 @@ public class HappinessManager : MonoBehaviour
         HappinessType type)
     {
         HappinessBuildingData building =
-            Buildings.Find(b => b.BuildingID == buildingID);
+            buildings.Find(b => b.buildingID == buildingID);
 
         if (building == null)
             return;
 
-        building.Modifiers.RemoveAll(
-            m => m.Type == type);
+        building.modifiers.RemoveAll(
+            m => m.type == type);
 
-        building.IsDirty = true;
+        building.isDirty = true;
     }
 
     // =========================
@@ -212,12 +213,12 @@ public class HappinessManager : MonoBehaviour
     public float GetHappiness(int buildingID)
     {
         HappinessBuildingData building =
-            Buildings.Find(b => b.BuildingID == buildingID);
+            buildings.Find(b => b.buildingID == buildingID);
 
         if (building == null)
             return 0f;
 
-        return building.CurrentHappiness;
+        return building.currentHappiness;
     }
 
     // =========================
@@ -226,10 +227,10 @@ public class HappinessManager : MonoBehaviour
 
     private void UpdateUI(HappinessBuildingData building)
     {
-        if (building.HappinessSlider != null)
+        if (building.happinessSlider != null)
         {
-            building.HappinessSlider.value =
-                building.CurrentHappiness / 100f;
+            building.happinessSlider.value =
+                building.currentHappiness / 100f;
         }
     }
 
@@ -240,11 +241,11 @@ public class HappinessManager : MonoBehaviour
     [ContextMenu("Test Add Park Bonus")]
     private void TestParkBonus()
     {
-        if (Buildings.Count == 0)
+        if (buildings.Count == 0)
             return;
 
         AddModifier(
-            Buildings[0].BuildingID,
+            buildings[0].buildingID,
             HappinessType.Parks,
             15f);
     }
@@ -252,11 +253,11 @@ public class HappinessManager : MonoBehaviour
     [ContextMenu("Test Pollution")]
     private void TestPollution()
     {
-        if (Buildings.Count == 0)
+        if (buildings.Count == 0)
             return;
 
         AddModifier(
-            Buildings[0].BuildingID,
+            buildings[0].buildingID,
             HappinessType.Pollution,
             -25f);
     }
