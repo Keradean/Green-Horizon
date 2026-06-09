@@ -1,11 +1,15 @@
 using UnityEngine;
+
 //=== Andy ===//
 
-public class DestroyOnPlace : MonoBehaviour
+namespace Andy
 {
-    // Wird von BuildingSystem aufgerufen wenn das Gebäude geplaced wird
-    public void OnPlaced()
+    public class DestroyOnPlace : MonoBehaviour
     {
-        Destroy(gameObject);
+        // Wird von BuildingSystem aufgerufen wenn das Gebäude geplaced wird
+        public void OnPlaced()
+        {
+            Destroy(gameObject);
+        }
     }
 }
