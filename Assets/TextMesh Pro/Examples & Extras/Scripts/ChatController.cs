@@ -1,5 +1,6 @@
 ﻿using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace TextMesh_Pro.Examples___Extras.Scripts
@@ -7,47 +8,47 @@ namespace TextMesh_Pro.Examples___Extras.Scripts
     public class ChatController : MonoBehaviour {
 
 
-        public TMP_InputField ChatInputField;
+        [FormerlySerializedAs("ChatInputField")] public TMP_InputField chatInputField;
 
-        public TMP_Text ChatDisplayOutput;
+        [FormerlySerializedAs("ChatDisplayOutput")] public TMP_Text chatDisplayOutput;
 
-        public Scrollbar ChatScrollbar;
+        [FormerlySerializedAs("ChatScrollbar")] public Scrollbar chatScrollbar;
 
         void OnEnable()
         {
-            ChatInputField.onSubmit.AddListener(AddToChatOutput);
+            chatInputField.onSubmit.AddListener(AddToChatOutput);
         }
 
         void OnDisable()
         {
-            ChatInputField.onSubmit.RemoveListener(AddToChatOutput);
+            chatInputField.onSubmit.RemoveListener(AddToChatOutput);
         }
 
 
         void AddToChatOutput(string newText)
         {
             // Clear Input Field
-            ChatInputField.text = string.Empty;
+            chatInputField.text = string.Empty;
 
             var timeNow = System.DateTime.Now;
 
             var formattedInput = "[<#FFFF80>" + timeNow.Hour.ToString("d2") + ":" + timeNow.Minute.ToString("d2") + ":" + timeNow.Second.ToString("d2") + "</color>] " + newText;
 
-            if (ChatDisplayOutput != null)
+            if (chatDisplayOutput != null)
             {
                 // No special formatting for first entry
                 // Add line feed before each subsequent entries
-                if (ChatDisplayOutput.text == string.Empty)
-                    ChatDisplayOutput.text = formattedInput;
+                if (chatDisplayOutput.text == string.Empty)
+                    chatDisplayOutput.text = formattedInput;
                 else
-                    ChatDisplayOutput.text += "\n" + formattedInput;
+                    chatDisplayOutput.text += "\n" + formattedInput;
             }
 
             // Keep Chat input field active
-            ChatInputField.ActivateInputField();
+            chatInputField.ActivateInputField();
 
             // Set the scrollbar to the bottom when next text is submitted.
-            ChatScrollbar.value = 0;
+            chatScrollbar.value = 0;
         }
 
     }

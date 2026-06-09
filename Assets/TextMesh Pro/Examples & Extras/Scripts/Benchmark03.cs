@@ -1,5 +1,6 @@
 ﻿using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.TextCore.LowLevel;
 
 namespace TextMesh_Pro.Examples___Extras.Scripts
@@ -7,12 +8,12 @@ namespace TextMesh_Pro.Examples___Extras.Scripts
 
     public class Benchmark03 : MonoBehaviour
     {
-        public enum BenchmarkType { TMP_SDF_MOBILE = 0, TMP_SDF__MOBILE_SSD = 1, TMP_SDF = 2, TMP_BITMAP_MOBILE = 3, TEXTMESH_BITMAP = 4 }
+        public enum BenchmarkType { TMPSDFMobile = 0, TMPSDFMobileSsd = 1, TMPSDF = 2, TMPBitmapMobile = 3, TextmeshBitmap = 4 }
 
-        public int NumberOfSamples = 100;
-        public BenchmarkType Benchmark;
+        [FormerlySerializedAs("NumberOfSamples")] public int numberOfSamples = 100;
+        [FormerlySerializedAs("Benchmark")] public BenchmarkType benchmark;
 
-        public Font SourceFont;
+        [FormerlySerializedAs("SourceFont")] public Font sourceFont;
 
 
         void Awake()
@@ -26,32 +27,32 @@ namespace TextMesh_Pro.Examples___Extras.Scripts
             TMP_FontAsset fontAsset = null;
 
             // Create Dynamic Font Asset for the given font file.
-            switch (Benchmark)
+            switch (benchmark)
             {
-                case BenchmarkType.TMP_SDF_MOBILE:
-                    fontAsset = TMP_FontAsset.CreateFontAsset(SourceFont, 90, 9, GlyphRenderMode.SDFAA, 256, 256, AtlasPopulationMode.Dynamic);
+                case BenchmarkType.TMPSDFMobile:
+                    fontAsset = TMP_FontAsset.CreateFontAsset(sourceFont, 90, 9, GlyphRenderMode.SDFAA, 256, 256, AtlasPopulationMode.Dynamic);
                     break;
-                case BenchmarkType.TMP_SDF__MOBILE_SSD:
-                    fontAsset = TMP_FontAsset.CreateFontAsset(SourceFont, 90, 9, GlyphRenderMode.SDFAA, 256, 256, AtlasPopulationMode.Dynamic);
+                case BenchmarkType.TMPSDFMobileSsd:
+                    fontAsset = TMP_FontAsset.CreateFontAsset(sourceFont, 90, 9, GlyphRenderMode.SDFAA, 256, 256, AtlasPopulationMode.Dynamic);
                     fontAsset.material.shader = Shader.Find("TextMeshPro/Mobile/Distance Field SSD");
                     break;
-                case BenchmarkType.TMP_SDF:
-                    fontAsset = TMP_FontAsset.CreateFontAsset(SourceFont, 90, 9, GlyphRenderMode.SDFAA, 256, 256, AtlasPopulationMode.Dynamic);
+                case BenchmarkType.TMPSDF:
+                    fontAsset = TMP_FontAsset.CreateFontAsset(sourceFont, 90, 9, GlyphRenderMode.SDFAA, 256, 256, AtlasPopulationMode.Dynamic);
                     fontAsset.material.shader = Shader.Find("TextMeshPro/Distance Field");
                     break;
-                case BenchmarkType.TMP_BITMAP_MOBILE:
-                    fontAsset = TMP_FontAsset.CreateFontAsset(SourceFont, 90, 9, GlyphRenderMode.SMOOTH, 256, 256, AtlasPopulationMode.Dynamic);
+                case BenchmarkType.TMPBitmapMobile:
+                    fontAsset = TMP_FontAsset.CreateFontAsset(sourceFont, 90, 9, GlyphRenderMode.SMOOTH, 256, 256, AtlasPopulationMode.Dynamic);
                     break;
             }
 
-            for (var i = 0; i < NumberOfSamples; i++)
+            for (var i = 0; i < numberOfSamples; i++)
             {
-                switch (Benchmark)
+                switch (benchmark)
                 {
-                    case BenchmarkType.TMP_SDF_MOBILE:
-                    case BenchmarkType.TMP_SDF__MOBILE_SSD:
-                    case BenchmarkType.TMP_SDF:
-                    case BenchmarkType.TMP_BITMAP_MOBILE:
+                    case BenchmarkType.TMPSDFMobile:
+                    case BenchmarkType.TMPSDFMobileSsd:
+                    case BenchmarkType.TMPSDF:
+                    case BenchmarkType.TMPBitmapMobile:
                         {
                             var go = new GameObject();
                             go.transform.position = new Vector3(0, 1.2f, 0);
@@ -63,19 +64,19 @@ namespace TextMesh_Pro.Examples___Extras.Scripts
                             textComponent.alignment = TextAlignmentOptions.Center;
                             textComponent.color = new Color32(255, 255, 0, 255);
 
-                            if (Benchmark == BenchmarkType.TMP_BITMAP_MOBILE)
+                            if (benchmark == BenchmarkType.TMPBitmapMobile)
                                 textComponent.fontSize = 132;
 
                         }
                         break;
-                    case BenchmarkType.TEXTMESH_BITMAP:
+                    case BenchmarkType.TextmeshBitmap:
                         {
                             var go = new GameObject();
                             go.transform.position = new Vector3(0, 1.2f, 0);
 
                             var textMesh = go.AddComponent<TextMesh>();
-                            textMesh.GetComponent<Renderer>().sharedMaterial = SourceFont.material;
-                            textMesh.font = SourceFont;
+                            textMesh.GetComponent<Renderer>().sharedMaterial = sourceFont.material;
+                            textMesh.font = sourceFont;
                             textMesh.anchor = TextAnchor.MiddleCenter;
                             textMesh.fontSize = 130;
 

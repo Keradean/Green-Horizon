@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using UnityEngine.Serialization;
 
 namespace Furkan.Ereignisse
 {
@@ -8,13 +9,13 @@ namespace Furkan.Ereignisse
     {
         public static Ereignisse Instance { get; private set; }
 
-        public int Geld = 0;
+        [FormerlySerializedAs("Geld")] public int geld = 0;
         public int müll = 0;
 
-        private bool droughtTriggered = false;
-        private bool floodsTriggered = false;
-        private bool heatWaveTriggered = false;
-        private bool politicalUnrestTriggered = false;
+        private bool _droughtTriggered = false;
+        private bool _floodsTriggered = false;
+        private bool _heatWaveTriggered = false;
+        private bool _politicalUnrestTriggered = false;
 
         private void Awake()
         {
@@ -30,51 +31,51 @@ namespace Furkan.Ereignisse
 
         private void Update()
         {
-            if (CO2BudgetManager.Instance != null)
+            if (Co2BudgetManager.Instance != null)
             {
-                float currentCo2 = CO2BudgetManager.Instance.currentFootprint;
+                float currentCo2 = Co2BudgetManager.Instance.currentFootprint;
                 
                 // Dürren-Trigger
-                if (currentCo2 == 70 && !droughtTriggered)
+                if (currentCo2 == 70 && !_droughtTriggered)
                 {
                     TriggerDrought();
-                    droughtTriggered = true;
+                    _droughtTriggered = true;
                 }
                 else if (currentCo2 != 70)
                 {
-                    droughtTriggered = false;
+                    _droughtTriggered = false;
                 }
 
                 // Überflutungen-Trigger
-                if (currentCo2 == 75 && müll > 50 && !floodsTriggered)
+                if (currentCo2 == 75 && müll > 50 && !_floodsTriggered)
                 {
                     TriggerFloods();
-                    floodsTriggered = true;
+                    _floodsTriggered = true;
                 }
                 else if (currentCo2 != 75 || müll <= 50)
                 {
-                    floodsTriggered = false;
+                    _floodsTriggered = false;
                 }
 
                 // Hitzewellen-Trigger
-                if (currentCo2 == 50 && !heatWaveTriggered)
+                if (currentCo2 == 50 && !_heatWaveTriggered)
                 {
                     TriggerHeatWave();
-                    heatWaveTriggered = true;
+                    _heatWaveTriggered = true;
                 }
                 else if (currentCo2 != 50)
                 {
-                    heatWaveTriggered = false;
+                    _heatWaveTriggered = false;
                 }
                 
-                if (currentCo2 == 50 && Geld < 30 && !politicalUnrestTriggered)
+                if (currentCo2 == 50 && geld < 30 && !_politicalUnrestTriggered)
                 {
                     TriggerPoliticalUnrest();
-                    politicalUnrestTriggered = true;
+                    _politicalUnrestTriggered = true;
                 }
-                else if (currentCo2 != 50 || Geld >= 30)
+                else if (currentCo2 != 50 || geld >= 30)
                 {
-                    politicalUnrestTriggered = false;
+                    _politicalUnrestTriggered = false;
                 }
             }
         }
@@ -82,34 +83,34 @@ namespace Furkan.Ereignisse
         // Event-Funktionen
         private void TriggerDrought()
         {
-            Geld -= 10;
+            geld -= 10;
             müll += 5;
-            if (CO2BudgetManager.Instance != null)
+            if (Co2BudgetManager.Instance != null)
             {
-                CO2BudgetManager.Instance.AddBadDecision(1); // CO2 steigt leicht an (z.B. durch Waldbrände)
+                Co2BudgetManager.Instance.AddBadDecision(1); // CO2 steigt leicht an (z.B. durch Waldbrände)
             }
             Debug.Log("Dürren-Event ausgelöst! Geld -10, Müll +5, CO2 +10");
         }
 
         private void TriggerFloods()
         {
-            Geld -= 40;
+            geld -= 40;
             müll += 20;
             Debug.Log("Überflutungs-Event ausgelöst! Geld -40, Müll +20");
         }
 
         private void TriggerHeatWave()
         {
-            Geld -= 10;
+            geld -= 10;
             Debug.Log("Hitzewellen-Event ausgelöst! Geld -10");
         }
 
         private void TriggerPoliticalUnrest()
         {
             müll += 35;
-            if (CO2BudgetManager.Instance != null)
+            if (Co2BudgetManager.Instance != null)
             {
-                CO2BudgetManager.Instance.AddBadDecision(2);
+                Co2BudgetManager.Instance.AddBadDecision(2);
             }
             Debug.Log("Politische Unruhen-Event ausgelöst! Müll +35, CO2 +50");
         }

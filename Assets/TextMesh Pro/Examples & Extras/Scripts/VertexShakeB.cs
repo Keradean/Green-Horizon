@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace TextMesh_Pro.Examples___Extras.Scripts
 {
@@ -8,17 +9,17 @@ namespace TextMesh_Pro.Examples___Extras.Scripts
     public class VertexShakeB : MonoBehaviour
     {
 
-        public float AngleMultiplier = 1.0f;
-        public float SpeedMultiplier = 1.0f;
-        public float CurveScale = 1.0f;
+        [FormerlySerializedAs("AngleMultiplier")] public float angleMultiplier = 1.0f;
+        [FormerlySerializedAs("SpeedMultiplier")] public float speedMultiplier = 1.0f;
+        [FormerlySerializedAs("CurveScale")] public float curveScale = 1.0f;
 
-        private TMP_Text m_TextComponent;
-        private bool hasTextChanged;
+        private TMP_Text _mTextComponent;
+        private bool _hasTextChanged;
 
 
         void Awake()
         {
-            m_TextComponent = GetComponent<TMP_Text>();
+            _mTextComponent = GetComponent<TMP_Text>();
         }
 
         void OnEnable()
@@ -41,8 +42,8 @@ namespace TextMesh_Pro.Examples___Extras.Scripts
 
         void ON_TEXT_CHANGED(Object obj)
         {
-            if (obj = m_TextComponent)
-                hasTextChanged = true;
+            if (obj = _mTextComponent)
+                _hasTextChanged = true;
         }
 
         /// <summary>
@@ -54,19 +55,19 @@ namespace TextMesh_Pro.Examples___Extras.Scripts
 
             // We force an update of the text object since it would only be updated at the end of the frame. Ie. before this code is executed on the first frame.
             // Alternatively, we could yield and wait until the end of the frame when the text object will be generated.
-            m_TextComponent.ForceMeshUpdate();
+            _mTextComponent.ForceMeshUpdate();
 
-            var textInfo = m_TextComponent.textInfo;
+            var textInfo = _mTextComponent.textInfo;
 
             Matrix4x4 matrix;
             var copyOfVertices = new Vector3[0][];
 
-            hasTextChanged = true;
+            _hasTextChanged = true;
 
             while (true)
             {
                 // Allocate new vertices 
-                if (hasTextChanged)
+                if (_hasTextChanged)
                 {
                     if (copyOfVertices.Length < textInfo.meshInfo.Length)
                         copyOfVertices = new Vector3[textInfo.meshInfo.Length][];
@@ -77,7 +78,7 @@ namespace TextMesh_Pro.Examples___Extras.Scripts
                         copyOfVertices[i] = new Vector3[length];
                     }
 
-                    hasTextChanged = false;
+                    _hasTextChanged = false;
                 }
 
                 var characterCount = textInfo.characterCount;
@@ -174,7 +175,7 @@ namespace TextMesh_Pro.Examples___Extras.Scripts
                 for (var i = 0; i < textInfo.meshInfo.Length; i++)
                 {
                     textInfo.meshInfo[i].mesh.vertices = copyOfVertices[i];
-                    m_TextComponent.UpdateGeometry(textInfo.meshInfo[i].mesh, i);
+                    _mTextComponent.UpdateGeometry(textInfo.meshInfo[i].mesh, i);
                 }
 
                 yield return new WaitForSeconds(0.1f);

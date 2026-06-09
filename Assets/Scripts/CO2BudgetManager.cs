@@ -1,9 +1,9 @@
 using UnityEngine;
 using System;
 
-public class CO2BudgetManager : MonoBehaviour
+public class Co2BudgetManager : MonoBehaviour
 {
-    public static CO2BudgetManager Instance { get; private set; }
+    public static Co2BudgetManager Instance { get; private set; }
 
     [Header("CO2 Budget Settings")]
     [Tooltip("Startwert des CO2-Fußabdrucks in Tonnen")]
@@ -18,11 +18,11 @@ public class CO2BudgetManager : MonoBehaviour
     {
         if (Instance != null && Instance != this)
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(this.gameObject);
+        DontDestroyOnLoad(gameObject);
         currentFootprint = startFootprint;
     }
 
@@ -30,44 +30,32 @@ public class CO2BudgetManager : MonoBehaviour
     // Stufe 1 = klein, Stufe 2 = mittel, Stufe 3 = groß
     public void AddBadDecision(int level)
     {
-        var amount = 0f;
-        switch (level)
+        var amount = level switch
         {
-            case 1:
-                amount = 10f; // Beispielwert für kleine schlechte Entscheidung
-                break;
-            case 2:
-                amount = 50f; // Beispielwert für mittlere schlechte Entscheidung
-                break;
-            case 3:
-                amount = 200f; // Beispielwert für große schlechte Entscheidung
-                break;
-            default:
-                amount = 0f;
-                break;
-        }
+            1 => 10f // Beispielwert für kleine schlechte Entscheidung
+            ,
+            2 => 50f // Beispielwert für mittlere schlechte Entscheidung
+            ,
+            3 => 200f // Beispielwert für große schlechte Entscheidung
+            ,
+            _ => 0f
+        };
         currentFootprint += amount;
         OnBudgetChanged?.Invoke(currentFootprint);
     }
 
     public void AddGoodDecision(int level)
     {
-        float amount = 0f;
-        switch (level)
+        var amount = level switch
         {
-            case 1:
-                amount = 10f; // Beispielwert für kleine gute Entscheidung
-                break;
-            case 2:
-                amount = 50f; // Beispielwert für mittlere gute Entscheidung
-                break;
-            case 3:
-                amount = 200f; // Beispielwert für große gute Entscheidung
-                break;
-            default:
-                amount = 0f;
-                break;
-        }
+            1 => 10f // Beispielwert für kleine gute Entscheidung
+            ,
+            2 => 50f // Beispielwert für mittlere gute Entscheidung
+            ,
+            3 => 200f // Beispielwert für große gute Entscheidung
+            ,
+            _ => 0f
+        };
 
         // Fußabdruck verringern, aber nicht < 0
         currentFootprint = Mathf.Max(0f, currentFootprint - amount);
