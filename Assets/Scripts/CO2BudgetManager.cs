@@ -62,6 +62,12 @@ public class Co2BudgetManager : MonoBehaviour
         OnBudgetChanged?.Invoke(currentFootprint);
     }
 
+    public void AddPollution(float amount)
+    {
+        currentFootprint += amount;
+        OnBudgetChanged?.Invoke(currentFootprint);
+    }
+
     public float GetCurrentFootprint()
     {
         return currentFootprint;
