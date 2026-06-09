@@ -45,7 +45,6 @@ namespace Dennis.DayAndNight
             directionalLight.transform.localRotation = Quaternion.Euler(new Vector3((timePercent * 360f) -90f, 170f, 0));
         }
         //////////////////////////////////////////////////////////////////////////////////
-        [Obsolete("Obsolete")]
         private void FindDirectionalLight()
         {
             if (directionalLight != null)
@@ -57,7 +56,7 @@ namespace Dennis.DayAndNight
             }
             else
             {
-                var lights = FindObjectsByType<Light>(FindObjectsSortMode.None);
+                var lights = FindObjectsByType<Light>(FindObjectsInactive.Exclude);
                 foreach (var light in lights)
                 {
                     if (light.type != LightType.Directional) continue;
