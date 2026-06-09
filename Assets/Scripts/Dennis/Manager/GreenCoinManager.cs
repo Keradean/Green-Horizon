@@ -1,8 +1,10 @@
+using UnityEngine;
+
 namespace Dennis.Manager
 {
     public class GreenCoinManager : Singleton<GreenCoinManager>
     {
-        public int CurrentGold { get; private set; } = 1000;
+        [field: SerializeField] public int CurrentGold { get; private set; } = 1000;
         ////////////////////////////////////////////////////////////////////////////////////////////////
         public void AddGold(int amount)
         {

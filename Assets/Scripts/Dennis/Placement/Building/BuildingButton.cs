@@ -1,9 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
 using Andy.Manager;
 
 //*** De Col ***\\
+//=== Andy ===//
 namespace Dennis.Placement.Building
 {
     [RequireComponent(typeof(Button))]
@@ -14,12 +16,17 @@ namespace Dennis.Placement.Building
         [SerializeField] private BuildingData buildingData;
 
         [Header("Sondermodi")]
-        [SerializeField] private bool isRoadButton    = false;
+        [SerializeField] private bool isRoadButton = false;
         [SerializeField] private bool isDemolishButton = false;
 
         private void Awake()
         {
             GetComponent<Button>().onClick.AddListener(OnClick);
+
+            // Preis aus BuildingData ins Text Feld setzen
+            var text = GetComponentInChildren<TextMeshProUGUI>();
+            if (text != null && buildingData != null)
+                text.text = buildingData.Cost + " $";
         }
         /////////////////////////////////////////////////////////////////////////////////////
         private void OnDestroy()
