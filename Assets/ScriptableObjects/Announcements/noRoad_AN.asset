@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: noRoad_AN
   m_EditorClassIdentifier: Assembly-CSharp::Andy.Manager.AnnouncementData
   message: "Geb\xE4ude k\xF6nnen nur an Stra\xDFen plaziert werden"
-  icon: {fileID: 21300000, guid: b06868fd758905347950ce2a5c9023fa, type: 3}
+  icon: {fileID: 21300000, guid: 446545e782ec1044d8831fe2f33f786c, type: 3}
   duration: 1
