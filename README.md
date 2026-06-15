@@ -1,4 +1,4 @@
-#𝑮𝒓𝒆𝒆𝒏 𝑯𝒐𝒓𝒊𝒛𝒐𝒏
+# 𝑮𝒓𝒆𝒆𝒏 𝑯𝒐𝒓𝒊𝒛𝒐𝒏
 
 > Ein nachhaltiger Stadtbau-Simulator – gebaut mit Unity 6 im Rahmen einer Umschulung an der SRH Fachschulen GmbH.
 
