@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.Building.BuildingData
   <Cost>k__BackingField: 67000
   <Model>k__BackingField: {fileID: 7938737080107574164, guid: 3a977821214601b43af417682d5c83f6, type: 3}
+  <RequiresRoad>k__BackingField: 0
   <BuildingName>k__BackingField: Windrad
   <Description>k__BackingField: Wind
   <Icon>k__BackingField: {fileID: 21300000, guid: 32dd8b42bf6b76f41a4e90097a64007a, type: 3}

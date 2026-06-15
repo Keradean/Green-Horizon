@@ -8,7 +8,9 @@ namespace Dennis.Placement.Building
     {
         [Header("Building Data")]
         [field: SerializeField] public int Cost { get; private set; }
-        [field: SerializeField] public BuildingModel Model { get; private set; }
+        [field: SerializeField] public BuildingModel Model { get; private set; } 
+        [field: SerializeField] public bool RequiresRoad { get; private set; } = true;
+        [field: SerializeField] public BuildingData RequiredBuilding { get; private set; }
 
         [Header("Tooltip Info")]
         [field: SerializeField] public string BuildingName { get; private set; }

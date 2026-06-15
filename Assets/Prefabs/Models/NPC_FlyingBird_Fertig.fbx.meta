@@ -1,0 +1,224 @@
+fileFormatVersion: 2
+guid: dd61cd8226de7e346a7f2f898be1e101
+ModelImporter:
+  serializedVersion: 24200
+  internalIDToNameTable: []
+  externalObjects:
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: NPC_FlyingBird_Augen_Schwarz_BaseColor
+    second: {fileID: 2800000, guid: 3afb89667959fe040a5bdd9045ec0ffb, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: NPC_FlyingBird_Augen_Schwarz_Normal_DirectX_OpenGl
+    second: {fileID: 2800000, guid: 0776717910be3af419d02eb865f5734e, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: NPC_FlyingBird_Augen_Schwarz_OcclusionRoughnessMetallic
+    second: {fileID: 2800000, guid: 42f0d21283649c642853bf7fdb626c00, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: NPC_FlyingBird_Der gelbe Schnabel_BaseColor
+    second: {fileID: 2800000, guid: 46346aa01882521408de991f056baa06, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: NPC_FlyingBird_Der gelbe Schnabel_Normal_DirectX_OpenGl
+    second: {fileID: 2800000, guid: 2e39709ea21c1dd4cb4dc1f4e5062b69, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: NPC_FlyingBird_Der gelbe Schnabel_OcclusionRoughnessMetallic
+    second: {fileID: 2800000, guid: 27eaac1bf7aa6f042b17ee5a82d422db, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: "NPC_FlyingBird_K\xF6rperteil_Oben_Rot_BaseColor"
+    second: {fileID: 2800000, guid: b64d192ffc1f9724eb76e418248c8631, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: "NPC_FlyingBird_K\xF6rperteil_Oben_Rot_Normal_DirectX_OpenGl"
+    second: {fileID: 2800000, guid: d75967dc94087a14c8291452d0c94103, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: "NPC_FlyingBird_K\xF6rperteil_Oben_Rot_OcclusionRoughnessMetallic"
+    second: {fileID: 2800000, guid: b82652d357dfcd542ad531ba4fdf244d, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: NPC_FlyingBird_Schwanz_BaseColor
+    second: {fileID: 2800000, guid: bb374237690ad9747b388e1bc3e21585, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: NPC_FlyingBird_Schwanz_Normal_DirectX_OpenGl
+    second: {fileID: 2800000, guid: 9976cfdd1f62dab4f8d50423e79a12a7, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: NPC_FlyingBird_Schwanz_OcclusionRoughnessMetallic
+    second: {fileID: 2800000, guid: 151eb12e3a7b92842b82d242c134207c, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: NPC_FlyingBird_Schwanzteil_BaseColor
+    second: {fileID: 2800000, guid: e06141a99b8401642abaa5ed157c64e1, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: NPC_FlyingBird_Schwanzteil_Normal_DirectX_OpenGl
+    second: {fileID: 2800000, guid: 3b375e35f92472d46b1f176cde03167c, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: NPC_FlyingBird_Schwanzteil_OcclusionRoughnessMetallic
+    second: {fileID: 2800000, guid: ffa7ad2872f21ba4d94c1885d1294418, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: "NPC_FlyingBird_Unter_k\xF6rperteil_Wei\xDF_BaseColor"
+    second: {fileID: 2800000, guid: 6f3791ea3385e7045b81e23a929d5eaa, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: "NPC_FlyingBird_Unter_k\xF6rperteil_Wei\xDF_Normal_DirectX_OpenGl"
+    second: {fileID: 2800000, guid: a94229100f807ea4e8d0b9820ef91d71, type: 3}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: rig|rigAction
+      takeName: rig|rigAction
+      internalID: 3374748389425109202
+      firstFrame: 0
+      lastFrame: 49
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    generateMeshLods: 0
+    meshLodGenerationFlags: 0
+    maximumMeshLod: -1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

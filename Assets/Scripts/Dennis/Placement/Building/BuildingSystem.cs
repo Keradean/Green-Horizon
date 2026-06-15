@@ -21,6 +21,7 @@ namespace Dennis.Placement.Building
         [SerializeField] private DemolishButton demolishButton;
         [SerializeField] private Material demolishHighlightMaterial;
         [SerializeField] private AnnouncementData noRoadAnnouncement;
+        [SerializeField] private AnnouncementData noRequirementAnnouncement;
         public const float CellSize = 1f;
         private BuildingPreview _preview;
         private Building _hoveredBuilding;
@@ -207,7 +208,7 @@ namespace Dennis.Placement.Building
 
             var buildPosition = _preview.BuildingModel.GetAllBuildingPositions();
 
-            var hasRoadNeighbour = buildPosition.Any(p =>
+            var hasRoadNeighbour = !_preview.Data.RequiresRoad || buildPosition.Any(p =>
             {
                 var cell = grid.WorldToCell(p);
                 return grid.IsRoad(cell + Vector2Int.up) ||
@@ -216,9 +217,13 @@ namespace Dennis.Placement.Building
                        grid.IsRoad(cell + Vector2Int.left);
             });
 
+            var requirementMet = _preview.Data.RequiredBuilding == null ||
+                                 CityTickManager.Instance.Buildings.Contains(_preview.Data.RequiredBuilding);
+
             var canBuild = grid.CanBuild(buildPosition) &&
                            buildPosition.All(p => !grid.IsRoad(grid.WorldToCell(p))) &&
-                           hasRoadNeighbour;
+                           hasRoadNeighbour &&
+                           requirementMet;
 
             if (canBuild)
             {
@@ -232,12 +237,13 @@ namespace Dennis.Placement.Building
             {
                 _preview.ChangeState(BuildingPreview.BuildingPreviewState.Invalid);
 
-                // Announcement nur wenn Klick auf ungültige Position ohne Straße
                 if (Mouse.current.leftButton.wasPressedThisFrame &&
-                    !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject() &&
-                    !hasRoadNeighbour)
+                    !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
                 {
-                    AnnouncementManager.Instance.Show(noRoadAnnouncement);
+                    if (!hasRoadNeighbour)
+                        AnnouncementManager.Instance.Show(noRoadAnnouncement);
+                    else if (!requirementMet)
+                        AnnouncementManager.Instance.Show(noRequirementAnnouncement);
                 }
             }
 
@@ -264,6 +270,10 @@ namespace Dennis.Placement.Building
 
             foreach (var arrow in building.GetComponentsInChildren<Andy.DestroyOnPlace>())
                 arrow.OnPlaced();
+
+            // Licht Controller aktivieren
+            foreach (var lc in building.GetComponentsInChildren<BuildingLightController>())
+                lc.OnPlaced();
 
             grid.SetBuilding(building, buildPosition);
             Destroy(_preview.gameObject);
