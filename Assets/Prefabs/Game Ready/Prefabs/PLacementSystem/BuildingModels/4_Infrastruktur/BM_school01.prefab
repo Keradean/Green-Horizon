@@ -192,6 +192,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3584646790661459562, guid: 092c7c66495cf4040b98f2182acdefa1, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 03415c68a8d2dc14988ba947e74980a2, type: 2}
+    - target: {fileID: 3584646790661459562, guid: 092c7c66495cf4040b98f2182acdefa1, type: 3}
+      propertyPath: 'm_Materials.Array.data[5]'
+      value: 
+      objectReference: {fileID: 2100000, guid: aeb11f9232cbfce43b9279145e211cde, type: 2}
     - target: {fileID: 7684253917028086372, guid: 092c7c66495cf4040b98f2182acdefa1, type: 3}
       propertyPath: m_Name
       value: kindergarten01 done

@@ -399,6 +399,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7055987689078988609, guid: 638d8966dc3806d449b38068bdc61e5f, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: aeb11f9232cbfce43b9279145e211cde, type: 2}
     - target: {fileID: 7668318181336398693, guid: 638d8966dc3806d449b38068bdc61e5f, type: 3}
       propertyPath: m_Name
       value: 'gas_station01 '
