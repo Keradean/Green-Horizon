@@ -87,6 +87,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1350500576559228126}
     m_Modifications:
+    - target: {fileID: 1058946487255521465, guid: 41b17bf5083dab24eb8c38f9fe971974, type: 3}
+      propertyPath: 'm_Materials.Array.data[8]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 31f66f8f43ae9ca4ca21e5f8f486b355, type: 2}
     - target: {fileID: 4292221924402566473, guid: 41b17bf5083dab24eb8c38f9fe971974, type: 3}
       propertyPath: m_Name
       value: pharmacy01

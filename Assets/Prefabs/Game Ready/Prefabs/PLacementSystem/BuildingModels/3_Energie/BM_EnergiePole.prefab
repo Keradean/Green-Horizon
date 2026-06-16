@@ -189,6 +189,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5743807063746565256, guid: 9e2cfb465d2014d46b6dc2bfb35e0dad, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 03415c68a8d2dc14988ba947e74980a2, type: 2}
     - target: {fileID: 6583468267190535679, guid: 9e2cfb465d2014d46b6dc2bfb35e0dad, type: 3}
       propertyPath: m_Name
       value: Strommast

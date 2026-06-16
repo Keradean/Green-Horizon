@@ -256,6 +256,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 607808288151429357, guid: 6ed95f20b0d7ffb43b9b2dadce3ac15c, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 03415c68a8d2dc14988ba947e74980a2, type: 2}
+    - target: {fileID: 4913622004336022938, guid: 6ed95f20b0d7ffb43b9b2dadce3ac15c, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 03415c68a8d2dc14988ba947e74980a2, type: 2}
     - target: {fileID: 8842808873404953172, guid: 6ed95f20b0d7ffb43b9b2dadce3ac15c, type: 3}
       propertyPath: m_Name
       value: Umspannwerk

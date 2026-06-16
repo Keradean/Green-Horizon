@@ -90,6 +90,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1350500576559228126}
     m_Modifications:
+    - target: {fileID: 2435686559075312439, guid: e1d946556603ef1448704884a50a7a60, type: 3}
+      propertyPath: 'm_Materials.Array.data[3]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 31f66f8f43ae9ca4ca21e5f8f486b355, type: 2}
+    - target: {fileID: 2435686559075312439, guid: e1d946556603ef1448704884a50a7a60, type: 3}
+      propertyPath: 'm_Materials.Array.data[4]'
+      value: 
+      objectReference: {fileID: 2100000, guid: aeb11f9232cbfce43b9279145e211cde, type: 2}
     - target: {fileID: 3265369952368091853, guid: e1d946556603ef1448704884a50a7a60, type: 3}
       propertyPath: m_Name
       value: townhall01
