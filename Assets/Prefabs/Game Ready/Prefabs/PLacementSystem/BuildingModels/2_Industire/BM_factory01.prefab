@@ -406,6 +406,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: power_coal01
       objectReference: {fileID: 0}
+    - target: {fileID: 2559353396015682654, guid: d66228c33376d0147936489ee9459f08, type: 3}
+      propertyPath: 'm_Materials.Array.data[6]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 16b39c84eebf2a44eaee45583950a141, type: 2}
     - target: {fileID: 7856714848027485593, guid: d66228c33376d0147936489ee9459f08, type: 3}
       propertyPath: m_LocalScale.x
       value: 1

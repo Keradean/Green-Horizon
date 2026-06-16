@@ -143,6 +143,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4796956186342973383, guid: c39538c8850bcdd40a741c1600109646, type: 3}
+      propertyPath: 'm_Materials.Array.data[9]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 31f66f8f43ae9ca4ca21e5f8f486b355, type: 2}
     - target: {fileID: 8772118748048418911, guid: c39538c8850bcdd40a741c1600109646, type: 3}
       propertyPath: m_Name
       value: restaurant02

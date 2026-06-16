@@ -347,6 +347,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: stripclub01
       objectReference: {fileID: 0}
+    - target: {fileID: 4612690568119259648, guid: ccc2b840466e77840be87236f41aed7d, type: 3}
+      propertyPath: 'm_Materials.Array.data[8]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 31f66f8f43ae9ca4ca21e5f8f486b355, type: 2}
     - target: {fileID: 8911936495363504145, guid: ccc2b840466e77840be87236f41aed7d, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.5

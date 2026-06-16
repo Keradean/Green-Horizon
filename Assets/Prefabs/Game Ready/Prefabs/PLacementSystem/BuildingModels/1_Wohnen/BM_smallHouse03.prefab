@@ -394,6 +394,14 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5519535022290158241, guid: e4c7e96fb3ec247458423348e9602eff, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: aeb11f9232cbfce43b9279145e211cde, type: 2}
+    - target: {fileID: 5519535022290158241, guid: e4c7e96fb3ec247458423348e9602eff, type: 3}
+      propertyPath: 'm_Materials.Array.data[8]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 19a026c0413227542be1850ba3e1d572, type: 2}
     - target: {fileID: 7593404138664378945, guid: e4c7e96fb3ec247458423348e9602eff, type: 3}
       propertyPath: m_Name
       value: 'medium01 '
