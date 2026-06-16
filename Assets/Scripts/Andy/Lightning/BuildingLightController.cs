@@ -2,18 +2,23 @@ using UnityEngine;
 using Dennis.DayAndNight;
 //=== Andy ===//
 
+[System.Serializable]
+public class WindowPair
+{
+    public Material dayMaterial;
+    public Material nightMaterial;
+}
+
 public class BuildingLightController : MonoBehaviour
 {
     [Header("Lichter")]
     [SerializeField] private Light[] lights;
 
     [Header("Fenster")]
-    [SerializeField] private Material windowMaterial;
-    [SerializeField] private Material nightWindow;
+    [SerializeField] private WindowPair[] windows;
 
     private Renderer _renderer;
-    private int _windowMaterialIndex = -1;
-    private Material _dayWindow;
+    private int[] _windowMaterialIndices;
     private bool _pendingIsDay;
     private bool _isPlaced = false;
 
@@ -23,13 +28,17 @@ public class BuildingLightController : MonoBehaviour
             light.enabled = false;
 
         _renderer = GetComponentInChildren<Renderer>();
+        _windowMaterialIndices = new int[windows.Length];
 
-        for (var i = 0; i < _renderer.sharedMaterials.Length; i++)
+        for (var w = 0; w < windows.Length; w++)
         {
-            if (_renderer.sharedMaterials[i] != windowMaterial) continue;
-            _windowMaterialIndex = i;
-            _dayWindow = _renderer.sharedMaterials[i];
-            break;
+            _windowMaterialIndices[w] = -1;
+            for (var i = 0; i < _renderer.sharedMaterials.Length; i++)
+            {
+                if (_renderer.sharedMaterials[i] != windows[w].dayMaterial) continue;
+                _windowMaterialIndices[w] = i;
+                break;
+            }
         }
     }
 
@@ -52,7 +61,7 @@ public class BuildingLightController : MonoBehaviour
 
     private bool IsNight()
     {
-        var lightManager = FindFirstObjectByType<LightManager>();
+        var lightManager = FindAnyObjectByType<LightManager>();
         if (lightManager == null) return false;
         var time = lightManager.TimeOfDay;
         return time < 6f || time >= 18f;
@@ -70,10 +79,14 @@ public class BuildingLightController : MonoBehaviour
         foreach (var light in lights)
             light.enabled = !_pendingIsDay;
 
-        if (_windowMaterialIndex == -1) return;
-
         var mats = _renderer.materials;
-        mats[_windowMaterialIndex] = _pendingIsDay ? _dayWindow : nightWindow;
+        for (var w = 0; w < windows.Length; w++)
+        {
+            if (_windowMaterialIndices[w] == -1) continue;
+            mats[_windowMaterialIndices[w]] = _pendingIsDay
+                ? windows[w].dayMaterial
+                : windows[w].nightMaterial;
+        }
         _renderer.materials = mats;
     }
 }

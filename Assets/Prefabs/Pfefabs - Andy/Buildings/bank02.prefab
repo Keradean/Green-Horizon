@@ -241,8 +241,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BuildingLightController
   lights:
   - {fileID: 407512546113990397}
-  windowMaterial: {fileID: -8323178721999471559, guid: cf0880dcbe28fb943939f638595e244b, type: 3}
-  nightWindow: {fileID: 2100000, guid: 5ee7d0792201b954b885839e44cf17d8, type: 2}
+  windows:
+  - dayMaterial: {fileID: -8323178721999471559, guid: cf0880dcbe28fb943939f638595e244b, type: 3}
+    nightMaterial: {fileID: 2100000, guid: 5ee7d0792201b954b885839e44cf17d8, type: 2}
 --- !u!1001 &8139894220208396636
 PrefabInstance:
   m_ObjectHideFlags: 0

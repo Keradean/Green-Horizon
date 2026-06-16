@@ -1570,8 +1570,8 @@ MonoBehaviour:
   preset: {fileID: 11400000, guid: 31e6b40fe09ca054589ecf12420d6406, type: 2}
   directionalLight: {fileID: 620375842}
   timeOfDay: 15.5
-  dayTimeDurationInMinutes: 1
-  nightTimeDurationInMinutes: 1
+  dayTimeDurationInMinutes: 3
+  nightTimeDurationInMinutes: 10
 --- !u!1 &101108056
 GameObject:
   m_ObjectHideFlags: 0
