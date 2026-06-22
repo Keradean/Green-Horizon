@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7004506997999711352}
   - component: {fileID: 6436617127384914252}
   - component: {fileID: 7924432940863071296}
+  - component: {fileID: 6549913877462031156}
   m_Layer: 0
   m_Name: Car
   m_TagString: Untagged
@@ -122,3 +123,19 @@ MonoBehaviour:
   - {fileID: 1646981259178978, guid: 512151c1530b99343a884b12ee9c5e1e, type: 3}
   - {fileID: 1646981259178978, guid: ab26596a331d7ee43a3e9d29e2be9f84, type: 3}
   - {fileID: 1646981259178978, guid: 50477af197889084e8a6d97f2b73b73b, type: 3}
+--- !u!114 &6549913877462031156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5209406156547294002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c696a4fcd61e1ab4991bc0a3d39b43cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Furkan.CarController
+  power: 5
+  torque: 0.5
+  maxSpeed: 5
+  movementVector: {x: 0, y: 0}

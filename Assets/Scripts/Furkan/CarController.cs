@@ -17,7 +17,7 @@ namespace Furkan
         Rigidbody rb;
 
         // Forward movement power
-        [SerializeField] private float power = 5;
+        [SerializeField] private float power = 10;
 
         // Turning strength
         [SerializeField] private float torque = 0.5f;
@@ -53,11 +53,11 @@ namespace Furkan
             // Apply forward force if under max speed
             if (rb.linearVelocity.magnitude < maxSpeed)
             {
-                rb.AddForce(movementVector.y * transform.forward * power);
+                rb.AddForce(movementVector.y * power * transform.forward);
             }
 
             // Apply turning torque (only when moving forward/backward)
-            rb.AddTorque(movementVector.x * Vector3.up * torque * movementVector.y);
+            rb.AddTorque(movementVector.x * movementVector.y * torque * Vector3.up);
         }
     }
 }
