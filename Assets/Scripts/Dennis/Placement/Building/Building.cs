@@ -51,5 +51,10 @@ namespace Dennis.Placement.Building
                 _renderers[i].materials = _originalMaterials[i];
             }
         }
+
+        public BuildingData GetBuildingData()
+        {
+            return _data;
+        }
     }
 }

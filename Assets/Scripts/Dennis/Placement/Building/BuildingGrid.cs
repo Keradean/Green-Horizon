@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Dennis.Placement.Building;
+using Samil.Manager;
 //*** De Col ***\\
 //=== Andy ===//
 namespace Dennis.Placement.Building
@@ -43,6 +44,7 @@ namespace Dennis.Placement.Building
             if (!_buildingCells.TryGetValue(building, out var cells)) return;
             foreach (var (x, y) in cells) _grid[x, y].Clear();
             _buildingCells.Remove(building);
+            CityTickManager.Instance.Buildings.Remove(building.GetBuildingData());
         }
 
         public Building GetBuildingAt(Vector3 worldPosition)
