@@ -49,6 +49,8 @@ public class HappinessManager : MonoBehaviour
         public bool IsPercent;
 
         public float Duration = -1f;
+
+        public string Source = "";
     }
 
     // =========================
@@ -166,7 +168,8 @@ public class HappinessManager : MonoBehaviour
         HappinessType type,
         float value,
         bool isPercent = false,
-        float duration = -1f)
+        float duration = -1f,
+        string source = "")
     {
         HappinessBuildingData building =
             Buildings.Find(b => b.BuildingID == buildingID);
@@ -179,7 +182,8 @@ public class HappinessManager : MonoBehaviour
             Type = type,
             Value = value,
             IsPercent = isPercent,
-            Duration = duration
+            Duration = duration,
+            Source = source
         });
 
         building.IsDirty = true;
@@ -191,7 +195,8 @@ public class HappinessManager : MonoBehaviour
 
     public void RemoveModifier(
         int buildingID,
-        HappinessType type)
+        HappinessType type,
+        string source = "")
     {
         HappinessBuildingData building =
             Buildings.Find(b => b.BuildingID == buildingID);
@@ -199,8 +204,12 @@ public class HappinessManager : MonoBehaviour
         if (building == null)
             return;
 
-        building.Modifiers.RemoveAll(
-            m => m.Type == type);
+        if (source != "")
+            building.Modifiers.RemoveAll(
+                m => m.Type == type && m.Source == source);
+        else
+            building.Modifiers.RemoveAll(
+                m => m.Type == type);
 
         building.IsDirty = true;
     }

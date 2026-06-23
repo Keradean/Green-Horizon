@@ -90,7 +90,8 @@ public class renewable_energy : MonoBehaviour
             HappinessManager.Instance.AddModifier(
                 0,
                 HappinessManager.HappinessType.Parks,
-                investment.HappinessBonus);
+                investment.HappinessBonus,
+                source: "renewable_" + type.ToString());
 
         Debug.Log(type + " gebaut! Output: " + investment.EnergyOutput);
         return true;
@@ -120,7 +121,8 @@ public class renewable_energy : MonoBehaviour
         if (HappinessManager.Instance != null)
             HappinessManager.Instance.RemoveModifier(
                 0,
-                HappinessManager.HappinessType.Parks);
+                HappinessManager.HappinessType.Parks,
+                "renewable_" + type.ToString());
 
         Debug.Log(type + " entfernt.");
     }
