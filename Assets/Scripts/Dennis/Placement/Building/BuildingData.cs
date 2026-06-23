@@ -21,6 +21,9 @@ namespace Dennis.Placement.Building
         [field: SerializeField] public string GridSize { get; private set; }  // z.B. "2x3" oder "1x1"
         [field: SerializeField] public int Pollution { get; private set; }       // Umweltverschmutzung
 
+        [Header("Energy")]
+        [field: SerializeField] public int EnergyUsage { get; private set; }       // Energieverbrauch in kW
+
         [Header("Circular Economy")]
         [field: SerializeField] public int CO2Reduction { get; private set; }      // CO2 Reduktion pro Tag (Recycling-Gebäude)
         [field: SerializeField] public int CostSavingsPerDay { get; private set; } // GreenCoins Ersparnis pro Tag

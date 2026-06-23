@@ -65,6 +65,9 @@ namespace Samil.Manager
         if (totalPollution > 0 && Co2BudgetManager.Instance != null)
             Co2BudgetManager.Instance.AddPollution(totalPollution);
 
+        if (EnergyBalanceManager.Instance != null)
+            EnergyBalanceManager.Instance.ProcessDayTick();
+
         UpdateUI();
     }
 
