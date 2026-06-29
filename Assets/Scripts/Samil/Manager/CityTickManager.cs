@@ -58,19 +58,16 @@ namespace Samil.Manager
             totalPollution += building.Pollution;
         });
 
-        if (totalPollution > 0 && Co2BudgetManager.Instance != null)
-        {
-            Co2BudgetManager.Instance.AddPollution(totalPollution);
-        }
+        // Kreislaufwirtschaft: CO2-Reduktion abziehen und GreenCoin-Ersparnis gutschreiben
+        if (CircularEconomyManager.Instance != null)
+            totalPollution = CircularEconomyManager.Instance.ProcessDayTick(totalPollution);
 
-        // CO2BudgetManager.Instance.AddBadDecision(1);
-        // renewable_energy.Instance.Investments.ForEach(investment =>
-        // {
-        //     if (investment.IsBuilt)
-        //     {
-        //         CO2BudgetManager.Instance.AddGoodDecision(investment.CO2ReductionLevel);
-        //     }
-        // });
+        if (totalPollution > 0 && Co2BudgetManager.Instance != null)
+            Co2BudgetManager.Instance.AddPollution(totalPollution);
+
+        if (EnergyBalanceManager.Instance != null)
+            EnergyBalanceManager.Instance.ProcessDayTick();
+
         UpdateUI();
     }
 
