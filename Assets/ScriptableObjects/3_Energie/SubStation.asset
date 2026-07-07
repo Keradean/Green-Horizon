@@ -15,10 +15,14 @@ MonoBehaviour:
   <Cost>k__BackingField: 15000
   <Model>k__BackingField: {fileID: 7938737080107574164, guid: 9297d993fe54061458d85f8b4d444112, type: 3}
   <RequiresRoad>k__BackingField: 0
+  <RequiredBuilding>k__BackingField: {fileID: 0}
   <BuildingName>k__BackingField: Umspannwerk
   <Description>k__BackingField: Spannung zwischen uns
   <Icon>k__BackingField: {fileID: 21300000, guid: 45365c344f2b007419de63ebb4e92682, type: 3}
   <Residents>k__BackingField: 10
   <IncomePerHour>k__BackingField: 100
-  <GridSize>k__BackingField: 
+  <GridSize>k__BackingField: 3x2
   <Pollution>k__BackingField: 12
+  <EnergyUsage>k__BackingField: 0
+  <CO2Reduction>k__BackingField: 0
+  <CostSavingsPerDay>k__BackingField: 0
