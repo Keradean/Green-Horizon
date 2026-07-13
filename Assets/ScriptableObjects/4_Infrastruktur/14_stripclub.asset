@@ -14,10 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.Building.BuildingData
   <Cost>k__BackingField: 0
   <Model>k__BackingField: {fileID: 7938737080107574164, guid: 9b8664dfc2b221b4aa52624bc48fe24a, type: 3}
+  <RequiresRoad>k__BackingField: 1
+  <RequiredBuilding>k__BackingField: {fileID: 0}
   <BuildingName>k__BackingField: 
   <Description>k__BackingField: 
   <Icon>k__BackingField: {fileID: 21300000, guid: b13dd9f40617f935b81de1b7c9c749dd, type: 3}
   <Residents>k__BackingField: 0
   <IncomePerHour>k__BackingField: 0
-  <GridSize>k__BackingField: 
+  <GridSize>k__BackingField: 3x3
   <Pollution>k__BackingField: 0
+  <EnergyUsage>k__BackingField: 0
+  <CO2Reduction>k__BackingField: 0
+  <CostSavingsPerDay>k__BackingField: 0
