@@ -124,51 +124,62 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5209406156547294002, guid: 8ba2bb14c57ca7c4298f461749163dcf, type: 3}
   m_PrefabInstance: {fileID: 3382879447079922182}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &162003868 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6549913877462031156, guid: 8ba2bb14c57ca7c4298f461749163dcf, type: 3}
-  m_PrefabInstance: {fileID: 3382879447079922182}
+--- !u!1 &184909825
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 162003867}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c696a4fcd61e1ab4991bc0a3d39b43cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Furkan.CarController
---- !u!114 &162003874
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 184909827}
+  - component: {fileID: 184909826}
+  m_Layer: 0
+  m_Name: AIDirector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &184909826
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 162003867}
+  m_GameObject: {fileID: 184909825}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e70df21e002b80b45bb7e9c1e1de5ba8, type: 3}
+  m_Script: {fileID: 11500000, guid: ebe27fe8afaa6da4dbcfe2a9e331ff68, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Furkan.CarAI
-  path: []
-  arriveDistance: 0.2
-  lastPointArriveDistance: 0.1
-  turningAngleOffset: 5
-  currentTargetPosition: {x: 0, y: 0, z: 0}
-  raycastStartingPoint: {fileID: 0}
-  collisionRaycastLength: 0.1
-  <OnDrive>k__BackingField:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 162003868}
-        m_TargetAssemblyTypeName: Furkan.CarController, Assembly-CSharp
-        m_MethodName: Move
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  m_EditorClassIdentifier: Assembly-CSharp::Furkan.AiDirector
+  placementManager: {fileID: 1176480840}
+  pedestrianPrefabs: []
+  carPrefab: {fileID: 162003867}
+  buildingGrid: {fileID: 0}
+  minSpawnInterval: 2
+  maxSpawnInterval: 5
+  maxActiveCars: 8
+  densityCheckRadius: 6
+  rushHourMultiplier: 1.5
+  rushHourStart: 8
+  rushHourEnd: 18
+  autoSpawnCars: 1
+--- !u!4 &184909827
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 184909825}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 593.67596, y: 0.00303, z: -407.2244}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &386224206
 GameObject:
   m_ObjectHideFlags: 0
@@ -545,6 +556,53 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1176480839
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1176480841}
+  - component: {fileID: 1176480840}
+  m_Layer: 0
+  m_Name: PlacementManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1176480840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1176480839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 943969f3dcb1e1a46b35c6205a24e909, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Furkan.PlacementManager
+  allStructures: []
+  houses: []
+  specialStructures: []
+--- !u!4 &1176480841
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1176480839}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 593.67596, y: 0.00303, z: -407.2244}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &3382879447079922182
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -597,21 +655,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Car
       objectReference: {fileID: 0}
-    - target: {fileID: 6549913877462031156, guid: 8ba2bb14c57ca7c4298f461749163dcf, type: 3}
-      propertyPath: power
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 6549913877462031156, guid: 8ba2bb14c57ca7c4298f461749163dcf, type: 3}
-      propertyPath: movementVector.y
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5209406156547294002, guid: 8ba2bb14c57ca7c4298f461749163dcf, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 162003874}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8ba2bb14c57ca7c4298f461749163dcf, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
@@ -621,3 +668,5 @@ SceneRoots:
   - {fileID: 3382879447079922182}
   - {fileID: 820718724}
   - {fileID: 386224210}
+  - {fileID: 184909827}
+  - {fileID: 1176480841}

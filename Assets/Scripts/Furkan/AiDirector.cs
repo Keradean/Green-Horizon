@@ -19,6 +19,7 @@ namespace Furkan
         [SerializeField] private float maxSpawnInterval = 5f;
         [SerializeField] private float maxActiveCars = 8f;
         [SerializeField] private float densityCheckRadius = 6f;
+        [SerializeField] private float laneOffset = 0.9f;
         [SerializeField] private float rushHourMultiplier = 1.5f;
         [SerializeField] private float rushHourStart = 8f;
         [SerializeField] private float rushHourEnd = 18f;
@@ -59,9 +60,7 @@ namespace Furkan
                 if (path.Count > 0)
                 {
                     path.Reverse();
-                    List<Vector3> agentPath = GetPedestrianPath(path, startMarkerPosition.Position, endMarkerPosition);
-                    var aiAgent = agent.GetComponent<AiAgent>();
-                    aiAgent.Initialize(agentPath);
+                    List<Vector3> agentPath = GetPedestrianPath(path, startMarkerPosition.Position, endMarkerPosition.Position);
                 }
             }
         }
@@ -69,7 +68,7 @@ namespace Furkan
         private void Awake()
         {
             if (buildingGrid == null)
-                buildingGrid = FindObjectOfType<BuildingGrid>();
+                buildingGrid = UnityEngine.Object.FindFirstObjectByType<BuildingGrid>();
         }
 
         private void Start()
@@ -143,7 +142,7 @@ namespace Furkan
             var endRoadPosition = ((INeedingRoad)endStructure).RoadPosition;
 
             var path = placementManager.GetPathBetween(startRoadPosition, endRoadPosition, true);
-            if (path == null || path.Count < 3)
+            if (path == null || path.Count < 2)
                 return false;
 
             path.Reverse();
@@ -152,15 +151,20 @@ namespace Furkan
             var endMarkerPosition = placementManager.GetStructureAt(endRoadPosition).GetCarEndMarker(path[path.Count - 2]);
             var markerCarPath = GetRoadMarkerCarPath(startRoadPosition, endRoadPosition);
 
-            if (markerCarPath.Count >= 2)
+            var chosenPath = markerCarPath.Count >= 2
+                ? markerCarPath
+                : GetCarPath(path, startMarkerPosition.Position, endMarkerPosition.Position);
+
+            if (chosenPath != null && chosenPath.Count >= 2)
             {
+                var laneShiftedPath = ApplyLaneOffsetToPath(chosenPath, laneOffset);
                 carPath = new List<Vector3> { startMarkerPosition.Position };
-                if (markerCarPath.Count > 0)
+                if (laneShiftedPath.Count > 0)
                 {
-                    if (markerCarPath[0] != carPath[0])
-                        carPath.AddRange(markerCarPath);
+                    if (laneShiftedPath[0] != carPath[0])
+                        carPath.AddRange(laneShiftedPath);
                     else
-                        carPath.AddRange(markerCarPath.Skip(1));
+                        carPath.AddRange(laneShiftedPath.Skip(1));
                 }
 
                 if (carPath.Count == 0 || carPath[carPath.Count - 1] != endMarkerPosition.Position)
@@ -176,6 +180,44 @@ namespace Furkan
             return false;
         }
 
+        private List<Vector3> ApplyLaneOffsetToPath(List<Vector3> sourcePath, float offset)
+        {
+            if (sourcePath == null || sourcePath.Count == 0 || Mathf.Approximately(offset, 0f))
+                return sourcePath ?? new List<Vector3>();
+
+            var shifted = new List<Vector3>(sourcePath.Count);
+            for (int i = 0; i < sourcePath.Count; i++)
+            {
+                Vector3 direction;
+                if (i == 0)
+                {
+                    direction = sourcePath.Count > 1 ? sourcePath[1] - sourcePath[0] : Vector3.forward;
+                }
+                else if (i == sourcePath.Count - 1)
+                {
+                    direction = sourcePath[i] - sourcePath[i - 1];
+                }
+                else
+                {
+                    var inDir = sourcePath[i] - sourcePath[i - 1];
+                    var outDir = sourcePath[i + 1] - sourcePath[i];
+                    direction = (inDir.normalized + outDir.normalized);
+                }
+
+                if (direction.sqrMagnitude < 0.0001f)
+                    direction = Vector3.forward;
+
+                direction.y = 0f;
+                direction.Normalize();
+
+                // Right-hand lane offset: each direction gets its own side of the road.
+                var side = Vector3.Cross(Vector3.up, direction).normalized;
+                shifted.Add(sourcePath[i] + side * offset);
+            }
+
+            return shifted;
+        }
+
         private List<Vector3> GetPedestrianPath(List<Vector3Int> path, Vector3 startPosition, Vector3 endPosition)
         {
             pedestrianGraph.ClearGraph();
@@ -187,40 +229,42 @@ namespace Furkan
 
         private void CreatAPedestrianGraph(List<Vector3Int> path)
         {
-            Dictionary<Marker, Vector3> tempDictionary = new Dictionary<Marker, Vector3>();
+            Dictionary<MarkerInfo, Vector3> tempDictionary = new Dictionary<MarkerInfo, Vector3>();
 
             for (int i = 0; i < path.Count; i++)
             {
                 var currentPosition = path[i];
-                var roadStructure = placementManager.GetStructureAt(currentPosition);
+                var roadStructure = placementManager.GetStructureAt(new Vector2Int(currentPosition.x, currentPosition.z));
+                if (roadStructure == null) continue;
+
                 var markersList = roadStructure.GetPedestrianMarkers();
                 bool limitDistance = markersList.Count == 4;
                 tempDictionary.Clear();
                 foreach (var marker in markersList)
                 {
                     pedestrianGraph.AddVertex(marker.Position);
-                    foreach (var markerNeighbourPosition in marker.GetAdjacentPositions())
-                    {
-                        pedestrianGraph.AddEdge(marker.Position, markerNeighbourPosition);
-                    }
 
-                    if (marker.OpenForconnections && i + 1 < path.Count)
+                    if (i + 1 < path.Count)
                     {
-                        var nextRoadStructure = placementManager.GetStructureAt(path[i + 1]);
-                        if (limitDistance)
+                        var nextRoadStructure = placementManager.GetStructureAt(new Vector2Int(path[i + 1].x, path[i + 1].z));
+                        if (nextRoadStructure != null)
                         {
-                            tempDictionary.Add(marker, nextRoadStructure.GetNearestPedestrianMarkerTo(marker.Position));
-                        }
-                        else
-                        {
-                            pedestrianGraph.AddEdge(marker.Position, nextRoadStructure.GetNearestPedestrianMarkerTo(marker.Position));
+                            var nextMarker = nextRoadStructure.GetNearestPedestrianMarkerTo(marker.Position);
+                            if (limitDistance)
+                            {
+                                tempDictionary.Add(marker, nextMarker.Position);
+                            }
+                            else
+                            {
+                                pedestrianGraph.AddEdge(marker.Position, nextMarker.Position);
+                            }
                         }
                     }
                 }
-                if (limitDistance && tempDictionary.Count == 4)
+                if (limitDistance && tempDictionary.Count >= 2)
                 {
                     var distanceSortedMarkers = tempDictionary.OrderBy(x => Vector3.Distance(x.Key.Position, x.Value)).ToList();
-                    for (int j = 0; j < 2; j++)
+                    for (int j = 0; j < Mathf.Min(2, distanceSortedMarkers.Count); j++)
                     {
                         pedestrianGraph.AddEdge(distanceSortedMarkers[j].Key.Position, distanceSortedMarkers[j].Value);
                     }
@@ -271,11 +315,13 @@ namespace Furkan
 
         private void CreatACarGraph(List<Vector3Int> path)
         {
-            Dictionary<Marker, Vector3> tempDictionary = new Dictionary<Marker, Vector3>();
+            Dictionary<MarkerInfo, Vector3> tempDictionary = new Dictionary<MarkerInfo, Vector3>();
             for (int i = 0; i < path.Count; i++)
             {
                 var currentPosition = path[i];
-                var roadStructure = placementManager.GetStructureAt(currentPosition);
+                var roadStructure = placementManager.GetStructureAt(new Vector2Int(currentPosition.x, currentPosition.z));
+                if (roadStructure == null) continue;
+
                 var markersList = roadStructure.GetCarMarkers();
                 var limitDistance = markersList.Count > 3;
                 tempDictionary.Clear();
@@ -283,32 +329,29 @@ namespace Furkan
                 foreach (var marker in markersList)
                 {
                     carGraph.AddVertex(marker.Position);
-                    foreach (var markerNeighbour in marker.adjacentMarkers)
+
+                    if (i + 1 < path.Count)
                     {
-                        carGraph.AddEdge(marker.Position, markerNeighbour.Position);
-                    }
-                    if (marker.OpenForconnections && i + 1 < path.Count)
-                    {
-                        var nextRoadPosition = placementManager.GetStructureAt(path[i + 1]);
-                        if (limitDistance)
+                        var nextRoadPosition = placementManager.GetStructureAt(new Vector2Int(path[i + 1].x, path[i + 1].z));
+                        if (nextRoadPosition != null)
                         {
-                            tempDictionary.Add(marker, nextRoadPosition.GetNearestCarMarkerTo(marker.Position));
-                        }
-                        else
-                        {
-                            carGraph.AddEdge(marker.Position, nextRoadPosition.GetNearestCarMarkerTo(marker.Position));
+                            if (limitDistance)
+                            {
+                                tempDictionary.Add(marker, nextRoadPosition.GetNearestCarMarkerTo(marker.Position).Position);
+                            }
+                            else
+                            {
+                                carGraph.AddEdge(marker.Position, nextRoadPosition.GetNearestCarMarkerTo(marker.Position).Position);
+                            }
                         }
                     }
                 }
                 if (limitDistance && tempDictionary.Count > 2)
                 {
                     var distanceSortedMarkers = tempDictionary.OrderBy(x => Vector3.Distance(x.Key.Position, x.Value)).ToList();
-                    foreach (var item in distanceSortedMarkers)
+                    for (int j = 0; j < Mathf.Min(2, distanceSortedMarkers.Count); j++)
                     {
-                        Debug.Log(Vector3.Distance(item.Key.Position, item.Value));
-                    }
-                    for (int j = 0; j < 2; j++)
-                    {
+                        Debug.Log(Vector3.Distance(distanceSortedMarkers[j].Key.Position, distanceSortedMarkers[j].Value));
                         carGraph.AddEdge(distanceSortedMarkers[j].Key.Position, distanceSortedMarkers[j].Value);
                     }
                 }
@@ -375,7 +418,7 @@ namespace Furkan
             {
                 foreach (var vertexNeighbour in graph.GetConnectedVerticesTo(vertex))
                 {
-                    Debug.DrawLine(vertex.Position + Vector3.up, vertexNeighbour.Position + Vector3.up, Color.red);
+                    Debug.DrawLine(vertex + Vector3.up, vertexNeighbour + Vector3.up, Color.red);
                 }
             }
         }
