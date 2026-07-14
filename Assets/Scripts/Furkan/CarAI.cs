@@ -31,6 +31,11 @@ namespace Furkan
         // Length of the raycast used for collision detection
         [SerializeField] private float collisionRaycastLength = 0.1f;
 
+        // Distance and radius used to detect cars ahead in traffic
+        [SerializeField] private float trafficDetectionDistance = 3f;
+        [SerializeField] private float trafficStopDistance = 1.2f;
+        [SerializeField] private float trafficCheckRadius = 0.35f;
+
         /// <summary>
         /// Returns true if the car is at the last index of the path.
         /// </summary>
@@ -82,7 +87,7 @@ namespace Furkan
         /// </summary>
         public void SetPath(List<Vector3> path)
         {
-            if (path.Count == 0)
+            if (path == null || path.Count < 2)
             {
                 Destroy(gameObject);
                 return;
@@ -93,7 +98,8 @@ namespace Furkan
             currentTargetPosition = this.path[index];
 
             // Instantly rotate the car to face the next path point
-            Vector3 relativepoint = transform.InverseTransformPoint(this.path[index + 1]);
+            var nextPoint = this.path[1];
+            Vector3 relativepoint = transform.InverseTransformPoint(nextPoint);
             float angle = Mathf.Atan2(relativepoint.x, relativepoint.z) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0, angle, 0);
             Stop = false;
@@ -110,20 +116,51 @@ namespace Furkan
         }
 
         /// <summary>
-        /// Checks for obstacles in front of the car using a raycast.
-        /// If an obstacle is detected, sets collisionStop to true.
+        /// Checks for obstacles in front of the car using raycasts and traffic detection.
+        /// If another car is detected ahead, the car slows down or stops to preserve distance.
         /// </summary>
         private void CheckForCollisions()
         {
+            collisionStop = false;
+
             if (Physics.Raycast(raycastStartingPoint.transform.position, transform.forward, collisionRaycastLength,
                     1 << gameObject.layer))
             {
                 collisionStop = true;
+                return;
             }
-            else
+
+            if (TryFindVehicleAhead(out var otherCar, out var distance))
             {
-                collisionStop = false;
+                collisionStop = distance <= trafficStopDistance || (distance <= trafficDetectionDistance && otherCar.Stop);
             }
+        }
+
+        private bool TryFindVehicleAhead(out CarAI otherCar, out float distance)
+        {
+            otherCar = null;
+            distance = float.MaxValue;
+
+            var origin = raycastStartingPoint != null
+                ? raycastStartingPoint.transform.position
+                : transform.position + transform.forward * 0.5f;
+
+            if (Physics.SphereCast(origin, trafficCheckRadius, transform.forward, out var hit, trafficDetectionDistance))
+            {
+                var carAhead = hit.collider.GetComponentInParent<CarAI>();
+                if (carAhead != null && carAhead != this)
+                {
+                    var directionToCar = carAhead.transform.position - transform.position;
+                    if (Vector3.Dot(directionToCar, transform.forward) > 0)
+                    {
+                        otherCar = carAhead;
+                        distance = directionToCar.magnitude;
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         /// <summary>

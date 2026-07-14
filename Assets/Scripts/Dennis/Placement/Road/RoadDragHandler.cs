@@ -13,17 +13,17 @@ namespace Dennis.Placement.Road
         [SerializeField] private BuildingPreview previewPrefab;
         [SerializeField] private BuildingGrid grid;
 
-        private readonly List<BuildingPreview> _pool        = new();
-        private readonly List<Vector2Int>      _scratchPath = new();
-        private readonly List<Vector2Int>      _toRecheck   = new();
-        private readonly HashSet<Vector2Int>   _tempRoads   = new();
+        private readonly List<BuildingPreview> _pool = new();
+        private readonly List<Vector2Int> _scratchPath = new();
+        private readonly List<Vector2Int> _toRecheck = new();
+        private readonly HashSet<Vector2Int> _tempRoads = new();
         private int _activeCount;
 
-        private bool       _isDragging;
+        private bool _isDragging;
         private Vector2Int _start;
         private Vector2Int _last;
         private Vector2Int _hoverCell;
-        private bool       _hasHover;
+        private bool _hasHover;
 
         /////////////////////////////////////////////////////////////////////////////////////
         public void Tick(Vector3 mouseWorld)
@@ -35,7 +35,7 @@ namespace Dennis.Placement.Road
                 if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) return;
                 _isDragging = true;
                 _start = cell;
-                _last  = cell;
+                _last = cell;
                 RebuildPath(_start, cell);
                 return;
             }
@@ -43,22 +43,22 @@ namespace Dennis.Placement.Road
             switch (_isDragging)
             {
                 case true when Mouse.current.leftButton.isPressed:
-                {
-                    if (cell == _last) return;
-                    _last = cell;
-                    RebuildPath(_start, cell);
-                    return;
-                }
+                    {
+                        if (cell == _last) return;
+                        _last = cell;
+                        RebuildPath(_start, cell);
+                        return;
+                    }
                 case true when Mouse.current.leftButton.wasReleasedThisFrame:
                     Commit();
                     _isDragging = false;
-                    _hasHover   = false;
+                    _hasHover = false;
                     return;
             }
 
             if (_hasHover && _hoverCell == cell) return;
             _hoverCell = cell;
-            _hasHover  = true;
+            _hasHover = true;
             _scratchPath.Clear();
             _scratchPath.Add(cell);
             ShowPreviews(_scratchPath);
@@ -68,7 +68,7 @@ namespace Dennis.Placement.Road
         public void Cancel()
         {
             _isDragging = false;
-            _hasHover   = false;
+            _hasHover = false;
             for (var i = 0; i < _activeCount; i++)
                 _pool[i].gameObject.SetActive(false);
             _activeCount = 0;
@@ -173,6 +173,8 @@ namespace Dennis.Placement.Road
 
             foreach (var c in _toRecheck.Where(c => grid.IsRoad(c) && !_scratchPath.Contains(c)))
                 UpdateRoadVisual(c);
+
+            grid.RebuildRoadMarkers();
 
             for (var i = 0; i < _activeCount; i++)
                 _pool[i].gameObject.SetActive(false);
