@@ -95,16 +95,26 @@ namespace Furkan
 
         public void RegisterStructure(StructureModel structure)
         {
+            if (structure == null)
+                return;
+
             if (!allStructures.Contains(structure))
-            {
                 allStructures.Add(structure);
-                structureGrid[structure.RoadPosition] = structure;
-            }
+
+            if (!houses.Contains(structure) && !specialStructures.Contains(structure))
+                houses.Add(structure);
+
+            structureGrid[structure.RoadPosition] = structure;
         }
 
         public void UnregisterStructure(StructureModel structure)
         {
+            if (structure == null)
+                return;
+
             allStructures.Remove(structure);
+            houses.Remove(structure);
+            specialStructures.Remove(structure);
             structureGrid.Remove(structure.RoadPosition);
         }
     }

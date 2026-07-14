@@ -4,12 +4,12 @@ using UnityEngine;
 
 namespace Furkan
 {
-    
+
     /// <summary>
     /// Controls the movement and turning of a car using physics (Rigidbody).
     /// Applies forward force and turning torque based on input.
     /// </summary>
-    
+
     [RequireComponent(typeof(Rigidbody))]
     public class CarController : MonoBehaviour
     {
@@ -25,6 +25,16 @@ namespace Furkan
         // Maximum allowed speed
         [SerializeField] private float maxSpeed = 5;
 
+        // How quickly sideways velocity is damped to prevent drift
+        [SerializeField] private float lateralGrip = 8f;
+
+        // Helps stabilize spin while cornering
+        [SerializeField] private float angularDamping = 4f;
+
+        // Caps and smooths yaw rotation to avoid spin-outs on corners.
+        [SerializeField] private float maxYawRate = 2.2f;
+        [SerializeField] private float yawStability = 7f;
+
         // Stores the current movement input (x: turn, y: forward)
         [SerializeField] private Vector2 movementVector;
 
@@ -34,6 +44,7 @@ namespace Furkan
         private void Awake()
         {
             rb = GetComponent<Rigidbody>();
+            rb.maxAngularVelocity = Mathf.Max(rb.maxAngularVelocity, maxYawRate);
         }
 
         /// <summary>
@@ -50,6 +61,8 @@ namespace Furkan
         /// </summary>
         private void FixedUpdate()
         {
+            rb.angularDamping = angularDamping;
+
             // Apply forward force if under max speed
             if (rb.linearVelocity.magnitude < maxSpeed)
             {
@@ -58,6 +71,21 @@ namespace Furkan
 
             // Apply turning torque (only when moving forward/backward)
             rb.AddTorque(movementVector.x * movementVector.y * torque * Vector3.up);
+
+            // Keep yaw stable and prevent odd rotations around X/Z.
+            var angularVelocity = rb.angularVelocity;
+            angularVelocity.x = 0f;
+            angularVelocity.z = 0f;
+
+            var targetYaw = movementVector.x * movementVector.y * maxYawRate;
+            angularVelocity.y = Mathf.Lerp(angularVelocity.y, targetYaw, yawStability * Time.fixedDeltaTime);
+            angularVelocity.y = Mathf.Clamp(angularVelocity.y, -maxYawRate, maxYawRate);
+            rb.angularVelocity = angularVelocity;
+
+            // Remove sideways slip in local space so cars hold their lane.
+            var localVelocity = transform.InverseTransformDirection(rb.linearVelocity);
+            localVelocity.x = Mathf.Lerp(localVelocity.x, 0f, lateralGrip * Time.fixedDeltaTime);
+            rb.linearVelocity = transform.TransformDirection(localVelocity);
         }
     }
 }

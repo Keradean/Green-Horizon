@@ -1,6 +1,7 @@
 using Andy.Manager;
 using Dennis.Manager;
 using Dennis.Placement.Road;
+using Furkan;
 using Samil.Manager;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace Dennis.Placement.Building
         [SerializeField] private BuildingPreview buildingPreviewPrefab;
         [SerializeField] private Building buildingPrefab;
         [SerializeField] private BuildingGrid grid;
+        [SerializeField] private PlacementManager placementManager;
         [SerializeField] private DemolishButton demolishButton;
         [SerializeField] private Material demolishHighlightMaterial;
         [SerializeField] private AnnouncementData noRoadAnnouncement;
@@ -38,6 +40,8 @@ namespace Dennis.Placement.Building
         {
             Instance = this;
             _camera = Camera.main;
+            if (placementManager == null)
+                placementManager = FindFirstObjectByType<PlacementManager>();
 
             _demolishPreviewPlane = GameObject.CreatePrimitive(PrimitiveType.Quad);
             _demolishPreviewPlane.GetComponent<Renderer>().material = demolishHighlightMaterial;
@@ -196,6 +200,11 @@ namespace Dennis.Placement.Building
                 _hoveredBuilding.Unhighlight();
                 _hoveredBuilding = null;
             }
+
+            var structure = building.GetComponent<StructureModel>();
+            if (structure != null)
+                placementManager?.UnregisterStructure(structure);
+
             grid.RemoveBuilding(building);
             Destroy(building.gameObject);
         }
@@ -266,8 +275,42 @@ namespace Dennis.Placement.Building
                 arrow.OnPlaced();
 
             grid.SetBuilding(building, buildPosition);
+
+            var structure = building.GetComponent<StructureModel>();
+            if (structure == null)
+                structure = building.gameObject.AddComponent<StructureModel>();
+
+            var roadCell = GetFirstAdjacentRoadCell(buildPosition);
+            if (roadCell.HasValue)
+                structure.SetRoadPosition(roadCell.Value);
+
+            placementManager?.RegisterStructure(structure);
+
             Destroy(_preview.gameObject);
             _preview = null;
+        }
+
+        private Vector2Int? GetFirstAdjacentRoadCell(List<Vector3> buildPosition)
+        {
+            foreach (var p in buildPosition)
+            {
+                var cell = grid.WorldToCell(p);
+                var neighbours = new[]
+                {
+                    cell + Vector2Int.up,
+                    cell + Vector2Int.down,
+                    cell + Vector2Int.right,
+                    cell + Vector2Int.left
+                };
+
+                foreach (var neighbour in neighbours)
+                {
+                    if (grid.IsRoad(neighbour))
+                        return neighbour;
+                }
+            }
+
+            return null;
         }
 
         public void CancelAll()

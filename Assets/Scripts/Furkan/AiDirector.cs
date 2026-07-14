@@ -19,7 +19,7 @@ namespace Furkan
         [SerializeField] private float maxSpawnInterval = 5f;
         [SerializeField] private float maxActiveCars = 8f;
         [SerializeField] private float densityCheckRadius = 6f;
-        [SerializeField] private float laneOffset = 0.9f;
+        [SerializeField] private float laneOffset = 0.2f;
         [SerializeField] private float rushHourMultiplier = 1.5f;
         [SerializeField] private float rushHourStart = 8f;
         [SerializeField] private float rushHourEnd = 18f;
@@ -146,32 +146,26 @@ namespace Furkan
                 return false;
 
             path.Reverse();
-
-            var startMarkerPosition = placementManager.GetStructureAt(startRoadPosition).GetCarSpawnMarker(path[1]);
-            var endMarkerPosition = placementManager.GetStructureAt(endRoadPosition).GetCarEndMarker(path[path.Count - 2]);
             var markerCarPath = GetRoadMarkerCarPath(startRoadPosition, endRoadPosition);
 
-            var chosenPath = markerCarPath.Count >= 2
-                ? markerCarPath
-                : GetCarPath(path, startMarkerPosition.Position, endMarkerPosition.Position);
+            var fallbackRoadPath = BuildWorldPathFromGridPath(path);
+            var chosenPath = markerCarPath.Count >= 2 ? markerCarPath : fallbackRoadPath;
 
             if (chosenPath != null && chosenPath.Count >= 2)
             {
                 var laneShiftedPath = ApplyLaneOffsetToPath(chosenPath, laneOffset);
-                carPath = new List<Vector3> { startMarkerPosition.Position };
-                if (laneShiftedPath.Count > 0)
+                if (laneShiftedPath == null || laneShiftedPath.Count < 2)
+                    return false;
+
+                carPath = new List<Vector3>(laneShiftedPath);
+                var car = Instantiate(carPrefab, carPath[0], Quaternion.identity);
+                var carAi = car.GetComponent<CarAI>();
+                if (carAi == null)
                 {
-                    if (laneShiftedPath[0] != carPath[0])
-                        carPath.AddRange(laneShiftedPath);
-                    else
-                        carPath.AddRange(laneShiftedPath.Skip(1));
+                    Destroy(car);
+                    return false;
                 }
 
-                if (carPath.Count == 0 || carPath[carPath.Count - 1] != endMarkerPosition.Position)
-                    carPath.Add(endMarkerPosition.Position);
-
-                var car = Instantiate(carPrefab, startMarkerPosition.Position, Quaternion.identity);
-                var carAi = car.GetComponent<CarAI>();
                 carAi.SetPath(carPath);
                 activeCars.Add(carAi);
                 return true;
@@ -180,10 +174,34 @@ namespace Furkan
             return false;
         }
 
+        private List<Vector3> BuildWorldPathFromGridPath(List<Vector3Int> gridPath)
+        {
+            var worldPath = new List<Vector3>();
+            if (gridPath == null || gridPath.Count < 2)
+                return worldPath;
+
+            if (buildingGrid == null)
+                return worldPath;
+
+            foreach (var step in gridPath)
+            {
+                var cell = new Vector2Int(step.x, step.z);
+                if (!buildingGrid.IsRoad(cell))
+                    continue;
+
+                worldPath.Add(buildingGrid.CellToWorld(cell));
+            }
+
+            return worldPath;
+        }
+
         private List<Vector3> ApplyLaneOffsetToPath(List<Vector3> sourcePath, float offset)
         {
             if (sourcePath == null || sourcePath.Count == 0 || Mathf.Approximately(offset, 0f))
                 return sourcePath ?? new List<Vector3>();
+
+            // Keep lane offset inside a safe portion of one grid cell width.
+            offset = Mathf.Clamp(offset, -0.35f, 0.35f);
 
             var shifted = new List<Vector3>(sourcePath.Count);
             for (int i = 0; i < sourcePath.Count; i++)
