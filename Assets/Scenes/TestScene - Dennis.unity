@@ -409,7 +409,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.RoadDragHandler
   roadData: {fileID: 11400000, guid: f2f2fff08482b3140936ff1930c770cd, type: 2}
   previewPrefab: {fileID: 128963798}
-  buildingPrefab: {fileID: 696515387}
   grid: {fileID: 141222554}
 --- !u!4 &1297799743
 Transform:
@@ -677,7 +676,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 9452ae1262a74094f8a68013fbcd1834, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

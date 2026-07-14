@@ -1,7 +1,8 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Dennis.Placement.Building;
-using Samil.Manager;
+using Furkan;
 //*** De Col ***\\
 //=== Andy ===//
 namespace Dennis.Placement.Building
@@ -14,8 +15,9 @@ namespace Dennis.Placement.Building
         private BuildingGridCell[,] _grid;
         private readonly Dictionary<Building, List<(int x, int y)>> _buildingCells = new();
 
-        private readonly HashSet<Vector2Int>                _roadCells      = new();
+        private readonly HashSet<Vector2Int> _roadCells = new();
         private readonly Dictionary<Vector2Int, GameObject> _roadContainers = new(); // feste Container pro Zelle
+        private readonly Dictionary<Vector2Int, RoadMarker> _roadMarkers = new();
 
         /////////////////////////////////////////////////////////////////////////////////////////////////
         private void Start()
@@ -87,6 +89,59 @@ namespace Dennis.Placement.Building
 
         public bool IsRoad(Vector2Int cell) => _roadCells.Contains(cell);
 
+        public void RebuildRoadMarkers()
+        {
+            foreach (var marker in _roadMarkers.Values.Where(marker => marker != null))
+            {
+                if (marker.gameObject != null)
+                    Destroy(marker.gameObject);
+            }
+
+            _roadMarkers.Clear();
+
+            foreach (var cell in _roadCells)
+            {
+                if (!_roadContainers.TryGetValue(cell, out var container) || container == null)
+                    continue;
+
+                var markerObject = new GameObject($"RoadMarker_{cell.x}_{cell.y}");
+                markerObject.transform.SetParent(container.transform, false);
+                markerObject.transform.localPosition = Vector3.zero;
+
+                var marker = markerObject.AddComponent<RoadMarker>();
+                marker.Cell = cell;
+                marker.Shape = DetermineMarkerShape(cell);
+                marker.OpenForConnections = true;
+                _roadMarkers[cell] = marker;
+            }
+
+            foreach (var cell in _roadCells)
+            {
+                if (!_roadMarkers.TryGetValue(cell, out var marker) || marker == null)
+                    continue;
+
+                var adjacent = new List<RoadMarker>();
+                foreach (var direction in new[] { Vector2Int.up, Vector2Int.down, Vector2Int.right, Vector2Int.left })
+                {
+                    var neighborCell = cell + direction;
+                    if (_roadMarkers.TryGetValue(neighborCell, out var neighborMarker) && neighborMarker != null)
+                        adjacent.Add(neighborMarker);
+                }
+
+                marker.SetConnections(adjacent);
+            }
+        }
+
+        public List<RoadMarker> GetRoadMarkers()
+        {
+            return _roadMarkers.Values.Where(marker => marker != null).ToList();
+        }
+
+        public RoadMarker GetRoadMarkerAt(Vector2Int cell)
+        {
+            return _roadMarkers.TryGetValue(cell, out var marker) ? marker : null;
+        }
+
         // Tauscht das Modell im Container aus — löscht alle Kinder und instantiiert neu
         public void SwapRoadModel(Vector2Int cell, GameObject prefab, float rotation)
         {
@@ -108,6 +163,7 @@ namespace Dennis.Placement.Building
             if (_roadContainers.TryGetValue(cell, out var container) && container != null)
                 Destroy(container);
             _roadContainers.Remove(cell);
+            RebuildRoadMarkers();
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -151,15 +207,34 @@ namespace Dennis.Placement.Building
                     origin + new Vector3(x * BuildingSystem.CellSize, 0.01f, height * BuildingSystem.CellSize));
             }
         }
+        private RoadMarkerShape DetermineMarkerShape(Vector2Int cell)
+        {
+            bool n = _roadCells.Contains(cell + Vector2Int.up);
+            bool s = _roadCells.Contains(cell + Vector2Int.down);
+            bool e = _roadCells.Contains(cell + Vector2Int.right);
+            bool w = _roadCells.Contains(cell + Vector2Int.left);
+
+            var connections = (n ? 1 : 0) + (s ? 1 : 0) + (e ? 1 : 0) + (w ? 1 : 0);
+
+            return connections switch
+            {
+                4 => RoadMarkerShape.Cross,
+                3 => RoadMarkerShape.TJunction,
+                2 when (n && s) || (e && w) => RoadMarkerShape.Straight,
+                2 => RoadMarkerShape.Corner,
+                1 => RoadMarkerShape.Single,
+                _ => RoadMarkerShape.Single,
+            };
+        }
     }
 
     public class BuildingGridCell
     {
         private Building _building;
         public BuildingGridCell(Building building) => _building = building;
-        public void SetBuilding(Building building)  => _building = building;
-        public void Clear()                          => _building = null;
-        public Building GetBuilding()                => _building;
-        public bool IsEmpty()                        => _building == null;
+        public void SetBuilding(Building building) => _building = building;
+        public void Clear() => _building = null;
+        public Building GetBuilding() => _building;
+        public bool IsEmpty() => _building == null;
     }
 }
