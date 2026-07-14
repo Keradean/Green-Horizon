@@ -45,7 +45,7 @@ namespace Can.Manager
             InitVolumeSlider();
 
             ShowPanel(mainMenuPanel);
-            Audiomanager.Instance.PlayBGM();
+            Audiomanager.Instance.PlayMainMenu();
         }
 
         private void OnDestroy()
@@ -121,6 +121,7 @@ namespace Can.Manager
         private static void StartGame()
         {
             Audiomanager.Instance.PlaySfx(1);
+            Audiomanager.Instance.PlayBGM();
             SceneManager.LoadScene("MainScene");
         }
 
