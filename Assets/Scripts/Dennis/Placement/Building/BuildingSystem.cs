@@ -42,7 +42,7 @@ namespace Dennis.Placement.Building
             Instance = this;
             _camera = Camera.main;
             if (placementManager == null)
-                placementManager = FindFirstObjectByType<PlacementManager>();
+                placementManager = FindAnyObjectByType<PlacementManager>();
 
             _demolishPreviewPlane = GameObject.CreatePrimitive(PrimitiveType.Quad);
             _demolishPreviewPlane.GetComponent<Renderer>().material = demolishHighlightMaterial;

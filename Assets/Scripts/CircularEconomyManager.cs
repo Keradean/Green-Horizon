@@ -116,14 +116,14 @@ public class CircularEconomyManager : MonoBehaviour
         }
 
         // Kosten abziehen
-     //   if (GreenCoinManager.Instance != null)
-        {
-      //      if (!GreenCoinManager.Instance.SpendGold(mechanic.InvestmentCost))
-            {
-                Debug.Log("Nicht genug GreenCoins für " + type);
-                return false;
-            }
-        }
+        //if (GreenCoinManager.Instance != null)
+        //{
+        //    if (!GreenCoinManager.Instance.SpendGold(mechanic.InvestmentCost))
+        //    {
+        //        Debug.Log("Nicht genug GreenCoins für " + type);
+        //        return false;
+        //    }
+        //}
 
         mechanic.IsActive = true;
 
