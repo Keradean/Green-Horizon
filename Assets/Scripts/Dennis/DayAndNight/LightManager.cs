@@ -70,10 +70,10 @@ namespace Dennis.DayAndNight
             else
             {
                 var lights = FindObjectsByType<Light>(FindObjectsInactive.Exclude);
-                foreach (var light in lights)
+                foreach (var var in lights)
                 {
-                    if (light.type != LightType.Directional) continue;
-                    directionalLight = light;
+                    if (var.type != LightType.Directional) continue;
+                    directionalLight = var;
                     return;
                 }
             }

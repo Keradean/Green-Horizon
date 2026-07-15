@@ -273,6 +273,7 @@ namespace Dennis.Placement.Building
             if (GreenCoinManager.Instance.CurrentGold < _preview.Data.Cost) return;
             GreenCoinManager.Instance.SpendGold(_preview.Data.Cost);
             CityTickManager.Instance.Buildings.Add(_preview.Data);
+            CityTickManager.Instance.RefreshUI();
 
             var rotation = Quaternion.Euler(0, _preview.BuildingModel.Rotation, 0);
             var building = Instantiate(buildingPrefab, _preview.transform.position, rotation);

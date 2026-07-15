@@ -9,8 +9,8 @@ namespace Furkan
     public class PedestrianAI : MonoBehaviour
     {
         [SerializeField] private List<Vector3> path = null;
-        [SerializeField] private float moveSpeed = 1.8f;
-        [SerializeField] private float arriveDistance = 0.12f;
+        [SerializeField] private float moveSpeed = 0.3f;
+        [SerializeField] private float arriveDistance = 0.1f;
         [SerializeField] private float rotateSpeed = 8f;
 
         private int currentIndex;
@@ -61,11 +61,9 @@ namespace Furkan
                 toTarget.y = 0f;
             }
 
-            if (toTarget.sqrMagnitude > 0.0001f)
-            {
-                FaceTarget(target);
-                transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
-            }
+            if (!(toTarget.sqrMagnitude > 0.0001f)) return;
+            FaceTarget(target);
+            transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
         }
 
         private void FaceTarget(Vector3 target)

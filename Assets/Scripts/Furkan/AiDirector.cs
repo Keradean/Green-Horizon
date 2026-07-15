@@ -146,7 +146,7 @@ namespace Furkan
                 return;
 
             var houses = placementManager.GetAllHouses();
-            if (houses == null || houses.Count <= 1)
+            if (houses is not { Count: > 1 })
                 return;
 
             var randomHouseIndex = UnityEngine.Random.Range(0, houses.Count);
@@ -177,46 +177,37 @@ namespace Furkan
 
             // Erst Spezialstruktur versuchen, dann fallback auf Haus-zu-Haus wenn keine Spezialstruktur vorhanden ist.
             var randomDestination = placementManager.GetRandomSpecialStrucutre();
-            if (!TrySpawninACar(randomHouse, randomDestination))
+            if (TrySpawninACar(randomHouse, randomDestination)) return;
+            var houseDestination = GetRandomHouseDestination(randomHouse);
+            if (houseDestination != null)
             {
-                var houseDestination = GetRandomHouseDestination(randomHouse);
-                if (houseDestination != null)
-                {
-                    TrySpawninACar(randomHouse, houseDestination);
-                }
+                TrySpawninACar(randomHouse, houseDestination);
             }
         }
 
         private StructureModel GetRandomHouseDestination(StructureModel sourceHouse)
         {
             var houses = placementManager.GetAllHouses();
-            if (houses == null || houses.Count <= 1)
+            if (houses is not { Count: > 1 })
                 return null;
+            
+            StructureModel farthest = null;
+            var maxDistance = -1f;
 
-            StructureModel destination = null;
-            for (int i = 0; i < 10; i++)
+            foreach (var house in houses)
             {
-                var candidate = houses[UnityEngine.Random.Range(0, houses.Count)];
-                if (candidate != sourceHouse)
-                {
-                    destination = candidate;
-                    break;
-                }
+                if (house == sourceHouse) continue;
+
+                var distance = Vector3.Distance(
+                    sourceHouse.transform.position,
+                    house.transform.position);
+
+                if (!(distance > maxDistance)) continue;
+                maxDistance = distance;
+                farthest = house;
             }
 
-            if (destination == null)
-            {
-                foreach (var house in houses)
-                {
-                    if (house != sourceHouse)
-                    {
-                        destination = house;
-                        break;
-                    }
-                }
-            }
-
-            return destination;
+            return farthest;
         }
 
         private bool TrySpawninACar(StructureModel startStructure, StructureModel endStructure)

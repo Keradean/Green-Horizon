@@ -94,7 +94,6 @@ namespace Dennis.Tutorial
         {
             _isActive = false;
             tutorialPanel.SetActive(false);
-            Debug.Log("Tutorial completed!");
         }
 
         /////////////////////////////////////////////////////////////////////////////////////

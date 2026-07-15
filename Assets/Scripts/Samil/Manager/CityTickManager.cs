@@ -34,6 +34,7 @@ namespace Samil.Manager
 
     private float _tickPassed = 0f;
     public List<BuildingData> Buildings { get; private set; } = new List<BuildingData>();
+    public void RefreshUI() => UpdateUI();
 
     private void Update()
     {
