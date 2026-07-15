@@ -95,7 +95,7 @@ namespace Can.Manager
         private void InitGraphicsDropdown()
         {
             graphicsDropdown.ClearOptions();
-            graphicsDropdown.AddOptions(new List<string> { "Low", "Medium", "High" });
+            graphicsDropdown.AddOptions(new List<string> { "Gering", "Mittel", "Hoch" });
             var savedQuality = PlayerPrefs.GetInt("Quality", 1);
             graphicsDropdown.value = savedQuality;
             graphicsDropdown.RefreshShownValue();
@@ -133,6 +133,7 @@ namespace Can.Manager
 
         private void CloseSettings()
         {
+            Debug.Log("ssss");
             Audiomanager.Instance.PlaySfx(1);
             PlayerPrefs.Save();
             ShowPanel(mainMenuPanel);
