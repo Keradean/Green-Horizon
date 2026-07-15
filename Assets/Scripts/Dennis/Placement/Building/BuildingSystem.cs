@@ -1,6 +1,7 @@
 using Andy.Manager;
 using Dennis.Manager;
 using Dennis.Placement.Road;
+using Dennis.Tutorial;
 using Furkan;
 using Samil.Manager;
 using System.Collections.Generic;
@@ -280,7 +281,6 @@ namespace Dennis.Placement.Building
             foreach (var arrow in building.GetComponentsInChildren<Andy.DestroyOnPlace>())
                 arrow.OnPlaced();
 
-            // Licht Controller aktivieren
             foreach (var lc in building.GetComponentsInChildren<BuildingLightController>())
                 lc.OnPlaced();
 
@@ -298,6 +298,9 @@ namespace Dennis.Placement.Building
 
             Destroy(_preview.gameObject);
             _preview = null;
+
+            // ── Tutorial informieren ──────────────────────────────────────────
+            TutorialManager.Instance?.NotifyEvent(TutorialTrigger.BuildingPlaced);
         }
 
         private Vector2Int? GetFirstAdjacentRoadCell(List<Vector3> buildPosition)
