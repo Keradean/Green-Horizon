@@ -3,6 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Dennis.Placement.Building;
+using Dennis.Tutorial;
 //*** De Col ***\\
 //=== Andy ===//
 namespace Dennis.Placement.Road
@@ -156,9 +157,8 @@ namespace Dennis.Placement.Road
         {
             _toRecheck.Clear();
 
-            foreach (var c in _scratchPath)
+            foreach (var c in _scratchPath.Where(c => grid.CanBuildAt(c) || grid.IsRoad(c)))
             {
-                if (!grid.CanBuildAt(c) && !grid.IsRoad(c)) continue;
                 if (grid.CanBuildAt(c))
                     grid.SetRoad(c);
 
@@ -179,6 +179,9 @@ namespace Dennis.Placement.Road
             for (var i = 0; i < _activeCount; i++)
                 _pool[i].gameObject.SetActive(false);
             _activeCount = 0;
+
+            // ── Tutorial informieren ──────────────────────────────────────────
+            TutorialManager.Instance?.NotifyEvent(TutorialTrigger.RoadPlaced);
         }
 
         /////////////////////////////////////////////////////////////////////////////////////
