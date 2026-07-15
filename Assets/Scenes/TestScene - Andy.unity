@@ -11313,6 +11313,10 @@ PrefabInstance:
       value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7924432940863071296, guid: 8ba2bb14c57ca7c4298f461749163dcf, type: 3}
+      propertyPath: 'carPrefabs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 6579845101419423760, guid: 0a7d99a2929be8f4683464330a2c7ed3, type: 3}
+    - target: {fileID: 7924432940863071296, guid: 8ba2bb14c57ca7c4298f461749163dcf, type: 3}
       propertyPath: 'carPrefabs.Array.data[1]'
       value: 
       objectReference: {fileID: 6579845101419423760, guid: 994e002a7d5038d459a8167918204f63, type: 3}
