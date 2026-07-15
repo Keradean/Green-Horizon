@@ -18,15 +18,20 @@ namespace Furkan
         [SerializeField] private float minSpawnInterval = 2f;
         [SerializeField] private float maxSpawnInterval = 5f;
         [SerializeField] private float maxActiveCars = 8f;
+        [SerializeField] private float maxActivePedestrians = 12f;
         [SerializeField] private float densityCheckRadius = 6f;
         [SerializeField] private float laneOffset = 0.2f;
+        [SerializeField] private float pedestrianLaneOffset = 0.3f;
         [SerializeField] private float rushHourMultiplier = 1.5f;
         [SerializeField] private float rushHourStart = 8f;
         [SerializeField] private float rushHourEnd = 18f;
         [SerializeField] private bool autoSpawnCars = true;
+        [SerializeField] private bool autoSpawnPedestrians = true;
 
         private float nextCarSpawnTime;
+        private float nextPedestrianSpawnTime;
         private List<CarAI> activeCars = new List<CarAI>();
+        private List<PedestrianAI> activePedestrians = new List<PedestrianAI>();
 
         AdjacencyGraph pedestrianGraph = new AdjacencyGraph();
         AdjacencyGraph carGraph = new AdjacencyGraph();
@@ -35,11 +40,23 @@ namespace Furkan
 
         public void SpawnAllAagents()
         {
+            if (placementManager == null || pedestrianPrefabs == null || pedestrianPrefabs.Length == 0)
+                return;
+
+            var specialStructures = placementManager.GetAllSpecialStructures();
             foreach (var house in placementManager.GetAllHouses())
             {
-                TrySpawningAnAgent(house, placementManager.GetRandomSpecialStrucutre());
+                var destination = placementManager.GetRandomSpecialStrucutre();
+                if (destination == null && specialStructures.Count == 0)
+                    destination = GetRandomHouseDestination(house);
+
+                if (destination == null || destination == house)
+                    continue;
+
+                TrySpawningAnAgent(house, destination);
             }
-            foreach (var specialStructure in placementManager.GetAllSpecialStructures())
+
+            foreach (var specialStructure in specialStructures)
             {
                 TrySpawningAnAgent(specialStructure, placementManager.GetRandomHouseStructure());
             }
@@ -47,22 +64,64 @@ namespace Furkan
 
         private void TrySpawningAnAgent(StructureModel startStructure, StructureModel endStructure)
         {
-            if (startStructure != null && endStructure != null)
+            if (startStructure == null || endStructure == null || startStructure == endStructure)
+                return;
+
+            var startPosition = ((INeedingRoad)startStructure).RoadPosition;
+            var endPosition = ((INeedingRoad)endStructure).RoadPosition;
+
+            var startRoadStructure = placementManager.GetStructureAt(startPosition);
+            var endRoadStructure = placementManager.GetStructureAt(endPosition);
+
+            var startMarkerPosition = startRoadStructure != null
+                ? startRoadStructure.GetPedestrianSpawnMarker(startStructure.transform.position)
+                : new MarkerInfo { Position = startStructure.transform.position };
+
+            var endMarkerPosition = endRoadStructure != null
+                ? endRoadStructure.GetNearestPedestrianMarkerTo(endStructure.transform.position)
+                : new MarkerInfo { Position = endStructure.transform.position };
+
+            var pedestrianPrefab = GetRandomPedestrian();
+            if (pedestrianPrefab == null)
+                return;
+
+            var agent = Instantiate(pedestrianPrefab, startMarkerPosition.Position, Quaternion.identity);
+
+            var path = placementManager.GetPathBetween(startPosition, endPosition, true);
+            if (path == null || path.Count == 0)
             {
-                var startPosition = ((INeedingRoad)startStructure).RoadPosition;
-                var endPosition = ((INeedingRoad)endStructure).RoadPosition;
-
-                var startMarkerPosition = placementManager.GetStructureAt(startPosition).GetPedestrianSpawnMarker(startStructure.transform.position);
-                var endMarkerPosition = placementManager.GetStructureAt(endPosition).GetNearestPedestrianMarkerTo(endStructure.transform.position);
-
-                var agent = Instantiate(GetRandomPedestrian(), startMarkerPosition.Position, Quaternion.identity);
-                var path = placementManager.GetPathBetween(startPosition, endPosition, true);
-                if (path.Count > 0)
-                {
-                    path.Reverse();
-                    List<Vector3> agentPath = GetPedestrianPath(path, startMarkerPosition.Position, endMarkerPosition.Position);
-                }
+                Destroy(agent);
+                return;
             }
+
+            path.Reverse();
+
+            var markerCarPath = GetRoadMarkerCarPath(startPosition, endPosition);
+            var fallbackRoadPath = BuildWorldPathFromGridPath(path);
+            var chosenPath = markerCarPath.Count >= 2 ? markerCarPath : fallbackRoadPath;
+
+            if (chosenPath == null || chosenPath.Count < 2)
+            {
+                chosenPath = GetPedestrianPath(path, startMarkerPosition.Position, endMarkerPosition.Position);
+            }
+
+            if (chosenPath == null || chosenPath.Count < 2)
+            {
+                chosenPath = new List<Vector3>
+                {
+                    startMarkerPosition.Position,
+                    endMarkerPosition.Position
+                };
+            }
+
+            var fullPath = ApplyLaneOffsetToPath(chosenPath, pedestrianLaneOffset);
+
+            var pedestrianAi = agent.GetComponent<PedestrianAI>();
+            if (pedestrianAi == null)
+                pedestrianAi = agent.AddComponent<PedestrianAI>();
+
+            pedestrianAi.SetPath(fullPath);
+            activePedestrians.Add(pedestrianAi);
         }
 
         private void Awake()
@@ -74,6 +133,33 @@ namespace Furkan
         private void Start()
         {
             ScheduleNextCarSpawn();
+            ScheduleNextPedestrianSpawn();
+        }
+
+        public void SpawnAPedestrian()
+        {
+            CleanupInactivePedestrians();
+            if (GetActivePedestrianCountNearSpawnPoint() >= maxActivePedestrians)
+                return;
+
+            if (placementManager == null || pedestrianPrefabs == null || pedestrianPrefabs.Length == 0)
+                return;
+
+            var houses = placementManager.GetAllHouses();
+            if (houses == null || houses.Count <= 1)
+                return;
+
+            var randomHouseIndex = UnityEngine.Random.Range(0, houses.Count);
+            var randomHouse = houses[randomHouseIndex];
+
+            var randomDestination = placementManager.GetRandomSpecialStrucutre();
+            if (randomDestination == null)
+                randomDestination = GetRandomHouseDestination(randomHouse);
+
+            if (randomDestination == null)
+                return;
+
+            TrySpawningAnAgent(randomHouse, randomDestination);
         }
 
         public void SpawnACar()
@@ -378,11 +464,20 @@ namespace Furkan
 
         private GameObject GetRandomPedestrian()
         {
+            if (pedestrianPrefabs == null || pedestrianPrefabs.Length == 0)
+                return null;
+
             return pedestrianPrefabs[UnityEngine.Random.Range(0, pedestrianPrefabs.Length)];
         }
 
         private void Update()
         {
+            if (autoSpawnPedestrians && Time.time >= nextPedestrianSpawnTime)
+            {
+                SpawnAPedestrian();
+                ScheduleNextPedestrianSpawn();
+            }
+
             if (autoSpawnCars && Time.time >= nextCarSpawnTime)
             {
                 SpawnACar();
@@ -405,6 +500,15 @@ namespace Furkan
             nextCarSpawnTime = Time.time + interval;
         }
 
+        private void ScheduleNextPedestrianSpawn()
+        {
+            var activePedestriansCount = GetActivePedestrianCountNearSpawnPoint();
+            var densityFactor = Mathf.Clamp01(activePedestriansCount / maxActivePedestrians);
+            var timeFactor = IsRushHour() ? rushHourMultiplier : 1f;
+            var interval = Mathf.Lerp(maxSpawnInterval, minSpawnInterval, densityFactor) / timeFactor;
+            nextPedestrianSpawnTime = Time.time + interval;
+        }
+
         private int GetActiveCarCountNearSpawnPoint()
         {
             CleanupInactiveCars();
@@ -412,6 +516,20 @@ namespace Furkan
             foreach (var car in activeCars)
             {
                 if (car != null && Vector3.Distance(car.transform.position, transform.position) <= densityCheckRadius)
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
+
+        private int GetActivePedestrianCountNearSpawnPoint()
+        {
+            CleanupInactivePedestrians();
+            var count = 0;
+            foreach (var pedestrian in activePedestrians)
+            {
+                if (pedestrian != null && Vector3.Distance(pedestrian.transform.position, transform.position) <= densityCheckRadius)
                 {
                     count++;
                 }
@@ -428,6 +546,11 @@ namespace Furkan
         private void CleanupInactiveCars()
         {
             activeCars.RemoveAll(car => car == null);
+        }
+
+        private void CleanupInactivePedestrians()
+        {
+            activePedestrians.RemoveAll(pedestrian => pedestrian == null);
         }
 
         private void DrawGraph(AdjacencyGraph graph)
