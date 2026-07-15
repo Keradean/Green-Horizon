@@ -39,10 +39,10 @@ namespace Can.Manager
 
         private void Start()
         {
+            InitFullscreenToggle();
             InitResolutionDropdown();
             InitGraphicsDropdown();
             InitVolumeSlider();
-            InitFullscreenToggle();
 
             ShowPanel(mainMenuPanel);
             Audiomanager.Instance.PlayMainMenu();
@@ -88,13 +88,18 @@ namespace Can.Manager
             resolutionDropdown.value = currentIndex;
             resolutionDropdown.RefreshShownValue();
             resolutionDropdown.onValueChanged.AddListener(OnResolutionChanged);
+
+            var savedResolution = _resolutions[currentIndex];
+            Screen.SetResolution(savedResolution.width, savedResolution.height, Screen.fullScreen);
         }
         private void InitGraphicsDropdown()
         {
             graphicsDropdown.ClearOptions();
             graphicsDropdown.AddOptions(new List<string> { "Low", "Medium", "High" });
-            graphicsDropdown.value = PlayerPrefs.GetInt("Quality", 1);
+            var savedQuality = PlayerPrefs.GetInt("Quality", 1);
+            graphicsDropdown.value = savedQuality;
             graphicsDropdown.RefreshShownValue();
+            QualitySettings.SetQualityLevel(savedQuality, true);
         }
 
         private void InitVolumeSlider()
@@ -116,7 +121,8 @@ namespace Can.Manager
         private static void StartGame()
         {
             Audiomanager.Instance.PlaySfx(1);
-            SceneManager.LoadScene("Game");
+            Audiomanager.Instance.PlayBGM();
+            SceneManager.LoadScene("MainScene");
         }
 
         private void OpenSettings()
@@ -160,10 +166,7 @@ namespace Can.Manager
 
         private void OnGraphicsQualityChanged(int index)
         {
-           
-            var maxLevel = QualitySettings.names.Length - 1;
-            var mappedLevel = Mathf.RoundToInt(index * (maxLevel / 2f));
-            QualitySettings.SetQualityLevel(mappedLevel);
+            QualitySettings.SetQualityLevel(index, true);
             PlayerPrefs.SetInt("Quality", index);
         }
 

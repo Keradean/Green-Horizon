@@ -5206,6 +5206,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CircularEconomyManager
   Mechanics: []
+  savingsTickRate: 10
 --- !u!4 &845447004
 Transform:
   m_ObjectHideFlags: 0
@@ -5792,7 +5793,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 336934464}
-  - {fileID: 905983350}
   - {fileID: 1532686173}
   - {fileID: 616827553}
   - {fileID: 324546084}
@@ -9680,11 +9680,11 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: c12dabffc889be64d8b65d942c5486d3, type: 3}
+  m_Resource: {fileID: 8300000, guid: 02a8550568d641b489c5af2b78862f99, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.128
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -11041,13 +11041,18 @@ SceneRoots:
   m_Roots:
   - {fileID: 431809925}
   - {fileID: 539871084}
-  - {fileID: 385207053}
-  - {fileID: 388347176}
-  - {fileID: 126156241}
-  - {fileID: 977433304}
-  - {fileID: 740844857}
-  - {fileID: 102667872}
-  - {fileID: 941774792}
-  - {fileID: 1900674117}
-  - {fileID: 1649787908}
   - {fileID: 845447004}
+  - {fileID: 1507648598}
+  - {fileID: 2100299596}
+  - {fileID: 731188483}
+  - {fileID: 357933683}
+  - {fileID: 192634172}
+  - {fileID: 1854348943}
+  - {fileID: 1188190866}
+  - {fileID: 2099009460}
+  - {fileID: 1704548330}
+  - {fileID: 781641843}
+  - {fileID: 1160805537}
+  - {fileID: 639376420}
+  - {fileID: 1691504290}
+  - {fileID: 1880127198}
