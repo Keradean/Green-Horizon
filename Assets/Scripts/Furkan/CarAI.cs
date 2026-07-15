@@ -22,6 +22,13 @@ namespace Furkan
         // Minimum angle (in degrees) before the car starts turning
         [SerializeField] private float turningAngleOffset = 5;
 
+        // Allows switching to next waypoint slightly before corner nodes.
+        [SerializeField] private float cornerCutDistance = 0.45f;
+
+        // Reduces throttle shortly before a turn so corners are smoother.
+        [SerializeField] private float preCornerBrakeDistance = 1.9f;
+        [SerializeField] private float preCornerBrakeStrength = 0.6f;
+
         // The current target position on the path
         [SerializeField] private Vector3 currentTargetPosition;
 
@@ -99,9 +106,11 @@ namespace Furkan
 
             // Instantly rotate the car to face the next path point
             var nextPoint = this.path[1];
-            Vector3 relativepoint = transform.InverseTransformPoint(nextPoint);
-            float angle = Mathf.Atan2(relativepoint.x, relativepoint.z) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0, angle, 0);
+            var lookDirection = nextPoint - transform.position;
+            lookDirection.y = 0f;
+            if (lookDirection.sqrMagnitude > 0.0001f)
+                transform.rotation = Quaternion.LookRotation(lookDirection.normalized, Vector3.up);
+
             Stop = false;
         }
 
@@ -177,18 +186,56 @@ namespace Furkan
             {
                 Vector3 relativepoint = transform.InverseTransformPoint(currentTargetPosition);
                 float angle = Mathf.Atan2(relativepoint.x, relativepoint.z) * Mathf.Rad2Deg;
-                var rotateCar = 0;
-                if (angle > turningAngleOffset)
+                float rotateCar = 0f;
+                if (Mathf.Abs(angle) > turningAngleOffset)
                 {
-                    rotateCar = 1;
-                }
-                else if (angle < -turningAngleOffset)
-                {
-                    rotateCar = -1;
+                    // Proportional steering prevents binary oversteer at corners.
+                    rotateCar = Mathf.Clamp(angle / 45f, -1f, 1f);
                 }
 
-                OnDrive?.Invoke(new Vector2(rotateCar, 1));
+                // Slow down while taking sharp turns to stay on lane.
+                float turnStrength = Mathf.Clamp01(Mathf.Abs(angle) / 90f);
+                float throttle = Mathf.Lerp(1f, 0.45f, turnStrength);
+
+                // Additional lookahead braking before the next corner.
+                throttle *= GetPreCornerBrakeFactor();
+
+                OnDrive?.Invoke(new Vector2(rotateCar, throttle));
             }
+        }
+
+        private float GetPreCornerBrakeFactor()
+        {
+            if (path == null || index >= path.Count - 2)
+                return 1f;
+
+            var currentPosition = transform.position;
+            var toCurrentTarget = currentTargetPosition - currentPosition;
+            toCurrentTarget.y = 0f;
+
+            var distanceToCurrentTarget = toCurrentTarget.magnitude;
+            if (distanceToCurrentTarget > preCornerBrakeDistance)
+                return 1f;
+
+            var currentSegment = currentTargetPosition - currentPosition;
+            currentSegment.y = 0f;
+            if (currentSegment.sqrMagnitude < 0.0001f)
+                return 1f;
+
+            var nextSegment = path[index + 1] - currentTargetPosition;
+            nextSegment.y = 0f;
+            if (nextSegment.sqrMagnitude < 0.0001f)
+                return 1f;
+
+            var cornerAngle = Vector3.Angle(currentSegment.normalized, nextSegment.normalized);
+            var cornerStrength = Mathf.InverseLerp(10f, 90f, cornerAngle);
+            if (cornerStrength <= 0f)
+                return 1f;
+
+            var approachStrength = 1f - Mathf.Clamp01(distanceToCurrentTarget / preCornerBrakeDistance);
+            var brake = cornerStrength * approachStrength * Mathf.Clamp01(preCornerBrakeStrength);
+
+            return Mathf.Clamp01(1f - brake);
         }
 
         /// <summary>
@@ -205,11 +252,52 @@ namespace Furkan
                     distanceToCheck = lastPointArriveDistance;
                 }
 
-                if (Vector3.Magnitude(currentTargetPosition - transform.position) < distanceToCheck)
+                if (ShouldAdvanceToNextTarget(distanceToCheck))
                 {
                     SetNextTargetIndex();
                 }
             }
+        }
+
+        private bool ShouldAdvanceToNextTarget(float distanceToCheck)
+        {
+            var toTarget = currentTargetPosition - transform.position;
+            toTarget.y = 0f;
+            var distanceToTarget = toTarget.magnitude;
+
+            if (distanceToTarget < distanceToCheck)
+                return true;
+
+            if (path == null || index >= path.Count - 1)
+                return false;
+
+            var nextSegment = path[index + 1] - currentTargetPosition;
+            nextSegment.y = 0f;
+            if (nextSegment.sqrMagnitude < 0.0001f)
+                return false;
+
+            // If the car has crossed the node plane, switch target immediately.
+            if (Vector3.Dot(toTarget, nextSegment.normalized) <= 0f)
+                return true;
+
+            if (index < path.Count - 2)
+            {
+                var upcomingSegment = path[index + 2] - path[index + 1];
+                upcomingSegment.y = 0f;
+                if (upcomingSegment.sqrMagnitude > 0.0001f)
+                {
+                    var cornerAngle = Vector3.Angle(nextSegment.normalized, upcomingSegment.normalized);
+                    var cornerStrength = Mathf.InverseLerp(15f, 90f, cornerAngle);
+                    if (cornerStrength > 0f)
+                    {
+                        var earlyDistance = Mathf.Lerp(distanceToCheck, cornerCutDistance, cornerStrength);
+                        if (distanceToTarget < earlyDistance)
+                            return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         /// <summary>

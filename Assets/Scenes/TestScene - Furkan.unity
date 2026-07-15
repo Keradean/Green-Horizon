@@ -161,6 +161,7 @@ MonoBehaviour:
   maxSpawnInterval: 5
   maxActiveCars: 8
   densityCheckRadius: 6
+  laneOffset: 0.9
   rushHourMultiplier: 1.5
   rushHourStart: 8
   rushHourEnd: 18
