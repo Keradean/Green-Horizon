@@ -151,7 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Furkan.CarSpawner
   carPrefabs:
-  - {fileID: 1646981259178978, guid: 0ae65270c30153049ab49eb3ebf070d6, type: 3}
+  - {fileID: 6579845101419423760, guid: 0a7d99a2929be8f4683464330a2c7ed3, type: 3}
   - {fileID: 1646981259178978, guid: 2dc42346e5313b34c93d598a61994629, type: 3}
   - {fileID: 1646981259178978, guid: 512151c1530b99343a884b12ee9c5e1e, type: 3}
   - {fileID: 1646981259178978, guid: ab26596a331d7ee43a3e9d29e2be9f84, type: 3}
@@ -173,6 +173,8 @@ MonoBehaviour:
   maxSpeed: 5
   lateralGrip: 8
   angularDamping: 4
+  maxYawRate: 2.2
+  yawStability: 7
   movementVector: {x: 0, y: 0}
 --- !u!114 &1705692047288857706
 MonoBehaviour:
@@ -190,6 +192,9 @@ MonoBehaviour:
   arriveDistance: 0.2
   lastPointArriveDistance: 0.1
   turningAngleOffset: 5
+  cornerCutDistance: 0.45
+  preCornerBrakeDistance: 1.9
+  preCornerBrakeStrength: 0.6
   currentTargetPosition: {x: 0, y: 0, z: 0}
   raycastStartingPoint: {fileID: 5011177289795165971}
   collisionRaycastLength: 0.1

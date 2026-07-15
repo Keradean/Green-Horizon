@@ -23,7 +23,7 @@ namespace Furkan
         private void InitializeStructures()
         {
             // Find all structures in the scene
-            allStructures = FindObjectsByType<StructureModel>(FindObjectsSortMode.None).ToList();
+            allStructures = FindObjectsByType<StructureModel>(FindObjectsInactive.Exclude).ToList();
 
             // Separate houses and special structures
             houses.Clear();

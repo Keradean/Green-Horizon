@@ -68,7 +68,7 @@ namespace Furkan
         private void Awake()
         {
             if (buildingGrid == null)
-                buildingGrid = UnityEngine.Object.FindFirstObjectByType<BuildingGrid>();
+                buildingGrid = UnityEngine.Object.FindAnyObjectByType<BuildingGrid>();
         }
 
         private void Start()
