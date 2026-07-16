@@ -12,12 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36d07d1105d47ea4d9d2bb338e8b41d6, type: 3}
   m_Name: 06_mediumHouse03
   m_EditorClassIdentifier: Assembly-CSharp::Placement.BuildingData
-  <Cost>k__BackingField: 1
+  <Cost>k__BackingField: 6000
   <Model>k__BackingField: {fileID: 7938737080107574164, guid: 21968346a217d81489abe73a61a37685, type: 3}
-  <BuildingName>k__BackingField: 
-  <Description>k__BackingField: 
+  <RequiresRoad>k__BackingField: 1
+  <RequiredBuilding>k__BackingField: {fileID: 0}
+  <BuildingName>k__BackingField: Wohnblock
+  <Description>k__BackingField: "Ein kompakter Wohnblock f\xFCr mehrere Familien."
   <Icon>k__BackingField: {fileID: 21300000, guid: 776e2206fa7f63ed8aed693f5970e0a6, type: 3}
-  <Residents>k__BackingField: 0
-  <IncomePerHour>k__BackingField: 0
+  <Residents>k__BackingField: 18
+  <IncomePerHour>k__BackingField: 12
   <GridSize>k__BackingField: 2x2
-  <Pollution>k__BackingField: 0
+  <Pollution>k__BackingField: 4
+  <EnergyUsage>k__BackingField: 12
+  <CO2Reduction>k__BackingField: 0
+  <CostSavingsPerDay>k__BackingField: 0

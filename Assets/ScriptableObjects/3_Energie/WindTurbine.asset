@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36d07d1105d47ea4d9d2bb338e8b41d6, type: 3}
   m_Name: WindTurbine
   m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.Building.BuildingData
-  <Cost>k__BackingField: 67000
+  <Cost>k__BackingField: 20000
   <Model>k__BackingField: {fileID: 7938737080107574164, guid: 3a977821214601b43af417682d5c83f6, type: 3}
   <RequiresRoad>k__BackingField: 0
   <RequiredBuilding>k__BackingField: {fileID: 0}
   <BuildingName>k__BackingField: Windrad
-  <Description>k__BackingField: Wind
+  <Description>k__BackingField: Erzeugt saubere Energie aus Windkraft.
   <Icon>k__BackingField: {fileID: 21300000, guid: 32dd8b42bf6b76f41a4e90097a64007a, type: 3}
-  <Residents>k__BackingField: 12
-  <IncomePerHour>k__BackingField: 12
+  <Residents>k__BackingField: 0
+  <IncomePerHour>k__BackingField: 0
   <GridSize>k__BackingField: 4x2
-  <Pollution>k__BackingField: 12
+  <Pollution>k__BackingField: 0
   <EnergyUsage>k__BackingField: 0
   <CO2Reduction>k__BackingField: 8
-  <CostSavingsPerDay>k__BackingField: 0
+  <CostSavingsPerDay>k__BackingField: 25
