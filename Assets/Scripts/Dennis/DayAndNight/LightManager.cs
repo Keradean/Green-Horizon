@@ -10,16 +10,15 @@ namespace Dennis.DayAndNight
     public class LightManager : MonoBehaviour
     {
         public static event Action<bool> OnDayNightChanged;
-
         public float TimeOfDay => timeOfDay;
+        public float DayDuration => dayTimeDurationInMinutes;
+        public float NightDuration => nightTimeDurationInMinutes;
 
         [SerializeField] private LightingPreset preset;
         [SerializeField] private Light directionalLight;
         [SerializeField, Range(0, 24)] private float timeOfDay;
-
         [SerializeField] private float dayTimeDurationInMinutes;
         [SerializeField] private float nightTimeDurationInMinutes;
-
         private bool _wasDay = true;
         //////////////////////////////////////////////////////////////////////////////////
         private void Update()
@@ -30,10 +29,8 @@ namespace Dennis.DayAndNight
                 var isDay = timeOfDay is >= 6f and < 18f;
                 var durationSeconds = (isDay ? dayTimeDurationInMinutes : nightTimeDurationInMinutes) * 60;
                 var hoursPerSecond = 12f / durationSeconds;
-
                 timeOfDay += hoursPerSecond * Time.deltaTime;
                 timeOfDay %= 24;
-
                 if (isDay != _wasDay)
                 {
                     _wasDay = isDay;
@@ -52,7 +49,6 @@ namespace Dennis.DayAndNight
         {
             RenderSettings.ambientLight = preset.ambientColor.Evaluate(timePercent);
             RenderSettings.fogColor = preset.fogColor.Evaluate(timePercent);
-
             if (directionalLight == null) return;
             directionalLight.color = preset.directionalColor.Evaluate(timePercent);
             directionalLight.transform.localRotation = Quaternion.Euler(new Vector3((timePercent * 360f) - 90f, 170f, 0));
@@ -62,7 +58,6 @@ namespace Dennis.DayAndNight
         {
             if (directionalLight != null)
                 return;
-
             if (RenderSettings.sun != null)
             {
                 directionalLight = RenderSettings.sun;

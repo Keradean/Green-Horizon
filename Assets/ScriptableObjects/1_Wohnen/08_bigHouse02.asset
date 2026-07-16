@@ -12,17 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36d07d1105d47ea4d9d2bb338e8b41d6, type: 3}
   m_Name: 08_bigHouse02
   m_EditorClassIdentifier: Assembly-CSharp::Placement.BuildingData
-  <Cost>k__BackingField: 15000
+  <Cost>k__BackingField: 1
   <Model>k__BackingField: {fileID: 7938737080107574164, guid: f783b1772cd62ef4f8f10ea204a21c2f, type: 3}
-  <RequiresRoad>k__BackingField: 1
-  <RequiredBuilding>k__BackingField: {fileID: 0}
-  <BuildingName>k__BackingField: Hochhaus
-  <Description>k__BackingField: "Ein gro\xDFes Hochhaus mit hoher Wohnkapazit\xE4t."
+  <BuildingName>k__BackingField: 
+  <Description>k__BackingField: 
   <Icon>k__BackingField: {fileID: 21300000, guid: 8f5cc9479d093225381b5560bb98d8c0, type: 3}
-  <Residents>k__BackingField: 35
-  <IncomePerHour>k__BackingField: 24
+  <Residents>k__BackingField: 0
+  <IncomePerHour>k__BackingField: 0
   <GridSize>k__BackingField: 2x2
-  <Pollution>k__BackingField: 7
-  <EnergyUsage>k__BackingField: 30
-  <CO2Reduction>k__BackingField: 0
-  <CostSavingsPerDay>k__BackingField: 0
+  <Pollution>k__BackingField: 0

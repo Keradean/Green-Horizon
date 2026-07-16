@@ -14,15 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Placement.BuildingData
   <Cost>k__BackingField: 1000
   <Model>k__BackingField: {fileID: 7938737080107574164, guid: fac10e4fae54c4f498eafe7294acf49d, type: 3}
-  <RequiresRoad>k__BackingField: 1
-  <RequiredBuilding>k__BackingField: {fileID: 0}
-  <BuildingName>k__BackingField: Doppelhaus
-  <Description>k__BackingField: "Ein Wohnhaus f\xFCr zwei Familien mit gemeinsamer Grundst\xFCcksgrenze."
+  <BuildingName>k__BackingField: 
+  <Description>k__BackingField: 
   <Icon>k__BackingField: {fileID: 21300000, guid: d24be6b7ed74d3b42bf2f16a6c24777a, type: 3}
-  <Residents>k__BackingField: 4
-  <IncomePerHour>k__BackingField: 3
+  <Residents>k__BackingField: 10
+  <IncomePerHour>k__BackingField: 100
   <GridSize>k__BackingField: 2x2
-  <Pollution>k__BackingField: 1
-  <EnergyUsage>k__BackingField: 3
-  <CO2Reduction>k__BackingField: 0
-  <CostSavingsPerDay>k__BackingField: 0
+  <Pollution>k__BackingField: 0

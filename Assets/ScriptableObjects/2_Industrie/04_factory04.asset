@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36d07d1105d47ea4d9d2bb338e8b41d6, type: 3}
   m_Name: 04_factory04
   m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.Building.BuildingData
-  <Cost>k__BackingField: 6000
+  <Cost>k__BackingField: 0
   <Model>k__BackingField: {fileID: 7938737080107574164, guid: dd6b1f475f11a9741bdd68eb410eae74, type: 3}
   <RequiresRoad>k__BackingField: 0
   <RequiredBuilding>k__BackingField: {fileID: 0}
-  <BuildingName>k__BackingField: Werkstatt
-  <Description>k__BackingField: "Eine kleine Werkstatt f\xFCr handwerkliche Produktion."
+  <BuildingName>k__BackingField: 
+  <Description>k__BackingField: 
   <Icon>k__BackingField: {fileID: 21300000, guid: 7b2b9a23bdf96c940b7e7522129efa4b, type: 3}
-  <Residents>k__BackingField: 18
-  <IncomePerHour>k__BackingField: 14
+  <Residents>k__BackingField: 0
+  <IncomePerHour>k__BackingField: 0
   <GridSize>k__BackingField: 4x2
   <Pollution>k__BackingField: 10
-  <EnergyUsage>k__BackingField: 18
+  <EnergyUsage>k__BackingField: 0
   <CO2Reduction>k__BackingField: 0
   <CostSavingsPerDay>k__BackingField: 0

@@ -16,13 +16,13 @@ MonoBehaviour:
   <Model>k__BackingField: {fileID: 7938737080107574164, guid: 657018dc72699604bb8dd4e88d75757d, type: 3}
   <RequiresRoad>k__BackingField: 0
   <RequiredBuilding>k__BackingField: {fileID: 11400000, guid: ccc5c19c8ab110d4d851d81b569a8f77, type: 2}
-  <BuildingName>k__BackingField: Solarpanel
-  <Description>k__BackingField: Erzeugt saubere Energie aus Sonnenlicht.
+  <BuildingName>k__BackingField: Solar Panele
+  <Description>k__BackingField: "F\xFCr diese Gute Sonne"
   <Icon>k__BackingField: {fileID: 21300000, guid: 6a09ebe56250b8b45b30554269963840, type: 3}
-  <Residents>k__BackingField: 0
-  <IncomePerHour>k__BackingField: 0
+  <Residents>k__BackingField: 12
+  <IncomePerHour>k__BackingField: 12
   <GridSize>k__BackingField: 1x1
-  <Pollution>k__BackingField: 0
+  <Pollution>k__BackingField: 12
   <EnergyUsage>k__BackingField: 0
-  <CO2Reduction>k__BackingField: 5
-  <CostSavingsPerDay>k__BackingField: 20
+  <CO2Reduction>k__BackingField: 0
+  <CostSavingsPerDay>k__BackingField: 0

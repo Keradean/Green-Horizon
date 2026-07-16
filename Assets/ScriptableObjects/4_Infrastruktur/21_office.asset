@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36d07d1105d47ea4d9d2bb338e8b41d6, type: 3}
   m_Name: 21_office
   m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.Building.BuildingData
-  <Cost>k__BackingField: 6000
+  <Cost>k__BackingField: 0
   <Model>k__BackingField: {fileID: 7938737080107574164, guid: 03d84e09cb4d4784c8c7903a4256aec8, type: 3}
   <RequiresRoad>k__BackingField: 1
   <RequiredBuilding>k__BackingField: {fileID: 0}
-  <BuildingName>k__BackingField: "B\xFCrogeb\xE4ude"
-  <Description>k__BackingField: "Ein B\xFCrogeb\xE4ude f\xFCr Dienstleistungsunternehmen."
+  <BuildingName>k__BackingField: 
+  <Description>k__BackingField: 
   <Icon>k__BackingField: {fileID: 21300000, guid: 138e3d8df526adab68900e6d72db94bc, type: 3}
-  <Residents>k__BackingField: 20
-  <IncomePerHour>k__BackingField: 18
+  <Residents>k__BackingField: 0
+  <IncomePerHour>k__BackingField: 0
   <GridSize>k__BackingField: 2x2
   <Pollution>k__BackingField: 0
-  <EnergyUsage>k__BackingField: 10
+  <EnergyUsage>k__BackingField: 0
   <CO2Reduction>k__BackingField: 0
   <CostSavingsPerDay>k__BackingField: 0
