@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 //=== Can Özbal ===//
@@ -52,7 +51,7 @@ namespace Can.Manager
         {
             Audiomanager.Instance.PlaySfx(1);
             Audiomanager.Instance.PlayBGM();
-            SceneManager.LoadScene("MainScene");
+            SceneTransitionManager.LoadScene("MainScene");
         }
 
         private void QuitGame()
