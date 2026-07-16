@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36d07d1105d47ea4d9d2bb338e8b41d6, type: 3}
   m_Name: 20_school03
   m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.Building.BuildingData
-  <Cost>k__BackingField: 0
+  <Cost>k__BackingField: 30000
   <Model>k__BackingField: {fileID: 7938737080107574164, guid: a2002ab86a05d604a9c2327c38edbff9, type: 3}
   <RequiresRoad>k__BackingField: 1
   <RequiredBuilding>k__BackingField: {fileID: 0}
-  <BuildingName>k__BackingField: 
-  <Description>k__BackingField: 
+  <BuildingName>k__BackingField: "Universit\xE4t"
+  <Description>k__BackingField: "Eine Universit\xE4t f\xFCr h\xF6here Bildung."
   <Icon>k__BackingField: {fileID: 21300000, guid: 476dd02ae8a8f3e98aa650747a221a41, type: 3}
-  <Residents>k__BackingField: 0
+  <Residents>k__BackingField: 40
   <IncomePerHour>k__BackingField: 0
   <GridSize>k__BackingField: 6x4
   <Pollution>k__BackingField: 0
-  <EnergyUsage>k__BackingField: 0
+  <EnergyUsage>k__BackingField: 20
   <CO2Reduction>k__BackingField: 0
   <CostSavingsPerDay>k__BackingField: 0

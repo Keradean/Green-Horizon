@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36d07d1105d47ea4d9d2bb338e8b41d6, type: 3}
   m_Name: 13_museum
   m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.Building.BuildingData
-  <Cost>k__BackingField: 0
+  <Cost>k__BackingField: 9000
   <Model>k__BackingField: {fileID: 7938737080107574164, guid: a095fe2095dbd7844a6a306c5182d3f5, type: 3}
   <RequiresRoad>k__BackingField: 1
   <RequiredBuilding>k__BackingField: {fileID: 0}
-  <BuildingName>k__BackingField: 
-  <Description>k__BackingField: 
+  <BuildingName>k__BackingField: Museum
+  <Description>k__BackingField: Ein Museum, das die Geschichte der Stadt zeigt.
   <Icon>k__BackingField: {fileID: 21300000, guid: d2fb8a65d3d57f6ab9bd176aa7e5fdc5, type: 3}
-  <Residents>k__BackingField: 0
-  <IncomePerHour>k__BackingField: 0
+  <Residents>k__BackingField: 8
+  <IncomePerHour>k__BackingField: 5
   <GridSize>k__BackingField: 3x3
   <Pollution>k__BackingField: 0
-  <EnergyUsage>k__BackingField: 0
+  <EnergyUsage>k__BackingField: 6
   <CO2Reduction>k__BackingField: 0
   <CostSavingsPerDay>k__BackingField: 0
