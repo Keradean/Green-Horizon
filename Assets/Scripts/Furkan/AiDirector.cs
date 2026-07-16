@@ -228,27 +228,24 @@ namespace Furkan
             var fallbackRoadPath = BuildWorldPathFromGridPath(path);
             var chosenPath = markerCarPath.Count >= 2 ? markerCarPath : fallbackRoadPath;
 
-            if (chosenPath != null && chosenPath.Count >= 2)
+            if (chosenPath == null || chosenPath.Count < 2) return false;
+            var laneShiftedPath = ApplyLaneOffsetToPath(chosenPath, laneOffset);
+            if (laneShiftedPath == null || laneShiftedPath.Count < 2)
+                return false;
+
+            carPath = new List<Vector3>(laneShiftedPath);
+            var car = Instantiate(carPrefab, carPath[0], Quaternion.identity);
+            var carAi = car.GetComponent<CarAI>();
+            if (carAi == null)
             {
-                var laneShiftedPath = ApplyLaneOffsetToPath(chosenPath, laneOffset);
-                if (laneShiftedPath == null || laneShiftedPath.Count < 2)
-                    return false;
-
-                carPath = new List<Vector3>(laneShiftedPath);
-                var car = Instantiate(carPrefab, carPath[0], Quaternion.identity);
-                var carAi = car.GetComponent<CarAI>();
-                if (carAi == null)
-                {
-                    Destroy(car);
-                    return false;
-                }
-
-                carAi.SetPath(carPath);
-                activeCars.Add(carAi);
-                return true;
+                Destroy(car);
+                return false;
             }
 
-            return false;
+            carAi.SetPath(carPath);
+            activeCars.Add(carAi);
+            return true;
+
         }
 
         private List<Vector3> BuildWorldPathFromGridPath(List<Vector3Int> gridPath)
@@ -317,7 +314,6 @@ namespace Furkan
         {
             pedestrianGraph.ClearGraph();
             CreatAPedestrianGraph(path);
-            Debug.Log(pedestrianGraph);
             return AdjacencyGraph.AStarSearch(pedestrianGraph, startPosition, endPosition);
         }
 
@@ -333,7 +329,7 @@ namespace Furkan
                 if (roadStructure == null) continue;
 
                 var markersList = roadStructure.GetPedestrianMarkers();
-                bool limitDistance = markersList.Count == 4;
+                var limitDistance = markersList.Count == 4;
                 tempDictionary.Clear();
                 foreach (var marker in markersList)
                 {
