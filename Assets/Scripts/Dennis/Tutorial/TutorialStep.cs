@@ -8,6 +8,8 @@ namespace Dennis.Tutorial
         BuildingPlaced,  // Player placed a building
         RoadPlaced,      // Player placed a road
         Auto,            // Advances automatically after 2 seconds
+        Tab,             // Player clicked on a tab
+        numbers,          // Player pressed a number key
         CO2Increased,    // CO2 went up
         PauseOpened,     // Player opened pause menu
         CoinsSpent       // Player spent coins
@@ -16,7 +18,7 @@ namespace Dennis.Tutorial
     [System.Serializable]
     public class TutorialStep
     {
-        [TextArea(2, 5)]
+        [TextArea(2, 6)]
         public string message;
 
         public TutorialTrigger trigger;
