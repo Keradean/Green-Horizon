@@ -54,8 +54,6 @@ namespace Andy.Manager
                 
                 Dennis.Tutorial.TutorialManager.Instance?.NotifyEvent(Dennis.Tutorial.TutorialTrigger.Tab);
             }
-
-
             // Tabs per Zahlentasten
             if (Keyboard.current[Key.Digit1].wasPressedThisFrame) tabManager.ShowPanel(0);
             if (Keyboard.current[Key.Digit2].wasPressedThisFrame) tabManager.ShowPanel(1);
