@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Dennis.Manager
@@ -5,21 +6,21 @@ namespace Dennis.Manager
     public class GreenCoinManager : Singleton<GreenCoinManager>
     {
         [field: SerializeField] public int CurrentGold { get; private set; } = 10000;
-        ////////////////////////////////////////////////////////////////////////////////////////////////
+
+        public static event Action<int> OnGoldChanged;
+
         public void AddGold(int amount)
         {
             CurrentGold += amount;
+            OnGoldChanged?.Invoke(amount);
         }
-        ////////////////////////////////////////////////////////////////////////////////////////////////
+
         public bool SpendGold(int amount)
         {
-            var canSpendGold = false;
-            if (amount <= CurrentGold)
-            {
-                canSpendGold = true;
-                CurrentGold -=  amount;
-            }
-            return canSpendGold;
+            if (amount > CurrentGold) return false;
+            CurrentGold -= amount;
+            OnGoldChanged?.Invoke(-amount);
+            return true;
         }
     }
 }
