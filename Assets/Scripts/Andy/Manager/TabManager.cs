@@ -39,6 +39,7 @@ namespace Andy.Manager
         
             scrollRect.content = buildingPanels[index].GetComponent<RectTransform>();   // Aktives Panel umschalten
             scrollRect.horizontalNormalizedPosition = 0;                                // Reset Scroll auf Anfang
+            Dennis.Tutorial.TutorialManager.Instance?.NotifyEvent(Dennis.Tutorial.TutorialTrigger.Numbers);
         }
     }
 }

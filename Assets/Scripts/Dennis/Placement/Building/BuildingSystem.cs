@@ -112,6 +112,7 @@ namespace Dennis.Placement.Building
         {
             _isDemolishMode = true;
             demolishButton?.SetActive(true);
+            TutorialManager.Instance?.NotifyEvent(TutorialTrigger.DemolishMode);
         }
 
         private void ExitDemolishMode()

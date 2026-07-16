@@ -8,6 +8,9 @@ namespace Dennis.Tutorial
         BuildingPlaced,  // Player placed a building
         RoadPlaced,      // Player placed a road
         Auto,            // Advances automatically after 2 seconds
+        Tab,
+        Numbers,
+        DemolishMode,
         CO2Increased,    // CO2 went up
         PauseOpened,     // Player opened pause menu
         CoinsSpent       // Player spent coins

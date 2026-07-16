@@ -72326,15 +72326,15 @@ MonoBehaviour:
   - message: Willkommen bei Green Horizon!
     trigger: 0
   - message: "Dr\xFCcke [Tab] um das Bau Men\xFC zu \xF6ffnen"
-    trigger: 0
+    trigger: 4
   - message: 'Mit [ 1,2,3,4,5,6 ] kannst du zwischen den Tabs switchen '
-    trigger: 0
+    trigger: 5
   - message: "Zieh zuerst eine Stra\xDFe"
     trigger: 2
   - message: "Bau ein Wohnhaus an der Stra\xDFe."
     trigger: 1
   - message: "Mit [X] kommst du in den demolish Modus um Geb\xE4ude abzurei\xDFen"
-    trigger: 0
+    trigger: 6
   - message: "Viel Spa\xDF beim Bauen!!"
     trigger: 0
 --- !u!1001 &1044795785
