@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36d07d1105d47ea4d9d2bb338e8b41d6, type: 3}
   m_Name: 03_shop03
   m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.Building.BuildingData
-  <Cost>k__BackingField: 0
+  <Cost>k__BackingField: 900
   <Model>k__BackingField: {fileID: 7938737080107574164, guid: 82166a1cddc48f34b9b74340c1495414, type: 3}
   <RequiresRoad>k__BackingField: 1
   <RequiredBuilding>k__BackingField: {fileID: 0}
-  <BuildingName>k__BackingField: 
-  <Description>k__BackingField: 
+  <BuildingName>k__BackingField: "Fachgesch\xE4ft"
+  <Description>k__BackingField: "Ein Gesch\xE4ft f\xFCr spezialisierte Waren."
   <Icon>k__BackingField: {fileID: 21300000, guid: a99fc566b684a352a981d2ce29b15c13, type: 3}
-  <Residents>k__BackingField: 0
-  <IncomePerHour>k__BackingField: 0
+  <Residents>k__BackingField: 2
+  <IncomePerHour>k__BackingField: 8
   <GridSize>k__BackingField: 1x1
   <Pollution>k__BackingField: 0
-  <EnergyUsage>k__BackingField: 0
+  <EnergyUsage>k__BackingField: 2
   <CO2Reduction>k__BackingField: 0
   <CostSavingsPerDay>k__BackingField: 0
