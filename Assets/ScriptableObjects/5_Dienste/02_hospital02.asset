@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36d07d1105d47ea4d9d2bb338e8b41d6, type: 3}
   m_Name: 02_hospital02
   m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.Building.BuildingData
-  <Cost>k__BackingField: 15000
+  <Cost>k__BackingField: 0
   <Model>k__BackingField: {fileID: 7938737080107574164, guid: e821e496e8674b849a26916f305f8cf7, type: 3}
   <RequiresRoad>k__BackingField: 1
   <RequiredBuilding>k__BackingField: {fileID: 0}
-  <BuildingName>k__BackingField: Krankenhaus
-  <Description>k__BackingField: "Ein Krankenhaus f\xFCr die medizinische Versorgung der Stadt."
+  <BuildingName>k__BackingField: 
+  <Description>k__BackingField: 
   <Icon>k__BackingField: {fileID: 21300000, guid: 64d252bd63cffb6d2a16519ea70b0316, type: 3}
-  <Residents>k__BackingField: 30
+  <Residents>k__BackingField: 0
   <IncomePerHour>k__BackingField: 0
   <GridSize>k__BackingField: 3x3
   <Pollution>k__BackingField: 0
-  <EnergyUsage>k__BackingField: 15
+  <EnergyUsage>k__BackingField: 0
   <CO2Reduction>k__BackingField: 0
   <CostSavingsPerDay>k__BackingField: 0

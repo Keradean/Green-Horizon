@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36d07d1105d47ea4d9d2bb338e8b41d6, type: 3}
   m_Name: 06_policestation01
   m_EditorClassIdentifier: Assembly-CSharp::Dennis.Placement.Building.BuildingData
-  <Cost>k__BackingField: 7000
+  <Cost>k__BackingField: 0
   <Model>k__BackingField: {fileID: 7938737080107574164, guid: 30baea212840c244b9d5d64065679300, type: 3}
   <RequiresRoad>k__BackingField: 1
   <RequiredBuilding>k__BackingField: {fileID: 0}
-  <BuildingName>k__BackingField: Polizeiwache
-  <Description>k__BackingField: "Eine Polizeiwache f\xFCr die \xF6ffentliche Sicherheit."
+  <BuildingName>k__BackingField: 
+  <Description>k__BackingField: 
   <Icon>k__BackingField: {fileID: 21300000, guid: a892e47cc7fecd4288a63bc0bb67f1bd, type: 3}
-  <Residents>k__BackingField: 10
+  <Residents>k__BackingField: 0
   <IncomePerHour>k__BackingField: 0
   <GridSize>k__BackingField: 2x2
   <Pollution>k__BackingField: 0
-  <EnergyUsage>k__BackingField: 5
+  <EnergyUsage>k__BackingField: 0
   <CO2Reduction>k__BackingField: 0
   <CostSavingsPerDay>k__BackingField: 0

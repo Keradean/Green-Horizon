@@ -51,20 +51,17 @@ namespace Andy.Manager
                     BuildingSystem.Instance.CancelAll();
                 _isOpen = !_isOpen;
                 gridVisual.SetActive(_isOpen);
-                
-                Dennis.Tutorial.TutorialManager.Instance?.NotifyEvent(Dennis.Tutorial.TutorialTrigger.Tab);
             }
+
+
             // Tabs per Zahlentasten
             if (Keyboard.current[Key.Digit1].wasPressedThisFrame) tabManager.ShowPanel(0);
             if (Keyboard.current[Key.Digit2].wasPressedThisFrame) tabManager.ShowPanel(1);
             if (Keyboard.current[Key.Digit3].wasPressedThisFrame) tabManager.ShowPanel(2);
             if (Keyboard.current[Key.Digit4].wasPressedThisFrame) tabManager.ShowPanel(3);
             if (Keyboard.current[Key.Digit5].wasPressedThisFrame) tabManager.ShowPanel(4);
-            if (Keyboard.current[Key.Digit6].wasPressedThisFrame)
-            {
-                tabManager.ShowPanel(5);
-                Dennis.Tutorial.TutorialManager.Instance?.NotifyEvent(Dennis.Tutorial.TutorialTrigger.numbers);
-            }
+            if (Keyboard.current[Key.Digit6].wasPressedThisFrame) tabManager.ShowPanel(5);
+
             AnimateBar();
         }
 

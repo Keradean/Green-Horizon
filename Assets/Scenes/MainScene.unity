@@ -6754,8 +6754,8 @@ MonoBehaviour:
   preset: {fileID: 11400000, guid: 31e6b40fe09ca054589ecf12420d6406, type: 2}
   directionalLight: {fileID: 620375842}
   timeOfDay: 0
-  dayTimeDurationInMinutes: 0.5
-  nightTimeDurationInMinutes: 2
+  dayTimeDurationInMinutes: 1
+  nightTimeDurationInMinutes: 1
 --- !u!4 &97673553 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4172824642250125871, guid: 28d177a1b85034c4f976046a8de0eb66, type: 3}
@@ -28624,7 +28624,7 @@ GameObject:
   - component: {fileID: 403936237}
   - component: {fileID: 403936238}
   m_Layer: 5
-  m_Name: Holder - Left (1)
+  m_Name: Holder - Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30096,7 +30096,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 123.456.789
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fc25b16910217ef40b63f77af3b3677b, type: 2}
   m_sharedMaterial: {fileID: 2147374, guid: fc25b16910217ef40b63f77af3b3677b, type: 2}
@@ -52510,7 +52510,7 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 191.8
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
@@ -61216,7 +61216,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Co2Manager
   co2Value: 0
-  co2Fill: {fileID: 0}
+  co2Fill: {fileID: 1432544088}
 --- !u!1001 &890971414
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -64619,7 +64619,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HappinessManager
   happinessValue: 100
-  happinessIcon: {fileID: 0}
+  happinessIcon: {fileID: 1414976765}
   colorGradient:
     serializedVersion: 2
     key0: {r: 1, g: 0, b: 0, a: 1}
@@ -72325,10 +72325,16 @@ MonoBehaviour:
   steps:
   - message: Willkommen bei Green Horizon!
     trigger: 0
+  - message: "Dr\xFCcke [Tab] um das Bau Men\xFC zu \xF6ffnen"
+    trigger: 0
+  - message: 'Mit [ 1,2,3,4,5,6 ] kannst du zwischen den Tabs switchen '
+    trigger: 0
   - message: "Zieh zuerst eine Stra\xDFe"
     trigger: 2
   - message: "Bau ein Wohnhaus an der Stra\xDFe."
     trigger: 1
+  - message: "Mit [X] kommst du in den demolish Modus um Geb\xE4ude abzurei\xDFen"
+    trigger: 0
   - message: "Viel Spa\xDF beim Bauen!!"
     trigger: 0
 --- !u!1001 &1044795785
@@ -104145,7 +104151,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 674360605}
-  - {fileID: 1781304454}
   - {fileID: 931823890}
   - {fileID: 1414690500}
   m_Father: {fileID: 133612210}
@@ -113213,7 +113218,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1675104331}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1634590207
 MonoBehaviour:
@@ -115425,7 +115430,6 @@ Transform:
   - {fileID: 1004593235}
   - {fileID: 96724574}
   - {fileID: 1572191505}
-  - {fileID: 1634590206}
   - {fileID: 240942912}
   - {fileID: 1044550775}
   m_Father: {fileID: 0}
@@ -121890,141 +121894,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3801940a6fefe424397a55c5705e77b1, type: 3}
---- !u!1 &1781304453
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1781304454}
-  - component: {fileID: 1781304458}
-  - component: {fileID: 1781304457}
-  - component: {fileID: 1781304456}
-  - component: {fileID: 1781304455}
-  m_Layer: 5
-  m_Name: Button - Demolish (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1781304454
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1781304453}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.9647486}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1493762935}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 77.41455, y: 230}
-  m_SizeDelta: {x: 90, y: 90}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1781304455
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1781304453}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 441cd9f82e908bb44813f9c908f32c3c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Andy.Manager.DemolishButton
-  iconNormal: {fileID: 21300000, guid: 7db1b4ce21ac9464c8815df401a396bf, type: 3}
-  iconActive: {fileID: 21300000, guid: 446545e782ec1044d8831fe2f33f786c, type: 3}
---- !u!114 &1781304456
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1781304453}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 1781304457}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &1781304457
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1781304453}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7db1b4ce21ac9464c8815df401a396bf, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &1781304458
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1781304453}
-  m_CullTransparentMesh: 1
 --- !u!4 &1781914338 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7942446863422186099, guid: 3801940a6fefe424397a55c5705e77b1, type: 3}
@@ -146510,6 +146379,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 684811285}
+  - {fileID: 1634590206}
   - {fileID: 1675104331}
   - {fileID: 345233557}
   - {fileID: 222719364}
