@@ -193,6 +193,7 @@ namespace Dennis.Placement.Building
                 foreach (var n in neighbours.Where(n => grid.IsRoad(n)))
                     roadHandler.UpdateRoadVisualPublic(n);
 
+                Can.Manager.Audiomanager.Instance.PlayDemolishSound();
                 return;
             }
 
@@ -210,6 +211,7 @@ namespace Dennis.Placement.Building
 
             grid.RemoveBuilding(building);
             Destroy(building.gameObject);
+            Can.Manager.Audiomanager.Instance.PlayDemolishSound();
         }
 
         /////////////////////////////////////////////////////////////////////////////////////
@@ -298,10 +300,11 @@ namespace Dennis.Placement.Building
 
             placementManager?.RegisterStructure(structure);
 
+            Can.Manager.Audiomanager.Instance.PlayPlaceSound();
+
             Destroy(_preview.gameObject);
             _preview = null;
 
-            // ── Tutorial informieren ──────────────────────────────────────────
             TutorialManager.Instance?.NotifyEvent(TutorialTrigger.BuildingPlaced);
         }
 

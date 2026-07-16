@@ -21,6 +21,11 @@ namespace Can.Manager
         public AudioSource dayAmbience;
         public AudioSource nightAmbience;
 
+        [Header("Building SFX")]
+        public AudioSource buildSfx;
+        public AudioSource demolishSfx;
+        [SerializeField] private float pitchVariation = 0.1f;
+
         private int _currentBGM;
         private bool _playingBGM;
         private float _dayAmbienceVolume;
@@ -33,13 +38,11 @@ namespace Can.Manager
             if (dayAmbience != null)
             {
                 _dayAmbienceVolume = dayAmbience.volume;
-                // Clip vorab laden
                 dayAmbience.PlayOneShot(dayAmbience.clip, 0f);
             }
             if (nightAmbience != null)
             {
                 _nightAmbienceVolume = nightAmbience.volume;
-                // Clip vorab laden
                 nightAmbience.PlayOneShot(nightAmbience.clip, 0f);
             }
             _lightManager = FindAnyObjectByType<LightManager>();
@@ -154,6 +157,20 @@ namespace Can.Manager
         {
             if (sfx == null || sfxToPlay < 0 || sfxToPlay >= sfx.Length) return;
             sfx[sfxToPlay].Play();
+        }
+
+        public void PlayPlaceSound()
+        {
+            if (buildSfx == null || buildSfx.clip == null) return;
+            buildSfx.pitch = 1f + Random.Range(-pitchVariation, pitchVariation);
+            buildSfx.PlayOneShot(buildSfx.clip);
+        }
+
+        public void PlayDemolishSound()
+        {
+            if (demolishSfx == null || demolishSfx.clip == null) return;
+            demolishSfx.pitch = 1f + Random.Range(-pitchVariation, pitchVariation);
+            demolishSfx.PlayOneShot(demolishSfx.clip);
         }
         #endregion
     }
