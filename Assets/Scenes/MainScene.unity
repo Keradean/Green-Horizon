@@ -15927,7 +15927,7 @@ GameObject:
   - component: {fileID: 240942912}
   - component: {fileID: 240942913}
   m_Layer: 0
-  m_Name: Manager-Placement
+  m_Name: Manager - Placement
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42332,6 +42332,55 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7942446863422186099, guid: 3801940a6fefe424397a55c5705e77b1, type: 3}
   m_PrefabInstance: {fileID: 299146901}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &635260410
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 635260411}
+  - component: {fileID: 635260412}
+  m_Layer: 0
+  m_Name: Manager - FloatingNumbers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &635260411
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 635260410}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1675104331}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &635260412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 635260410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f448001e75bf67241afa6ab41f01e228, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Andy.Manager.FloatingNumberManager
+  floatingNumberPrefab: {fileID: 7255616785148700422, guid: e7e4a0aba3dde6541b4a978a8cb0788b, type: 3}
+  moneyHolder: {fileID: 424252182}
+  residentHolder: {fileID: 1930001683}
+  floatDistance: 40
+  duration: 2
 --- !u!1001 &635917066
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -69750,7 +69799,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e656f422a3be4b4288973a5d3ed8d1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Manager.GreenCoinManager
-  <CurrentGold>k__BackingField: 10000000
+  <CurrentGold>k__BackingField: 3000
 --- !u!4 &1007661577 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7942446863422186099, guid: 3801940a6fefe424397a55c5705e77b1, type: 3}
@@ -83395,7 +83444,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8377254d3a6f1744ea9bf2673a2cda13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneButton
-  sceneName: 
+  sceneName: MainMenu
 --- !u!1001 &1197222045
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -113232,7 +113281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06d52eebda901704e850319c261a0b39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Samil.Manager.CityTickManager
-  daysPerSecond: 1
+  daysPerSecond: 0.5
   goldText: {fileID: 424252183}
   residentText: {fileID: 1930001684}
   daysPassed: 0
@@ -115432,6 +115481,7 @@ Transform:
   - {fileID: 1572191505}
   - {fileID: 240942912}
   - {fileID: 1044550775}
+  - {fileID: 635260411}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1676113263
