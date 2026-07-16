@@ -1,3 +1,6 @@
+using Dennis.Manager;
+using Dennis.Placement.Building;
+using Samil.Manager;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -69,6 +72,14 @@ namespace Can.Manager
         public static void LoadScene(string sceneName)
         {
             if (Instance._isTransitioning) return;
+            if (CityTickManager.Instance)
+            {
+                CityTickManager.Instance.Buildings.Clear();
+            }
+            if (GreenCoinManager.Instance)
+            {
+                GreenCoinManager.Instance.SetGold(3000);
+            }
             Instance.StartCoroutine(Instance.TransitionRoutine(sceneName));
         }
 

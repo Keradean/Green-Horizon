@@ -1,6 +1,7 @@
 //=== Andy ===//
 
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Andy.Manager
 {
@@ -24,7 +25,19 @@ namespace Andy.Manager
         public delegate void GameStateChangeHandler(GameState newGameState);
         public event GameStateChangeHandler OnGameStateChanged;
 
-        private GameStateManager() { }
+
+        private GameStateManager()
+        {
+            // Der Manager überlebt Scene-Wechsel (statisches Singleton), der State
+            // darf aber nicht hängen bleiben: neue Scene startet immer im Gameplay,
+            // sonst ist z.B. das Pause-Menü nach Rückkehr ins MainScene noch offen.
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            SetState(GameState.Gameplay);
+        }
 
         // State setzen - ignoriert wenn neuer State gleich dem aktuellen ist
         public void SetState(GameState newGameState)

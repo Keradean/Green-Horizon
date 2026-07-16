@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 //=== Andy ===//
 
 // Liegt auf dem PausePanel GameObject.
@@ -44,6 +45,7 @@ namespace Andy.Manager
                 Time.deltaTime * slideSpeed
             );
         }
+
         /////////////////////////////////////////////////////////////////////////////////////
         private void OnGameStateChanged(GameState newGameState)
         {

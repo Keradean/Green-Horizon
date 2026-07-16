@@ -15,6 +15,12 @@ namespace Dennis.Manager
             OnGoldChanged?.Invoke(amount);
         }
 
+        public void SetGold(int amount)
+        {
+            CurrentGold = amount;
+            OnGoldChanged?.Invoke(amount);
+        }
+
         public bool SpendGold(int amount)
         {
             if (amount > CurrentGold) return false;
