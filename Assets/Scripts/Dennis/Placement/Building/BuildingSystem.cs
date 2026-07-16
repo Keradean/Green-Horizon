@@ -300,7 +300,7 @@ namespace Dennis.Placement.Building
 
             placementManager?.RegisterStructure(structure);
 
-            Can.Manager.Audiomanager.Instance.PlayPlaceSound();
+            Can.Manager.Audiomanager.Instance?.PlayPlaceSound();
 
             Destroy(_preview.gameObject);
             _preview = null;

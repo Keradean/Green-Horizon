@@ -18546,12 +18546,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraController
   moveSpeed: 20
-  smoothSpeed: 7
+  smoothSpeed: 9
   zoomSpeed: 2
   minZoom: -4
   maxZoom: 40
   enableRotation: 1
-  rotationSpeed: 20
+  rotationSpeed: 15
   minBounds: {x: -40, y: -40}
   maxBounds: {x: 40, y: 40}
 --- !u!1001 &271415994
